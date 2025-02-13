@@ -1,0 +1,291 @@
+---
+import { Image } from 'astro:assets';
+import 'swiper/css';
+import 'swiper/css/effect-fade';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+const testimonials = [
+  // Stan 1
+  [
+    {
+      title: "Przyjazne miejsce",
+      content: "Akademia to wyjątkowe miejsce, gdzie każde dziecko czuje się jak w domu. Nasza córka nie tylko rozwija swoje umiejętności gimnastyczne, ale także zyskała więcej pewności siebie. Trenerzy tworzą niesamowitą atmosferę, łącząc profesjonalizm z ciepłym podejściem do dzieci. Szczególnie doceniamy indywidualne podejście do każdego małego gimnastyka oraz regularne informacje o postępach.",
+      author: "Joanna, Mama 10-letniej Zuzi"
+    },
+    {
+      title: "Profesjonalne podejście",
+      content: "Z pełnym przekonaniem polecam Akademię wszystkim rodzicom. Poziom nauczania jest naprawdę imponujący, a trenerzy potrafią w fantastyczny sposób zmotywować dzieci do wysiłku. Nasza córka zrobiła ogromne postępy w ciągu ostatniego roku. Dodatkowo, sala jest świetnie wyposażona, a zajęcia zawsze są doskonale przygotowane. To, co najbardziej cenimy, to fakt, że dzieci uczą się nie tylko gimnastyki, ale także dyscypliny i współpracy.",
+      author: "Marcin, Tata 8-letniej Zosi"
+    },
+    {
+      title: "Świetna organizacja",
+      content: "To, co wyróżnia Akademię, to perfekcyjna organizacja zajęć i profesjonalny sprzęt. Każde zajęcia są dokładnie zaplanowane, a dzieci mają możliwość korzystania z najwyższej jakości wyposażenia. Trenerzy dbają o bezpieczeństwo, jednocześnie zachęcając do pokonywania własnych granic. Widzimy, jak nasza córka z radością uczestniczy w każdych zajęciach i jak dumna jest ze swoich postępów.",
+      author: "Katarzyna"
+    }
+  ],
+  // Stan 2
+  [
+    {
+      title: "Rozwój pasji",
+      content: "Akademia pomogła mojemu synowi oraz córce rozwinąć prawdziwą pasję do gimnastyki. Bardzo polecam wszystkim rodzicom, a szczególne dla rodziców o małych dzieciach. Zajęcia są różnorodne i dostosowane do poziomu zaawansowania każdego dziecka.",
+      author: "Marta, Mama Kacpra i Patrycji"
+    },
+    {
+      title: "Bezpieczeństwo",
+      content: "Bardzo doceniam dbałość o bezpieczeństwo dzieci podczas zajęć. Trenerzy są czujni i profesjonalni, a sala świetnie wyposażona.",
+      author: "Anna, Mama 7-letniej Hani"
+    },
+    {
+      title: "Wszechstronny rozwój",
+      content: "Zajęcia w Akademii to nie tylko gimnastyka, ale także nauka systematyczności, odpowiedzialności i pracy zespołowej. Polecam każdemu rodzicowi!",
+      author: "Paulina, Mama Marka"
+    }
+  ],
+  // Stan 3
+  [
+    {
+      title: "Motywujące zajęcia",
+      content: "Trenerzy potrafią świetnie zmotywować dzieci do ćwiczeń. Nasza córka zawsze wraca z zajęć pełna energii i chęci do dalszego treningu.",
+      author: "Karolina, Mama 8-letniej Mai"
+    },
+    {
+      title: "Przyjazne miejsce",
+      content: "Akademia to bardzo przyjazne miejsce dla dzieci. Panuje tu świetna atmosfera, a trenerzy mają świetne podejście do młodych gimnastyków.",
+      author: "Joanna, Mama 10-letniej Zuzi"
+    },
+    {
+      title: "Widoczne efekty",
+      content: "Po roku zajęć widzimy ogromną różnicę w sprawności fizycznej naszej córki. Poprawiła się jej koordynacja, gibkość i pewność siebie.",
+      author: "Magdalena, Mama 9-letniej Natalii"
+    }
+  ]
+];
+---
+
+<div class="mt-24 h-[879px] relative w-full max-w-[1920px] mx-auto overflow-visible" data-aos="fade-up" data-aos-duration="1000">
+  <div class="rounded-[100px] w-full h-full absolute left-0 top-0 bg-gradient-to-b from-[rgba(155,77,206,1)] to-[rgba(255,255,255,1)]">
+    <!-- Blur effects -->
+    <div class="bg-[#a0b9f9] rounded-[50%] w-[732px] h-[596px] absolute left-[411px] top-12" style="filter: blur(150px)"></div>
+    <div class="bg-[#f2afda] rounded-[50%] w-[650px] h-[529.72px] absolute left-[928px] top-[59.82px]" style="filter: blur(150px)"></div>
+
+    <!-- Header -->
+    <div class="absolute left-1/2 -translate-x-1/2 top-[111px] text-center w-full">
+      <h2 class="text-[50px] leading-[160%] text-white" data-aos="fade-up" data-aos-delay="200">
+        <span class="font-bold">Co mówią</span>
+        <span class="font-extralight"> o nas klienci?</span>
+      </h2>
+      <p class="text-xl leading-[160%] text-white mt-4" data-aos="fade-up" data-aos-delay="300">Opinie o Małopolskiej Akademii Gimnastyki</p>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="swiper testimonials-carousel absolute top-[297px] w-full">
+      <div class="swiper-wrapper">
+        {testimonials.map((group) => (
+          <div class="swiper-slide">
+            <div class="flex justify-center gap-[48px] py-8">
+              {group.map((testimonial) => (
+                <div class="w-[456px] h-[445px] relative" data-aos="zoom-in" data-aos-delay="400">
+                  <div class="bg-white/25 rounded-[89px] w-full h-full absolute shadow-[0_12px_25px_0px_rgba(0,0,0,0.05)] backdrop-blur-[25px]">
+                    <div class="px-16 pt-16 pb-12 flex flex-col h-full">
+                      <p class="text-xl leading-[160%] text-white/80 mb-3">{testimonial.author}</p>
+                      <h3 class="text-[40px] leading-[120%] font-bold text-white mb-6">{testimonial.title}</h3>
+                      <div class="flex-1 overflow-y-auto custom-scrollbar pr-4 pb-4">
+                        <p class="text-xl leading-[160%] text-white">{testimonial.content}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="swiper-button-prev left-[calc(50%-900px)]"></div>
+      <div class="swiper-button-next right-[calc(50%-900px)]"></div>
+    </div>
+
+    <!-- Decorative images -->
+    <Image
+      src="/images/arts/art3.png"
+      alt="Decorative gymnast"
+      width={448}
+      height={448}
+      class="absolute left-[33px] top-12 z-20 transition-transform duration-300 hover:scale-105"
+    />
+    <Image
+      src="/images/arts/art6.png"
+      alt="Decorative rings"
+      width={473}
+      height={473}
+      class="absolute right-0 top-0 z-30 parallax-art6"
+    />
+  </div>
+</div>
+
+<style>
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+  }
+
+  /* Swiper styles */
+  .swiper-slide {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    cursor: grab;
+  }
+
+  .swiper-slide:active {
+    cursor: grabbing;
+  }
+
+  .swiper-slide-active {
+    opacity: 1;
+  }
+
+  .parallax-art6 {
+    transition: transform 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+    will-change: transform;
+    transform: translateX(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .parallax-art6 {
+      transition: none;
+      transform: none;
+    }
+  }
+
+  /* Navigation styles */
+  .swiper-button-next,
+  .swiper-button-prev {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+  }
+
+  .swiper-button-next {
+    right: calc(50% - 900px);
+  }
+
+  .swiper-button-prev {
+    left: calc(50% - 900px);
+  }
+
+  .swiper-button-next:hover,
+  .swiper-button-prev:hover {
+    color: #AAC9E7;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  @media (max-width: 1280px) {
+    .swiper-button-prev { left: 24px; }
+    .swiper-button-next { right: 24px; }
+  }
+</style>
+
+<script>
+  import Swiper from 'swiper';
+  import { Navigation, EffectFade } from 'swiper/modules';
+
+  // Inicjalizacja Swiper
+  const swiper = new Swiper('.testimonials-carousel', {
+    modules: [Navigation, EffectFade],
+    speed: 800,
+    effect: 'fade',
+    fadeEffect: {
+      crossFade: true
+    },
+    loop: true,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+
+  // Obsługa paralaksy dla poręczy gimnastycznych
+  const art6Element = document.querySelector('.parallax-art6');
+  let targetX = 0;
+  let currentX = 0;
+  let ticking = false;
+
+  function lerp(start, end, factor) {
+    return start + (end - start) * factor;
+  }
+
+  function updateParallax() {
+    if (art6Element) {
+      const scrolled = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const elementRect = art6Element.getBoundingClientRect();
+      const elementCenter = elementRect.top + elementRect.height / 2;
+      const viewportCenter = windowHeight / 2;
+      
+      // Obliczamy docelową pozycję
+      const distanceFromCenter = elementCenter - viewportCenter;
+      const maxShift = 100; // Zwiększone maksymalne przesunięcie
+      targetX = (distanceFromCenter / windowHeight) * maxShift;
+      
+      // Płynne przejście do docelowej pozycji
+      currentX = lerp(currentX, targetX, 0.05); // Zmniejszona wartość dla większego opóźnienia
+      
+      art6Element.style.transform = `translateX(${-currentX}px)`;
+
+      // Kontynuuj animację, jeśli nie osiągnęliśmy celu
+      if (Math.abs(targetX - currentX) > 0.1) {
+        requestAnimationFrame(updateParallax);
+      } else {
+        ticking = false;
+      }
+    } else {
+      ticking = false;
+    }
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }
+
+  // Nasłuchiwanie zdarzeń
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  document.addEventListener('astro:page-load', () => {
+    currentX = 0;
+    targetX = 0;
+    updateParallax();
+  });
+
+  // Inicjalne ustawienie
+  if (document.readyState === 'complete') {
+    updateParallax();
+  } else {
+    window.addEventListener('load', updateParallax);
+  }
+</script>

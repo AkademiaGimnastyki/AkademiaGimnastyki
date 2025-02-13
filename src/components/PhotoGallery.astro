@@ -1,0 +1,116 @@
+---
+import { Image } from 'astro:assets';
+import 'swiper/css';
+
+const galleryItems = [
+  {
+    image: '/images/placeholders/bruce-mars-gJtDg6WfMlQ-unsplash.jpg',
+    caption: 'Gimnastyka sportowa',
+    description: 'Trening dla osób w każdym wieku'
+  },
+  {
+    image: '/images/placeholders/karsten-winegeart-0Wra5YYVQJE-unsplash.jpg',
+    caption: 'Sprzęt do ćwiczeń',
+    description: 'Profesjonalne wyposażenie sali'
+  },
+  {
+    image: '/images/placeholders/kike-vega-F2qh3yjz6Jk-unsplash (1).jpg',
+    caption: 'Gimnastyka artystyczna',
+    description: 'Rozwój gibkości i gracji'
+  },
+  {
+    image: '/images/placeholders/jonathan-borba-lrQPTQs7nQQ-unsplash (1).jpg',
+    caption: 'Dla początkujących',
+    description: 'Pierwsze kroki w gimnastyce'
+  },
+  {
+    image: '/images/placeholders/bruce-mars-HHXdPG_eTIQ-unsplash.jpg',
+    caption: 'Dla zaawansowanych',
+    description: 'Trening na najwyższym poziomie'
+  },
+  {
+    image: '/images/placeholders/andrew-tanglao-3I2vzcmEpLU-unsplash.jpg',
+    caption: 'Zawody sportowe',
+    description: 'Regularne wydarzenia i pokazy'
+  }
+];
+---
+
+<div class="w-full py-12 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="swiper gallery-carousel">
+      <div class="swiper-wrapper">
+        {galleryItems.map((item, index) => (
+          <div class="swiper-slide group relative overflow-hidden rounded-[40px]">
+            <Image 
+              src={item.image}
+              alt={item.caption}
+              width={800}
+              height={600}
+              class="w-full h-96 object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-all duration-500 ease-out group-hover:opacity-100"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-6 translate-y-full transition-transform duration-500 ease-out group-hover:translate-y-0">
+              <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-4 transform group-hover:scale-100">
+                <h3 class="text-mag-blue text-lg font-medium text-center mb-1">{item.caption}</h3>
+                <p class="text-gray-600 text-sm text-center">{item.description}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .gallery-carousel {
+    padding: 20px 0;
+  }
+  
+  .swiper-slide {
+    width: calc(100% / 3 - 40px);
+    margin-right: 20px;
+    transition: transform 0.3s ease-in-out;
+    cursor: grab;
+  }
+
+  .swiper-slide:active {
+    cursor: grabbing;
+  }
+
+  @media (max-width: 1024px) {
+    .swiper-slide {
+      width: 100%;
+      margin-right: 0;
+    }
+  }
+</style>
+
+<script>
+  import Swiper from 'swiper';
+  import { Autoplay } from 'swiper/modules';
+
+  function initGallery() {
+    new Swiper('.gallery-carousel', {
+      modules: [Autoplay],
+      slidesPerView: 'auto',
+      spaceBetween: 20,
+      loop: true,
+      centeredSlides: true,
+      grabCursor: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      breakpoints: {
+        1024: {
+          slidesPerView: 3,
+        }
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initGallery);
+  document.addEventListener('astro:page-load', initGallery);
+</script>

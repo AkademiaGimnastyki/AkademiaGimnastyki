@@ -1,0 +1,87 @@
+---
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import '@fontsource/poppins/100.css';
+import '@fontsource/poppins/200.css';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/700.css';
+import { ViewTransitions } from 'astro:transitions';
+import Navigation from '../components/Navigation.astro';
+import 'aos/dist/aos.css';
+import '../styles/globals.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { 
+  title, 
+  description = "Małopolska Akademia Gimnastyki - profesjonalne zajęcia gimnastyczne dla dzieci i młodzieży." 
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <ViewTransitions />
+
+    <!-- Preload krytycznych zasobów -->
+    <link rel="preload" href="/images/logo/logo_akademia.svg" as="image" fetchpriority="high" />
+    <link rel="preload" href="/images/trainers/trainer1.jpg" as="image" fetchpriority="high" />
+    <link rel="preload" href="/images/trainers/trainer2.jpg" as="image" fetchpriority="high" />
+    <link rel="preload" href="/images/trainers/trainer3.jpg" as="image" fetchpriority="high" />
+  </head>
+  <body class="min-h-screen bg-background font-roboto antialiased">
+    <Navigation />
+    <main>
+      <slot />
+    </main>
+
+    <script>
+      import AOS from 'aos';
+      
+      let aosInitialized = false;
+      
+      function initAOS() {
+        if (!aosInitialized) {
+          AOS.init({
+            duration: 1000,
+            once: true,
+            disable: 'mobile',
+            offset: 100,
+            delay: 0,
+            easing: 'ease-out-cubic'
+          });
+          aosInitialized = true;
+        }
+      }
+
+      // Inicjalizacja AOS
+      document.addEventListener('astro:page-load', () => {
+        if (!aosInitialized) {
+          initAOS();
+        } else {
+          // Tylko odświeżenie AOS dla nowych elementów
+          requestAnimationFrame(() => {
+            AOS.refresh();
+          });
+        }
+      }, { once: false });
+
+      // Czyszczenie AOS przed przejściem
+      document.addEventListener('astro:before-preparation', () => {
+        if (aosInitialized) {
+          AOS.refresh();
+        }
+      });
+    </script>
+  </body>
+</html>

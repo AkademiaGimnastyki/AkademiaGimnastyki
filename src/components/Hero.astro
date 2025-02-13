@@ -1,0 +1,123 @@
+---
+import { Facebook, Instagram } from 'lucide-react';
+import { Image } from 'astro:assets';
+import TrainerAvatars from './ui/TrainerAvatars.astro';
+import HeroButtons from './ui/HeroButtons.astro';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  backgroundImage?: string;
+  showButtons?: boolean;
+}
+
+const {
+  title = "Małopolska Akademia",
+  subtitle = "Gimnastyki",
+  backgroundImage = "/images/hero/hero o nas.jpg",
+  showButtons = true
+} = Astro.props;
+
+const trainers = [
+  {
+    name: "Jan Kowalski",
+    image: "/images/trainers/trainer1.jpg"
+  },
+  {
+    name: "Anna Nowak",
+    image: "/images/trainers/trainer2.jpg"
+  },
+  {
+    name: "Piotr Wiśniewski",
+    image: "/images/trainers/trainer3.jpg"
+  }
+];
+---
+
+<div class="relative w-full max-w-[1920px] mx-auto">
+  <div class="relative mx-4 sm:mx-6 lg:mx-8 my-6">
+    <div class="rounded-[32px] overflow-hidden" transition:name="hero-container">
+      <div class="relative w-full aspect-[16/9]">
+        <Image
+          src={backgroundImage}
+          alt="Background image"
+          width={1920}
+          height={1080}
+          class="absolute inset-0 w-full h-full object-cover"
+          loading="eager"
+          decoding="sync"
+          transition:name="hero-image"
+        />
+        <!-- Overlay -->
+        <div 
+          class="absolute inset-0 bg-gradient-to-r from-black/50 to-black/30"
+          transition:name="hero-overlay"
+        ></div>
+
+        <!-- Content Grid -->
+        <div class="absolute inset-0 grid grid-rows-[auto_1fr_auto] p-6 sm:p-8 md:p-10">
+          <!-- Top Row - Logo -->
+          <div class="h-24">
+            <a href="/o-nas" class="inline-block" transition:name="hero-logo">
+              <img
+                src="/images/logo/logo_akademia.svg"
+                alt="Małopolska Akademia Gimnastyki - Logo"
+                class="w-auto h-16 sm:h-20 md:h-24 transition-all duration-300 ease-in-out hover:scale-110 hover:drop-shadow-mag cursor-pointer hover:-translate-y-1"
+                loading="eager"
+                decoding="sync"
+                width="240"
+                height="96"
+              />
+            </a>
+          </div>
+
+          <!-- Middle Row - Main Content -->
+          <div class="flex flex-col items-center justify-center text-center" transition:name="hero-content">
+            <h1 class="font-poppins text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-white mb-4 sm:mb-8">
+              <span class="block font-bold">{title}</span>
+              <span class="block mt-2 font-thin tracking-wide">{subtitle}</span>
+            </h1>
+            
+            {showButtons && (
+              <div class="mt-8">
+                <HeroButtons />
+              </div>
+            )}
+          </div>
+
+          <!-- Bottom Row - Social Links -->
+          <div class="h-24 flex items-end justify-between" transition:name="hero-footer">
+            <div class="space-y-4">
+              <TrainerAvatars trainers={trainers} />
+              <div class="flex space-x-2 sm:space-x-4">
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="pointer-events-auto bg-white/10 hover:bg-white/20 text-white p-1.5 sm:p-2 md:p-3 rounded-full transition-all duration-300"
+                >
+                  <Facebook class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+                </a>
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="pointer-events-auto bg-white/10 hover:bg-white/20 text-white p-1.5 sm:p-2 md:p-3 rounded-full transition-all duration-300"
+                >
+                  <Instagram class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  :global(.lucide) {
+    width: 100%;
+    height: 100%;
+  }
+</style>

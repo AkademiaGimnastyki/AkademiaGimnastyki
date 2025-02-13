@@ -1,0 +1,132 @@
+---
+import { Image } from 'astro:assets';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+// Importy obrazów
+import image1 from '/public/images/placeholders/bruce-mars-gJtDg6WfMlQ-unsplash.jpg';
+import image2 from '/public/images/placeholders/karsten-winegeart-0Wra5YYVQJE-unsplash.jpg';
+import image3 from '/public/images/placeholders/kike-vega-F2qh3yjz6Jk-unsplash (1).jpg';
+
+interface Props {
+  badge?: string;
+  title: string;
+  description: string;
+  images?: Array<{
+    src: ImageMetadata;
+    alt: string;
+  }>;
+}
+
+const { 
+  badge = "Małopolska Akademia Gimnastyki",
+  title = "Gimnastyka dla każdego", 
+  description = "Nasza akademia to miejsce, gdzie pasja łączy się z profesjonalizmem. Oferujemy zajęcia dostosowane do różnych grup wiekowych i poziomów zaawansowania.",
+  images = [
+    { src: image1, alt: "Zajęcia gimnastyczne 1" },
+    { src: image2, alt: "Zajęcia gimnastyczne 2" },
+    { src: image3, alt: "Zajęcia gimnastyczne 3" }
+  ]
+} = Astro.props;
+---
+
+<div class="w-full py-8 lg:py-16">
+  <div class="container mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 justify-end items-end gap-10">
+      <div class="flex gap-4 flex-col items-start">
+        <div>
+          <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-mag-blue text-white">
+            {badge}
+          </span>
+        </div>
+        <div class="flex gap-2 flex-col">
+          <h2 class="text-xl md:text-3xl lg:text-5xl tracking-tighter lg:max-w-xl font-regular text-left">
+            {title}
+          </h2>
+          <p class="text-lg max-w-xl lg:max-w-sm leading-relaxed tracking-tight text-muted-foreground text-left">
+            {description}
+          </p>
+        </div>
+      </div>
+      <div class="w-full max-w-full px-6 relative">
+        <div class="swiper feature-carousel rounded-lg overflow-hidden">
+          <div class="swiper-wrapper">
+            {images.map((image) => (
+              <div class="swiper-slide relative">
+                <div class="absolute inset-0 bg-black/10 rounded-[50px] z-0"></div>
+                <Image 
+                  src={image.src}
+                  alt={image.alt}
+                  width={800}
+                  height={600}
+                  fetchpriority="high"
+                  class="w-full h-full object-cover rounded-[50px] z-10"
+                />
+              </div>
+            ))}
+          </div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import Swiper from 'swiper';
+  import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+
+  document.addEventListener('astro:page-load', () => {
+    const swiper = new Swiper('.feature-carousel', {
+      modules: [Navigation, Pagination, Autoplay],
+      loop: true,
+      spaceBetween: 30,
+      centeredSlides: true,
+      autoplay: {
+        delay: 3500,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+  });
+</script>
+
+<style>
+  .bg-muted {
+    background-color: #f3f4f6;
+  }
+  .text-muted-foreground {
+    color: #6b7280;
+  }
+  
+  /* Swiper custom styles */
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: #00b3d4 !important;
+  }
+
+  .swiper-button-next:hover,
+  .swiper-button-prev:hover {
+    transform: scale(1.2);
+  }
+
+  /* Pagination styles */
+  .swiper-pagination-bullet {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .swiper-pagination-bullet-active {
+    background: #00b3d4 !important;
+    transform: scale(1.2);
+  }
+</style>

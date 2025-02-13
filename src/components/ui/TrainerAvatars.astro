@@ -1,0 +1,45 @@
+---
+interface Trainer {
+  image: string;
+  name: string;
+}
+
+interface Props {
+  trainers: Trainer[];
+}
+
+const { trainers } = Astro.props;
+---
+
+<div class="hidden sm:flex -space-x-3 sm:-space-x-4">
+  {trainers.map((trainer, index) => (
+    <div
+      data-trainer-name={trainer.name}
+      style={`z-index: ${trainers.length - index}`}
+      class:list={[
+        "trainer-avatar",
+        "relative w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16",
+        "rounded-full border-2 border-white overflow-visible",
+        "bg-white transition-all duration-300",
+        "hover:z-10 hover:scale-110 hover:drop-shadow-mag"
+      ]}
+    >
+      <img
+        src={trainer.image}
+        alt={trainer.name}
+        class:list={[
+          "w-full h-full object-cover rounded-full"
+        ]}
+      />
+      <span class="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-black/75 text-white text-sm px-2 py-1 rounded opacity-0 transition-opacity group-hover:opacity-100">
+        {trainer.name}
+      </span>
+    </div>
+  ))}
+</div>
+
+<style>
+  .trainer-avatar:hover span {
+    opacity: 1;
+  }
+</style>

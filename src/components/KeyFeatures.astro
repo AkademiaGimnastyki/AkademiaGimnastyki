@@ -1,0 +1,78 @@
+---
+const features = [
+  {
+    icon: "🎓",
+    title: "Certyfikowani Trenerzy",
+    subtitle: "Absolwenci AWF Kraków",
+    description: "Prowadzimy zajęcia pod okiem pedagogów i byłych zawodników z wieloletnim doświadczeniem."
+  },
+  {
+    icon: "👩 👦",
+    title: "Dla Wszystkich",
+    subtitle: "3-5 lat | 6-10 lat | 11-17 lat",
+    description: "Programy dostosowane do wieku i umiejętności – od maluchów po młodzież."
+  },
+  {
+    icon: "🛡️",
+    title: "Bezpieczeństwo Przede Wszystkim",
+    subtitle: "Profesjonalny Sprzęt i Asekuracja",
+    description: "Ćwiczymy na materacach, air trackach i przyrządach z atestami, pod stałą opieką trenerów."
+  },
+  {
+    icon: "💪",
+    title: "Holistyczny Rozwój",
+    subtitle: "Siła • Gibkość • Pewność Siebie",
+    description: "Wzmacniamy mięśnie, poprawiamy postawę i budujemy wiarę we własne możliwości."
+  },
+  {
+    icon: "🏅",
+    title: "Olimpijski Sprzęt",
+    subtitle: "Drążki, Kółka, Batuty, Równoważnie",
+    description: "Pracujemy na profesjonalnym sprzęcie, jakiego używają mistrzowie gimnastyki."
+  },
+  {
+    icon: "🌟",
+    title: "Ruch to Zabawa",
+    subtitle: "Połączenie Sportu i Kreatywności",
+    description: "Akrobacje, taniec z wstążką, gry zespołowe – nudzie mówimy NIE!"
+  }
+];
+---
+
+<section class="w-full py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {features.map(feature => (
+        <div
+          class="group p-6 rounded-3xl transition-all duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1.5"
+          style="
+            background: linear-gradient(
+                180deg,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 0.03) 100%
+              ),
+              linear-gradient(to left, #ffffff, #ffffff);
+            box-shadow: 0px 7.5px 30px 0px rgba(0, 0, 0, 0.18),
+              5.25px 5.25px 30px 0px rgba(70, 143, 239, 0.135);
+          "
+        >
+          <div class="flex flex-col items-start gap-4">
+            <span class="text-4xl" role="img" aria-label={feature.title}>
+              {feature.icon}
+            </span>
+            <h3 class="text-2xl font-bold text-gray-800 group-hover:text-[#00b3d4] transition-colors duration-500">{feature.title}</h3>
+            <p class="text-gray-600 leading-relaxed group-hover:text-[#e3a1a1] transition-colors duration-500">
+              {feature.description}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .container {
+    max-width: 1280px;
+  }
+</style>

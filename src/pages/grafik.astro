@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Calendar from '../components/Calendar.astro';
+---
+
+<Layout title="Grafik Zajęć - Małopolska Akademia Gimnastyki">
+  <main>
+    <Hero 
+      title="Grafik"
+      subtitle="Zajęć"
+      backgroundImage="/images/hero/hero grafik.jpg"
+    />
+
+    <!-- Calendar section -->
+    <section class="pb-16">
+      <Calendar />
+    </section>
+  </main>
+</Layout>

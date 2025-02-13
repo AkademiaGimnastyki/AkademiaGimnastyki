@@ -1,0 +1,28 @@
+---
+import Button from './Button.astro';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class:list={['relative flex flex-col sm:flex-row gap-6 mt-8', className]}>
+  <a href="/oferta">
+    <Button
+      variant="default"
+      class="relative z-20 bg-[#00b3d4] hover:bg-[#e3a1a1] text-white rounded-full px-8 py-3"
+    >
+      Poznaj naszą ofertę
+    </Button>
+  </a>
+  <a href="/grafik">
+    <Button
+      variant="default"
+      class="relative z-20 bg-[#e3a1a1] hover:bg-[#00b3d4] text-white rounded-full px-8 py-3"
+    >
+      Sprawdź grafik
+    </Button>
+  </a>
+</div>

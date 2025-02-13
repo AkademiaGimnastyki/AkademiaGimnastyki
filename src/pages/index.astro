@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import IntroSection from '../components/IntroSection';
+import Features from '../components/Features.astro';
+import PhotoGallery from '../components/PhotoGallery.astro';
+import KeyFeatures from '../components/KeyFeatures.astro';
+import BentoGallery from '../components/BentoGallery.astro';
+import VideoCTA from '../components/VideoCTA.astro';
+import Testimonials from '../components/Testimonials.astro';
+import FAQ from '../components/FAQ.astro';
+import SponsorsCarousel from '../components/SponsorsCarousel.astro';
+---
+
+<Layout title="Małopolska Akademia Gimnastyki">
+  <main>
+    <Hero showButtons={true} />
+    <IntroSection client:load />
+    <Features />
+    <PhotoGallery />
+    <KeyFeatures />
+    <BentoGallery />
+    <VideoCTA videoUrl="/videos/VIDEO1.webm" />
+    <Testimonials />
+    <FAQ />
+    <SponsorsCarousel />
+  </main>
+</Layout>

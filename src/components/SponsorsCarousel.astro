@@ -1,0 +1,102 @@
+---
+const sponsors = [
+  { name: "Termy Gorce", logo: "/images/sponsors/logo_termygorce.jpg", url: "https://termygorce.pl" },
+  { name: "Mok", logo: "/images/sponsors/logo_mok.jpg", url: "https://mokmszana.pl" },
+  { name: "Niedźwiedź", logo: "/images/sponsors/logo_niedzwiedz.jpg", url: "https://niedzwiedz.iap.pl" },
+  { name: "Termy Gorce", logo: "/images/sponsors/logo_termygorce.jpg", url: "https://termygorce.pl" },
+  { name: "Mok", logo: "/images/sponsors/logo_mok.jpg", url: "https://mokmszana.pl" },
+  { name: "Niedźwiedź", logo: "/images/sponsors/logo_niedzwiedz.jpg", url: "https://niedzwiedz.iap.pl" },
+];
+---
+
+<div class="w-full pt-32 pb-20 lg:pb-40" data-aos="fade-up" data-aos-duration="1000">
+  <div class="container mx-auto">
+    <div class="flex flex-col gap-10">
+      <h2 class="text-center text-4xl md:text-5xl">
+        <span class="font-bold">Nasi</span>{" "}
+        <span class="font-extralight">Partnerzy</span>
+      </h2>
+      
+      <div class="embla overflow-hidden" data-carousel>
+        <div class="flex" data-carousel-container>
+          {sponsors.map((sponsor, index) => (
+            <div 
+              class="flex-[0_0_50%] min-w-0 pl-4 md:flex-[0_0_33.33%] lg:flex-[0_0_25%] xl:flex-[0_0_16.66%]"
+              data-aos="zoom-in"
+              data-aos-delay={100 + index * 50}
+            >
+              <a 
+                href={sponsor.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="relative block transition-transform duration-300 hover:scale-105"
+              >
+                <img
+                  src={sponsor.logo}
+                  alt={`Logo ${sponsor.name}`}
+                  class="w-full h-auto object-contain p-4"
+                  loading="eager"
+                  decoding="async"
+                  fetchpriority={index < 3 ? "high" : "low"}
+                />
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import EmblaCarousel from 'embla-carousel';
+
+  let emblaInstance: ReturnType<typeof EmblaCarousel> | null = null;
+  let autoplayInterval: number | null = null;
+  let isInitialized = false;
+
+  const initCarousel = () => {
+    if (isInitialized) return;
+    
+    const carouselElement = document.querySelector('[data-carousel]') as HTMLElement;
+    if (!carouselElement) return;
+
+    emblaInstance = EmblaCarousel(carouselElement, { 
+      loop: true, 
+      align: "center",
+      skipSnaps: true
+    });
+
+    // Autoscroll z requestAnimationFrame dla lepszej wydajności
+    let lastScrollTime = Date.now();
+    const scroll = () => {
+      const now = Date.now();
+      if (now - lastScrollTime >= 3000) {
+        emblaInstance?.scrollNext();
+        lastScrollTime = now;
+      }
+      autoplayInterval = requestAnimationFrame(scroll);
+    };
+    
+    autoplayInterval = requestAnimationFrame(scroll);
+    isInitialized = true;
+  };
+
+  // Inicjalizacja przy pierwszym załadowaniu
+  if (document.readyState === 'complete') {
+    initCarousel();
+  } else {
+    document.addEventListener('DOMContentLoaded', initCarousel, { once: true });
+  }
+
+  // Cleanup przy przejściu
+  document.addEventListener('astro:before-swap', () => {
+    if (autoplayInterval) {
+      cancelAnimationFrame(autoplayInterval);
+    }
+    if (emblaInstance) {
+      emblaInstance.destroy();
+      isInitialized = false;
+    }
+  }, { once: true });
+</script>

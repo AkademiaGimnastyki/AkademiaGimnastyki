@@ -1,0 +1,46 @@
+---
+import { BentoGrid } from './ui/BentoGrid';
+
+const cards = [
+  {
+    id: 1,
+    title: "Międzywojewódzkie Mistrzostwa Juniorów 2023",
+    description: "Nasi zawodnicy zdobyli 5 medali podczas prestiżowych zawodów w Mszanie Dolnej. Złoto w kategorii junior młodszy przypadło Julii Kowalskiej za układ z obręczą.",
+    className: "md:col-span-2 aspect-[2/1]",
+    thumbnail: "/images/placeholders/bruce-mars-gJtDg6WfMlQ-unsplash.jpg",
+  },
+  {
+    id: 2,
+    title: "Grand Prix Małopolski - Kraków 2023",
+    description: "Historyczny sukces naszej akademii - wszystkie podium w kategorii młodzik zajęte przez nasze zawodniczki! Gratulujemy Ani, Zosi i Marysi!",
+    className: "col-span-1 aspect-square",
+    thumbnail: "/images/placeholders/karsten-winegeart-0Wra5YYVQJE-unsplash.jpg",
+  },
+  {
+    id: 3,
+    title: "Ogólnopolski Turniej w Akrobatyce Sportowej",
+    description: "Występ naszych najmłodszych adeptów podczas turnieju w Nowym Sączu. Debiut 8-letniej Hani w konkurencji dwójek mieszanych zakończony brązowym medalem!",
+    className: "col-span-1 aspect-square",
+    thumbnail: "/images/placeholders/kike-vega-F2qh3yjz6Jk-unsplash (1).jpg",
+  },
+  {
+    id: 4,
+    title: "Mistrzostwa Polski Seniorów 2023",
+    description: "Karolina Nowak z naszej akademii reprezentowała Małopolskę na Mistrzostwach Polski w Gdańsku. 4. miejsce w wieloboju i finał w układzie ze wstążką!",
+    className: "md:col-span-2 aspect-[2/1]",
+    thumbnail: "/images/placeholders/jonathan-borba-lrQPTQs7nQQ-unsplash (1).jpg",
+  },
+];
+---
+
+<section class="w-full pb-20 bg-white">
+  <div class="container mx-auto px-4">
+    <BentoGrid client:load cards={cards} />
+  </div>
+</section>
+
+<style>
+  .container {
+    max-width: 1280px;
+  }
+</style>

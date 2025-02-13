@@ -1,0 +1,154 @@
+---
+interface Props {
+  videoUrl: string;
+}
+
+const { videoUrl } = Astro.props;
+---
+
+<section class="relative w-full aspect-video overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/40 z-10"></div>
+  <div class="video-parallax absolute inset-0 -top-24 -bottom-24">
+    <video 
+      class="w-full h-full object-cover"
+      autoplay 
+      loop 
+      muted 
+      playsinline
+    >
+      <source src={videoUrl} type="video/webm" />
+      Twoja przeglądarka nie wspiera odtwarzania wideo.
+    </video>
+  </div>
+
+  <div class="relative z-20 container mx-auto px-4 h-full flex items-center">
+    <div class="max-w-2xl">
+      <div class="inline-flex items-center justify-center h-[2.6875rem] px-6 py-2 text-base leading-[160%] tracking-[0.04em] font-normal text-white bg-[#00b3d4]/20 backdrop-blur-md border border-[#00b3d4] rounded-[5.75rem] font-roboto mb-8">
+        Dołącz do nas
+      </div>
+
+      <h2 class="font-poppins text-5xl md:text-6xl lg:text-7xl text-white tracking-tighter mb-8">
+        <span class="font-bold">Dołącz do nas</span>
+        <span class="font-thin block mt-2">i rozwijaj swoją pasję</span>
+      </h2>
+
+      <p class="font-roboto text-xl text-white/90 max-w-xl mb-10 leading-relaxed">
+        Nasza akademia to miejsce, gdzie każde dziecko może odkryć radość z gimnastyki. Doświadczeni trenerzy, bezpieczne warunki i indywidualne podejście to nasza recepta na sukces.
+      </p>
+
+      <a 
+        href="/kontakt" 
+        class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-[#00b3d4] hover:bg-[#e3a1a1] transition-all duration-300 rounded-lg font-roboto overflow-hidden"
+      >
+        <span class="relative z-10">Zapisz się na zajęcia</span>
+        <div class="absolute inset-0 -z-10 bg-[#00b3d4] transition-all duration-300 group-hover:bg-[#e3a1a1]"></div>
+        <div class="absolute inset-0 -z-20 bg-gradient-to-r from-[#00b3d4] via-white to-[#e3a1a1] opacity-0 blur-xl transition-all duration-300 group-hover:opacity-70 scale-150"></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .video-parallax {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  section {
+    background: transparent;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+  }
+
+  @keyframes glow {
+    0% { opacity: 0.5; }
+    50% { opacity: 0.7; }
+    100% { opacity: 0.5; }
+  }
+
+  .group:hover .bg-gradient-to-r {
+    animation: glow 2s ease-in-out infinite;
+  }
+</style>
+
+<script>
+  let observer: IntersectionObserver | null = null;
+  let scrollHandler: (() => void) | null = null;
+
+  function setupParallax() {
+    const section = document.querySelector('section');
+    const videoParallax = document.querySelector('.video-parallax') as HTMLElement;
+    
+    if (!section || !videoParallax) return;
+
+    let ticking = false;
+    const parallaxSpeed = 0.15;
+
+    function updateParallax() {
+      const rect = section.getBoundingClientRect();
+      const scrolled = -rect.top;
+      const translate = scrolled * parallaxSpeed;
+      
+      if (rect.top <= window.innerHeight && rect.bottom >= 0) {
+        videoParallax.style.transform = `translate3d(0, ${translate}px, 0)`;
+      }
+    }
+
+    // Cleanup previous observer and event listener
+    cleanup();
+
+    // Create scroll handler
+    scrollHandler = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateParallax();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    // Create new Intersection Observer
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && scrollHandler) {
+          updateParallax();
+          window.addEventListener('scroll', scrollHandler);
+        } else if (scrollHandler) {
+          window.removeEventListener('scroll', scrollHandler);
+        }
+      });
+    }, {
+      rootMargin: "50px 0px",
+      threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+    });
+
+    observer.observe(section);
+  }
+
+  function cleanup() {
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+    }
+    if (scrollHandler) {
+      window.removeEventListener('scroll', scrollHandler);
+      scrollHandler = null;
+    }
+  }
+
+  // Setup on initial load
+  setupParallax();
+
+  // Setup on Astro page changes
+  document.addEventListener('astro:page-load', setupParallax);
+  
+  // Cleanup on Astro page unload
+  document.addEventListener('astro:page-unload', cleanup);
+</script>
