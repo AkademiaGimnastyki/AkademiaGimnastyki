@@ -1,5 +1,7 @@
 ---
 import Button from './ui/Button.astro';
+import { Image } from 'astro:assets';
+import arrowIcon from '../../public/images/arrow-right.svg';
 
 interface Props {
   showButtons?: boolean;
@@ -9,21 +11,43 @@ const { showButtons = true } = Astro.props;
 ---
 
 {showButtons && (
-  <div class="flex flex-col sm:flex-row gap-6 mt-8">
-    <a href="/oferta">
+  <div 
+    class="flex flex-col sm:flex-row gap-4 mt-8"
+    data-aos="fade-up"
+    data-aos-duration="800"
+    data-aos-delay="200"
+  >
+    <a href="/oferta" class="group relative">
       <Button
         variant="default"
-        class="relative z-20 bg-[#00b3d4] hover:bg-[#e3a1a1] text-white rounded-full px-8 py-3"
+        class="relative z-20 bg-[#00b3d4] hover:bg-[#00b3d4]/90 text-white rounded-full px-8 py-3 transition-colors duration-300"
       >
         Poznaj naszą ofertę
+        <Image
+          src={arrowIcon}
+          alt=""
+          width={24}
+          height={24}
+          class="ml-2 inline-block group-hover:translate-x-1 transition-transform"
+          loading="eager"
+        />
       </Button>
     </a>
-    <a href="/grafik">
+    
+    <a href="/grafik" class="group relative">
       <Button
         variant="default"
-        class="relative z-20 bg-[#e3a1a1] hover:bg-[#00b3d4] text-white rounded-full px-8 py-3"
+        class="relative z-20 bg-[#e3a1a1] hover:bg-[#e3a1a1]/90 text-white rounded-full px-8 py-3 transition-colors duration-300"
       >
         Sprawdź grafik
+        <Image
+          src={arrowIcon}
+          alt=""
+          width={24}
+          height={24}
+          class="ml-2 inline-block group-hover:translate-x-1 transition-transform"
+          loading="eager"
+        />
       </Button>
     </a>
   </div>

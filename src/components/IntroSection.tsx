@@ -3,13 +3,14 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { motion, useScroll, useTransform } from "framer-motion";
 
-// Import obrazów jako modułów
-import art2Image from '../../src/images/arts/art2.png';
-import art5Image from '../../src/images/arts/art5.png';
+// Standardowe importy obrazów
+import art2Image from '../../public/images/arts/art2.png';
+import art5Image from '../../public/images/arts/art5.png';
 
 export default function IntroSection() {
   const [titleNumber, setTitleNumber] = useState(0);
   const componentRef = useRef(null);
+  
   const { scrollYProgress } = useScroll({
     target: componentRef,
     offset: ["start end", "end start"]
@@ -20,27 +21,35 @@ export default function IntroSection() {
     []
   );
 
+  const images = useMemo(() => [
+    { src: art2Image.src, alt: "Gimnastyka dla dzieci" },
+    { src: art5Image.src, alt: "Zajęcia grupowe" }
+  ], []);
+
   // Efekt paralaksy względem pozycji komponentu
   const leftImageX = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    [250, 0, -250]
+    [250, 0, -250],
+    { clamp: true }
   );
 
   const rightImageX = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    [-250, 0, 250]
+    [-250, 0, 250],
+    { clamp: true }
   );
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery.matches) return;
+
     const interval = setInterval(() => {
-      setTitleNumber((titleNumber) =>
-        titleNumber === titles.length - 1 ? 0 : titleNumber + 1
-      );
+      setTitleNumber((prev) => (prev >= titles.length - 1 ? 0 : prev + 1));
     }, 2000);
     return () => clearInterval(interval);
-  }, [titleNumber, titles]);
+  }, [titles.length]);
 
   return (
     <motion.div 
@@ -76,29 +85,23 @@ export default function IntroSection() {
                 key={index}
                 className="absolute font-poppins text-[64px] font-extralight"
                 initial={{ opacity: 0, y: "100%" }}
+                animate={
+                  titleNumber === index
+                    ? { y: 0, opacity: 1 }
+                    : { y: titleNumber > index ? "-100%" : "100%", opacity: 0 }
+                }
                 transition={{ 
                   type: "spring", 
                   stiffness: 50,
                   damping: 12
                 }}
-                animate={
-                  titleNumber === index
-                    ? {
-                        y: 0,
-                        opacity: 1,
-                      }
-                    : {
-                        y: titleNumber > index ? "-100%" : "100%",
-                        opacity: 0,
-                      }
-                }
               >
                 {title}
               </motion.span>
             ))}
           </span>
         </motion.h2>
-        
+
         <motion.div 
           className="max-w-[766px] text-center px-4"
           initial={{ opacity: 0, y: 30 }}
@@ -120,79 +123,81 @@ export default function IntroSection() {
             Dołącz do nas!
           </motion.button>
         </motion.div>
+
+        {/* Left image with parallax */}
+        <motion.div 
+          className="absolute left-[350px] top-32 z-0"
+          style={{ x: leftImageX }}
+          initial={{ opacity: 0, x: 0 }}
+          animate={{ 
+            opacity: 1,
+            x: 0,
+            y: [0, -10, 0],
+            rotate: [-1, 1, -1]
+          }}
+          transition={{ 
+            duration: 1,
+            delay: 0.2,
+            y: {
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            },
+            rotate: {
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }
+          }}
+        >
+          <img
+            src={images[0].src}
+            alt={images[0].alt}
+            width={458}
+            height={458}
+            className="object-cover will-change-transform"
+            loading="eager"
+            decoding="async"
+          />
+        </motion.div>
+
+        {/* Right image with parallax */}
+        <motion.div 
+          className="absolute right-[350px] top-32 z-0"
+          style={{ x: rightImageX }}
+          initial={{ opacity: 0, x: 0 }}
+          animate={{ 
+            opacity: 1,
+            x: 0,
+            y: [0, -10, 0],
+            rotate: [1, -1, 1]
+          }}
+          transition={{ 
+            duration: 1,
+            delay: 0.2,
+            y: {
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            },
+            rotate: {
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }
+          }}
+        >
+          <img
+            src={images[1].src}
+            alt={images[1].alt}
+            width={458}
+            height={458}
+            className="object-cover will-change-transform"
+            loading="eager"
+            decoding="async"
+          />
+        </motion.div>
       </div>
-
-      {/* Left image with parallax */}
-      <motion.div 
-        className="absolute left-[350px] top-32 z-0"
-        style={{ x: leftImageX }}
-        initial={{ opacity: 0, x: 0 }}
-        animate={{ 
-          opacity: 1,
-          x: 0,
-          y: [0, -10, 0],
-          rotate: [-1, 1, -1]
-        }}
-        transition={{ 
-          duration: 1,
-          delay: 0.2,
-          y: {
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut"
-          },
-          rotate: {
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }
-        }}
-      >
-        <img
-          src={art2Image.src}
-          alt="Gimnastyka dla dzieci"
-          width={458}
-          height={458}
-          className="object-cover"
-          loading="eager"
-        />
-      </motion.div>
-
-      {/* Right image with parallax */}
-      <motion.div 
-        className="absolute right-[350px] top-32 z-0"
-        style={{ x: rightImageX }}
-        initial={{ opacity: 0, x: 0 }}
-        animate={{ 
-          opacity: 1,
-          x: 0,
-          y: [0, -10, 0],
-          rotate: [1, -1, 1]
-        }}
-        transition={{ 
-          duration: 1,
-          delay: 0.2,
-          y: {
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut"
-          },
-          rotate: {
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }
-        }}
-      >
-        <img
-          src={art5Image.src}
-          alt="Gimnastyka dla dzieci"
-          width={458}
-          height={458}
-          className="object-cover"
-          loading="eager"
-        />
-      </motion.div>
     </motion.div>
   );
 }

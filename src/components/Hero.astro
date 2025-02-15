@@ -1,5 +1,4 @@
 ---
-import { Facebook, Instagram } from 'lucide-react';
 import { Image } from 'astro:assets';
 import TrainerAvatars from './ui/TrainerAvatars.astro';
 import HeroButtons from './ui/HeroButtons.astro';
@@ -11,25 +10,21 @@ interface Props {
   showButtons?: boolean;
 }
 
-const {
-  title = "Małopolska Akademia",
-  subtitle = "Gimnastyki",
+const { 
   backgroundImage = "/images/hero/hero o nas.jpg",
   showButtons = true
 } = Astro.props;
 
 const trainers = [
   {
-    name: "Jan Kowalski",
+    name: "Anna Kowalska",
+    role: "Trener główny",
     image: "/images/trainers/trainer1.jpg"
   },
   {
-    name: "Anna Nowak",
+    name: "Jan Nowak",
+    role: "Asystent trenera",
     image: "/images/trainers/trainer2.jpg"
-  },
-  {
-    name: "Piotr Wiśniewski",
-    image: "/images/trainers/trainer3.jpg"
   }
 ];
 ---
@@ -73,13 +68,16 @@ const trainers = [
 
           <!-- Middle Row - Main Content -->
           <div class="flex flex-col items-center justify-center text-center" transition:name="hero-content">
-            <h1 class="font-poppins text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-white mb-4 sm:mb-8">
-              <span class="block font-bold">{title}</span>
-              <span class="block mt-2 font-thin tracking-wide">{subtitle}</span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl text-white mb-4 font-poppins" data-aos="fade-up">
+              <span class="font-thin">Klub Sportowy</span><br />
+              <span class="font-bold">Małopolska Akademia Gimnastyki</span>
             </h1>
+            <p class="text-xl md:text-2xl mb-8 font-light max-w-3xl mx-auto text-white" data-aos="fade-up" data-aos-delay="100">
+              Profesjonalne zajęcia gimnastyczne dla dzieci i młodzieży
+            </p>
             
             {showButtons && (
-              <div class="mt-8">
+              <div class="mt-8" data-aos="fade-up" data-aos-delay="200">
                 <HeroButtons />
               </div>
             )}
@@ -96,7 +94,9 @@ const trainers = [
                   rel="noopener noreferrer"
                   class="pointer-events-auto bg-white/10 hover:bg-white/20 text-white p-1.5 sm:p-2 md:p-3 rounded-full transition-all duration-300"
                 >
-                  <Facebook class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+                  <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                  </svg>
                 </a>
                 <a
                   href="https://instagram.com"
@@ -104,7 +104,11 @@ const trainers = [
                   rel="noopener noreferrer"
                   class="pointer-events-auto bg-white/10 hover:bg-white/20 text-white p-1.5 sm:p-2 md:p-3 rounded-full transition-all duration-300"
                 >
-                  <Instagram class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+                  <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                  </svg>
                 </a>
               </div>
             </div>

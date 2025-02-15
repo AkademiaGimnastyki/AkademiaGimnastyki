@@ -2,7 +2,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../lib/utils";
 import { useState, useRef, useEffect } from "react";
-import { XCircle } from "lucide-react";
 
 export interface Card {
   id: number;
@@ -121,12 +120,22 @@ export const BentoGrid = ({ cards }: { cards: Card[] }) => {
                     e.stopPropagation();
                     handleOutsideClick();
                   }}
-                  className="absolute top-4 right-4 z-50 text-white hover:text-[#00b3d4] hover:scale-110 transition-all duration-300 cursor-pointer"
+                  className="absolute top-4 right-4 z-50 text-white/80 hover:text-white hover:scale-110 transition-all duration-300 cursor-pointer"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                 >
-                  <XCircle size={32} strokeWidth={1.5} />
+                  <svg
+                    className="w-8 h-8"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M15 9l-6 6" />
+                    <path d="M9 9l6 6" />
+                  </svg>
                 </motion.button>
               </>
             )}

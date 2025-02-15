@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { Instagram, Facebook } from 'lucide-react';
 import TrainerAvatars from './TrainerAvatars.astro';
 import NavigationButtons from '../NavigationButtons.astro';
 
@@ -64,6 +63,30 @@ const trainers = [
             <div className="h-24 flex items-end justify-between">
               <div className="space-y-4">
                 <TrainerAvatars trainers={trainers} />
+              </div>
+              <div class="relative z-10 mt-6 flex gap-4">
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-gray-600 hover:text-[#00b3d4] transition-colors duration-300"
+                >
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                  </svg>
+                </a>
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-gray-600 hover:text-[#00b3d4] transition-colors duration-300"
+                >
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                  </svg>
+                </a>
               </div>
             </div>
           </div>

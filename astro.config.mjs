@@ -18,12 +18,13 @@ export default defineConfig({
   ],
   vite: {
     ssr: {
-      noExternal: ['lucide-react']
+      noExternal: ['lucide-react', 'lucide-astro']
     },
     server: {
       hmr: {
         overlay: true,
-        protocol: 'ws'
+        protocol: 'ws',
+        host: 'localhost'
       }
     }
   }
