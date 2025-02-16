@@ -5,9 +5,6 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  server: {
-    port: 4321
-  },
   integrations: [
     tailwind(),
     react({
@@ -23,8 +20,7 @@ export default defineConfig({
     server: {
       hmr: {
         overlay: true,
-        protocol: 'ws',
-        host: 'localhost'
+        protocol: 'ws'
       }
     }
   }
