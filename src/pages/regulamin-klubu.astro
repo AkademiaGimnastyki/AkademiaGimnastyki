@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import DownloadPdf from '../components/ui/DownloadPdf.astro';
+---
+
+<Layout title="Regulamin - Małopolska Akademia Gimnastyki">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Regulamin Małopolska Akademia Gimnastyki</h1>
+    
+    <div class="mb-8">
+      <p class="mb-4">Zapoznaj się z regulaminem naszego klubu. Kliknij przycisk poniżej, aby pobrać dokument w formacie PDF.</p>
+      
+      <DownloadPdf
+        pdfPath="/pdf/Regulamin_Malopolska_Akademia_Gimnastyki.pdf"
+        fileName="Regulamin_Malopolska_Akademia_Gimnastyki.pdf"
+        buttonText="Pobierz regulamin klubu"
+      />
+    </div>
+  </div>
+</Layout>
