@@ -14,7 +14,13 @@ import SponsorsCarousel from '../components/SponsorsCarousel.astro';
 
 <Layout title="Małopolska Akademia Gimnastyki">
   <main>
-    <Hero showButtons={true} />
+    <Hero 
+      title="Klub Sportowy"
+      subtitle="Małopolska Akademia Gimnastyki"
+      showButtons={true} 
+    >
+      Profesjonalne zajęcia gimnastyczne dla dzieci i młodzieży
+    </Hero>
     <IntroSection client:load />
     <Features />
     <PhotoGallery />

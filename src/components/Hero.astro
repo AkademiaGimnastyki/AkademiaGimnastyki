@@ -12,7 +12,9 @@ interface Props {
 
 const { 
   backgroundImage = "/images/hero/hero o nas.jpg",
-  showButtons = true
+  showButtons = true,
+  title = "Klub Sportowy",
+  subtitle = "Małopolska Akademia Gimnastyki"
 } = Astro.props;
 
 const trainers = [
@@ -69,11 +71,11 @@ const trainers = [
           <!-- Middle Row - Main Content -->
           <div class="flex flex-col items-center justify-center text-center" transition:name="hero-content">
             <h1 class="text-4xl md:text-5xl lg:text-6xl text-white mb-4 font-poppins" data-aos="fade-up">
-              <span class="font-thin">Klub Sportowy</span><br />
-              <span class="font-bold">Małopolska Akademia Gimnastyki</span>
+              <span class="font-thin">{title}</span><br />
+              <span class="font-bold">{subtitle}</span>
             </h1>
             <p class="text-xl md:text-2xl mb-8 font-light max-w-3xl mx-auto text-white" data-aos="fade-up" data-aos-delay="100">
-              Profesjonalne zajęcia gimnastyczne dla dzieci i młodzieży
+              <slot>Profesjonalne zajęcia gimnastyczne dla dzieci i młodzieży</slot>
             </p>
             
             {showButtons && (

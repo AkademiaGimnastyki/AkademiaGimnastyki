@@ -89,16 +89,18 @@ const galleryItems = [
 
 <script>
   import Swiper from 'swiper';
-  import { Autoplay } from 'swiper/modules';
+  import { Autoplay, Virtual } from 'swiper/modules';
 
   function initGallery() {
     new Swiper('.gallery-carousel', {
-      modules: [Autoplay],
+      modules: [Autoplay, Virtual],
       slidesPerView: 'auto',
       spaceBetween: 20,
       loop: true,
+      loopedSlides: 6,
       centeredSlides: true,
       grabCursor: true,
+      watchOverflow: true,
       autoplay: {
         delay: 5000,
         disableOnInteraction: false,
@@ -106,6 +108,7 @@ const galleryItems = [
       breakpoints: {
         1024: {
           slidesPerView: 3,
+          loopedSlides: 6
         }
       }
     });
