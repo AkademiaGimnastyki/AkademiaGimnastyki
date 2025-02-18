@@ -25,13 +25,20 @@ export default defineConfig({
       watch: {
         usePolling: true,
         interval: 1000,
+        awaitWriteFinish: {
+          stabilityThreshold: 500,
+          pollInterval: 100
+        }
       },
       hmr: {
         protocol: 'ws',
         host: '127.0.0.1',
         port: 4321,
+        clientPort: 4321,
         timeout: 5000,
-        overlay: false
+        overlay: true,
+        reconnect: true,
+        path: 'hmr-ws'
       }
     }
   }
