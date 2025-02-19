@@ -2,6 +2,20 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import Calendar from '../components/Calendar.astro';
+import ScheduleInfo from '../components/ScheduleInfo.astro';
+
+const mszanaGroups = [
+  { ageRange: "5-7", day: " lat poniedziałek", time: "15:30" },
+  { ageRange: "8-13", day: " lat środa", time: "15:30" },
+  { ageRange: "5-7", day: " lat poniedziałek", time: "15:30" },
+  { ageRange: "5-7", day: " lat poniedziałek", time: "15:30" }
+];
+
+const nowyTargGroups = [
+  { ageRange: "5-7", day: " lat wtorek", time: "16:30" },
+  { ageRange: "8-13", day: " lat czwartek", time: "16:30" },
+  { ageRange: "5-7", day: " lat piątek", time: "15:30" }
+];
 ---
 
 <Layout title="Grafik Zajęć - Małopolska Akademia Gimnastyki">
@@ -15,8 +29,42 @@ import Calendar from '../components/Calendar.astro';
     </Hero>
 
     <!-- Calendar section -->
-    <section class="pb-16">
-      <Calendar />
+    <section class="py-12 space-y-24">
+      <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl text-center mb-8">
+          <span class="font-extralight">Grafik</span>
+          <span class="font-bold">Mszana Dolna</span>
+        </h2>
+        <div class="flex flex-col lg:flex-row gap-8 items-start">
+          <div class="w-full lg:w-3/4">
+            <Calendar />
+          </div>
+          <div class="w-full lg:w-1/4">
+            <ScheduleInfo
+              location="Mszana Dolna, ul Józefa Marka 2"
+              groups={mszanaGroups}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl text-center mb-8">
+          <span class="font-extralight">Grafik</span>
+          <span class="font-bold">Nowy Targ</span>
+        </h2>
+        <div class="flex flex-col lg:flex-row gap-8 items-start">
+          <div class="w-full lg:w-3/4">
+            <Calendar />
+          </div>
+          <div class="w-full lg:w-1/4">
+            <ScheduleInfo
+              location="Nowy Targ, ul. Spadochroniarzy 2"
+              groups={nowyTargGroups}
+            />
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 </Layout>
