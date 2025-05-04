@@ -19,8 +19,10 @@ export const BentoGrid = ({ cards }: { cards: Card[] }) => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
+      (entries) => {
+        if (entries[0]) {
+          setIsVisible(entries[0].isIntersecting);
+        }
       },
       {
         threshold: 0.2 // Animacja rozpocznie się gdy 20% sekcji będzie widoczne

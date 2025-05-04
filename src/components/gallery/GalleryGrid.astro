@@ -1,10 +1,16 @@
 ---
-import { Image } from 'astro:assets';
+// Importujemy tylko to, co jest używane
 import GalleryLightbox from './GalleryLightbox';
 
+interface ImageData {
+  default: {
+    src: string;
+  };
+}
+
 // Importujemy wszystkie zdjęcia z folderu placeholders
-const placeholderImages = await Astro.glob('/public/images/placeholders/*.jpg');
-const images = placeholderImages.map((image) => ({
+const placeholderImages = await import.meta.glob<ImageData>('/public/images/placeholders/*.jpg', { eager: true });
+const images = Object.values(placeholderImages).map((image) => ({
   src: image.default.src,
   alt: 'Zdjęcie z galerii Akademii Gimnastyki'
 }));
@@ -19,7 +25,7 @@ const preloadImages = images.slice(0, 5);
   data-aos-duration="1000"
 >
   <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-    {images.map((image, index) => (
+    {images.map((image: { src: string; alt: string }, index: number) => (
       <div 
         class="relative group cursor-pointer overflow-hidden rounded-lg"
         data-aos="zoom-in"
@@ -46,14 +52,13 @@ const preloadImages = images.slice(0, 5);
 </section>
 
 <!-- Preload pierwszych 5 zdjęć -->
-{preloadImages.map((image) => (
+{preloadImages.map((image: { src: string; alt: string }) => (
   <link rel="preload" as="image" href={image.src} />
 ))}
 
 <div id="lightbox-root"></div>
 
 <script>
-  let currentImage: string | null = null;
   const lightboxRoot = document.getElementById('lightbox-root');
   const galleryItems = document.querySelectorAll('.group');
 
