@@ -9,7 +9,7 @@ const groups = [
 <form 
   action="https://formsubmit.co/akademia.malopolska@gmail.com"
   method="POST"
-  class="max-w-2xl mx-auto space-y-6 p-6 bg-white rounded-lg shadow-lg"
+  class="max-w-2xl mx-auto space-y-6 p-6 bg-brand-bg rounded-lg shadow-lg"
 >
   <!-- Ukryte pola Formsubmit -->
   <input type="hidden" name="_captcha" value="false">
@@ -18,43 +18,43 @@ const groups = [
 
   <!-- Imię i Nazwisko -->
   <div>
-    <label class="block text-gray-700 mb-2 font-medium">Imię i Nazwisko *</label>
+    <label class="block text-brand-text-main mb-2 font-medium">Imię i Nazwisko *</label>
     <input 
       type="text" 
       name="name" 
       required
-      class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b3d4] focus:border-transparent"
+      class="w-full p-3 border border-brand-text-main rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
     >
   </div>
 
   <!-- Email i Telefon -->
   <div class="grid md:grid-cols-2 gap-6">
     <div>
-      <label class="block text-gray-700 mb-2 font-medium">Email *</label>
+      <label class="block text-brand-text-main mb-2 font-medium">Email *</label>
       <input
         type="email"
         name="email"
         required
-        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b3d4] focus:border-transparent"
+        class="w-full p-3 border border-brand-text-main rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
       >
     </div>
     <div>
-      <label class="block text-gray-700 mb-2 font-medium">Telefon</label>
+      <label class="block text-brand-text-main mb-2 font-medium">Telefon</label>
       <input
         type="tel"
         name="phone"
-        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b3d4] focus:border-transparent"
+        class="w-full p-3 border border-brand-text-main rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
       >
     </div>
   </div>
 
   <!-- Wybór Grupy -->
   <div>
-    <label class="block text-gray-700 mb-2 font-medium">Grupa *</label>
+    <label class="block text-brand-text-main mb-2 font-medium">Grupa *</label>
     <select
       name="group"
       required
-      class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b3d4] focus:border-transparent appearance-none bg-white bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%2300b3d4\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'%3e%3c/polyline%3e%3c/svg%3e')] bg-no-repeat bg-[length:20px_20px] bg-[right_1rem_center]"
+      class="w-full p-3 border border-brand-text-main rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent appearance-none bg-brand-bg bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%2300b3d4\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'%3e%3c/polyline%3e%3c/svg%3e')] bg-no-repeat bg-[length:20px_20px] bg-[right_1rem_center]"
     >
       <option value="">-- Wybierz grupę --</option>
       {groups.map(group => (
@@ -65,18 +65,18 @@ const groups = [
 
   <!-- Dodatkowe Uwagi -->
   <div>
-    <label class="block text-gray-700 mb-2 font-medium">Uwagi</label>
+    <label class="block text-brand-text-main mb-2 font-medium">Uwagi</label>
     <textarea
       name="message"
       rows="4"
-      class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b3d4] focus:border-transparent"
+      class="w-full p-3 border border-brand-text-main rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
     ></textarea>
   </div>
 
   <!-- Przycisk CTA -->
   <button
     type="submit"
-    class="w-full bg-[#00b3d4] text-white font-bold py-4 rounded-lg hover:bg-[#e3a1a1] transition-colors duration-300"
+    class="w-full bg-brand-primary text-brand-text-main font-bold py-4 rounded-lg hover:bg-brand-accent transition-colors duration-300"
   >
     Zapisz się na zajęcia
   </button>

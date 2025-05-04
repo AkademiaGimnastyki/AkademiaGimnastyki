@@ -4,9 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        'mag-pink': '#e3a1a1',
-        'mag-blue': '#00b3d4',
-        'mag-gray': '#4a4a4a',
+        'brand-primary': '#00b3d4', // Akcent: Dynamika
+        'brand-accent': '#e3a1a1',  // Akcent: Czułość
+        'brand-text-main': '#4a4a4a', // Grafit
+        'brand-bg': '#ffffff', // Biel
       },
       fontFamily: {
         roboto: ['Roboto', 'sans-serif'],

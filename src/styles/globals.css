@@ -107,10 +107,8 @@
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+  
   body {
-    @apply bg-background text-foreground;
+    /* Możesz dodać tu globalne style body, jeśli będą potrzebne */
   }
 }
