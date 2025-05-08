@@ -14,14 +14,19 @@ const {
   ...rest
 } = Astro.props;
 
-const baseStyles = 'inline-flex items-center justify-center min-w-[200px] px-8 py-3 text-lg font-medium text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out hover:scale-120 hover:drop-shadow-mag';
+const baseStyles = 'inline-flex items-center justify-center min-w-[200px] px-8 py-3 text-lg font-medium text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-110 hover:drop-shadow-mag active:scale-95';
+
+const variantStyles = {
+  primary: 'bg-brand-primary hover:bg-brand-primary/90',
+  secondary: 'bg-brand-accent hover:bg-brand-accent/90'
+};
 ---
 
 {
   href ? (
     <a 
       href={href} 
-      class:list={[baseStyles, className]} 
+      class:list={[baseStyles, variantStyles[variant], className]} 
       {...rest}
     >
       <slot />
@@ -29,27 +34,10 @@ const baseStyles = 'inline-flex items-center justify-center min-w-[200px] px-8 p
   ) : (
     <button 
       type={type} 
-      class:list={[baseStyles, className]} 
+      class:list={[baseStyles, variantStyles[variant], className]} 
       {...rest}
     >
       <slot />
     </button>
   )
 }
-
-<style>
-  a, button {
-    position: relative;
-    z-index: 10;
-    transform-origin: center;
-    backface-visibility: hidden;
-  }
-
-  a:hover, button:hover {
-    transform: scale(1.2);
-  }
-
-  a:active, button:active {
-    transform: scale(0.95);
-  }
-</style>

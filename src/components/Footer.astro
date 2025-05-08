@@ -5,8 +5,7 @@ const logoPath = '/images/logo/logo_akademia.svg';
 <footer class="relative w-full bg-white pt-16 pb-32">
   <!-- Gradient background -->
   <div 
-    class="absolute inset-0 w-full h-full opacity-50 mb-8"
-    style="background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(242,175,218,0.15) 62%, rgba(155,77,206,0.15) 99%); filter: blur(27.5px);"
+    class="absolute inset-0 w-full h-full opacity-50 mb-8 bg-gradient-to-b from-transparent via-brand-accent/15 to-purple-500/15 blur-3xl"
   ></div>
 
   <div class="max-w-7xl mx-auto px-4 relative">
@@ -24,7 +23,7 @@ const logoPath = '/images/logo/logo_akademia.svg';
           <span class="font-bold">Małopolska</span><br />
           <span class="font-extralight">Akademia<br />Gimnastyki</span>
         </h2>
-        <div class="mt-4 w-[160px] h-[3px] bg-gradient-to-r from-[#7AD5E7] to-[#E3A1A1]"></div>
+        <div class="mt-4 w-[160px] h-[3px] bg-gradient-to-r from-brand-primary to-brand-accent"></div>
         <p class="mt-4 font-thin text-xl">Klub Sportowy</p>
       </div>
     </div>
@@ -38,21 +37,23 @@ const logoPath = '/images/logo/logo_akademia.svg';
           <span class="font-extralight">skróty</span>
         </h3>
         <nav class="flex flex-col space-y-4">
-          <a href="/o-nas" class="text-lg hover:text-[#00b3d4] transition-colors">O nas</a>
-          <a href="/oferta" class="text-lg hover:text-[#00b3d4] transition-colors">Oferta</a>
-          <a href="/galeria" class="text-lg hover:text-[#00b3d4] transition-colors">Galeria</a>
-          <a href="/blog" class="text-lg hover:text-[#00b3d4] transition-colors">Blog</a>
-          <a href="/kontakt" class="text-lg hover:text-[#00b3d4] transition-colors">Kontakt</a>
+          <a href="/o-nas" class="text-lg hover:text-brand-primary transition-colors">O nas</a>
+          <a href="/oferta" class="text-lg hover:text-brand-primary transition-colors">Oferta</a>
+          <a href="/galeria" class="text-lg hover:text-brand-primary transition-colors">Galeria</a>
+          <a href="/blog" class="text-lg hover:text-brand-primary transition-colors">Blog</a>
+          <a href="/kontakt" class="text-lg hover:text-brand-primary transition-colors">Kontakt</a>
         </nav>
       </div>
 
       <!-- Dokumenty -->
       <div>
-        <h3 class="text-xl font-bold mb-6">Dokumenty</h3>
+        <h3 class="text-xl mb-6">
+          <span class="font-bold">Dokumenty</span>
+        </h3>
         <nav class="flex flex-col space-y-4">
-          <a href="/regulamin-klubu" class="text-lg hover:text-[#00b3d4] transition-colors">Regulamin Klubu</a>
-          <a href="/regulamin-zajec" class="text-lg hover:text-[#00b3d4] transition-colors">Regulamin zajęć</a>
-          <a href="/formularz-zapisu" class="text-lg hover:text-[#00b3d4] transition-colors">Formularz zapisu</a>
+          <a href="/regulamin-klubu" class="text-lg hover:text-brand-primary transition-colors">Regulamin Klubu</a>
+          <a href="/regulamin-zajec" class="text-lg hover:text-brand-primary transition-colors">Regulamin zajęć</a>
+          <a href="/formularz-zapisu" class="text-lg hover:text-brand-primary transition-colors">Formularz zapisu</a>
         </nav>
       </div>
 
@@ -64,23 +65,23 @@ const logoPath = '/images/logo/logo_akademia.svg';
         </h3>
         <div class="space-y-6">
           <div class="flex items-start">
-            <svg class="w-4 h-4 text-[#00b3d4] mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="w-4 h-4 text-brand-primary mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
               <circle cx="12" cy="10" r="3" />
             </svg>
             <div class="text-lg ml-2">
               <p class="font-bold">Mszana Dolna</p>
-              <p class="text-gray-600">ul. Spadochroniarzy 2</p>
+              <p class="text-brand-text-main/70">ul. Spadochroniarzy 2</p>
             </div>
           </div>
           <div class="flex items-start">
-            <svg class="w-4 h-4 text-[#00b3d4] mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="w-4 h-4 text-brand-primary mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
               <circle cx="12" cy="10" r="3" />
             </svg>
             <div class="text-lg ml-2">
               <p class="font-bold">Nowy Targ</p>
-              <p class="text-gray-600">ul. Spadochroniarzy 2</p>
+              <p class="text-brand-text-main/70">ul. Spadochroniarzy 2</p>
             </div>
           </div>
         </div>
@@ -88,21 +89,23 @@ const logoPath = '/images/logo/logo_akademia.svg';
 
       <!-- Kontakt -->
       <div>
-        <h3 class="text-xl font-bold mb-6">Kontakt</h3>
+        <h3 class="text-xl mb-6">
+          <span class="font-bold">Kontakt</span>
+        </h3>
         <div class="space-y-6">
           <div class="flex items-center">
-            <svg class="w-4 h-4 text-[#00b3d4]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="w-4 h-4 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
-            <a href="mailto:akademia.kontakt@gmail.com" class="text-lg ml-2 hover:text-[#00b3d4] transition-colors">
+            <a href="mailto:akademia.kontakt@gmail.com" class="text-lg ml-2 hover:text-brand-primary transition-colors">
               akademia.kontakt@gmail.com
             </a>
           </div>
           <div class="flex items-center">
-            <svg class="w-4 h-4 text-[#00b3d4]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="w-4 h-4 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
-            <a href="tel:+48232242424" class="text-lg ml-2 hover:text-[#00b3d4] transition-colors">
+            <a href="tel:+48232242424" class="text-lg ml-2 hover:text-brand-primary transition-colors">
               <span class="font-bold">+48</span> 232 242 424
             </a>
           </div>

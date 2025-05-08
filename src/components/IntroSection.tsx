@@ -24,7 +24,7 @@ export default function IntroSection() {
   const images = useMemo(() => [
     { src: art2Image.src, alt: "Gimnastyka dla dzieci" },
     { src: art5Image.src, alt: "Zajęcia grupowe" }
-  ], []);
+  ] as const, []);
 
   // Efekt paralaksy względem pozycji komponentu
   const leftImageX = useTransform(
@@ -116,7 +116,7 @@ export default function IntroSection() {
           </p>
 
           <motion.button
-            className="rounded-[75px] border border-black px-12 py-3 font-roboto text-xl hover:bg-black hover:text-white transition-colors duration-300"
+            className="rounded-[75px] border border-brand-text-main px-12 py-3 font-roboto font-medium text-xl hover:bg-brand-text-main hover:text-white transition-colors duration-300"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
