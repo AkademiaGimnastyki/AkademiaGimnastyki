@@ -1,10 +1,5 @@
 ---
 import { Image } from 'astro:assets';
-import Swiper from 'swiper';
-import { Navigation, Autoplay, EffectFade } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/effect-fade';
 
 const features = [
   {
@@ -167,20 +162,25 @@ const features = [
     });
 
     // Handle text animations and dot synchronization
-    const featureTexts = document.querySelectorAll('.feature-text');
-    const featureDots = document.querySelectorAll('.feature-dot');
+    const featureTexts = document.querySelectorAll('.feature-text') || [];
+    const featureDots = document.querySelectorAll('.feature-dot') || [];
     
     // Initialize first slide
-    featureTexts[0].classList.add('active');
-    featureDots[0].classList.add('active');
+    if (featureTexts?.[0]) featureTexts[0].classList.add('active');
+    if (featureDots?.[0]) featureDots[0].classList.add('active');
 
     // Update active states on slide change
     swiper.on('slideChange', () => {
-      featureTexts.forEach((text) => text.classList.remove('active'));
-      featureDots.forEach((dot) => dot.classList.remove('active'));
-      
-      featureTexts[swiper.realIndex].classList.add('active');
-      featureDots[swiper.realIndex].classList.add('active');
+      if (featureTexts && featureDots) {
+        featureTexts.forEach((text) => text?.classList?.remove('active'));
+        featureDots.forEach((dot) => dot?.classList?.remove('active'));
+        
+        const currentText = featureTexts[swiper.realIndex];
+        const currentDot = featureDots[swiper.realIndex];
+        
+        if (currentText) currentText.classList.add('active');
+        if (currentDot) currentDot.classList.add('active');
+      }
     });
 
     // Add click handlers for dots

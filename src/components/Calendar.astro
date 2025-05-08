@@ -4,29 +4,23 @@ interface Props {
 }
 
 const { 
-  calendarUrl = "https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Europe%2FWarsaw&showPrint=0&src=MjNjMTI5MTYzMjk3MTZhOGU5MTFjNTYxNDQ1ZWMwZDc5ZjkxY2ZkZTY5NDdhYzM1NTdiMWMxZGIxMzM2YjQyZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23D81B60"
+  calendarUrl = "https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Europe%2FWarsaw&showPrint=0&showNav=1&showTitle=0&showDate=1&showTabs=1&showCalendars=0&src=MjNjMTI5MTYzMjk3MTZhOGU5MTFjNTYxNDQ1ZWMwZDc5ZjkxY2ZkZTY5NDdhYzM1NTdiMWMxZGIxMzM2YjQyZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23D81B60"
 } = Astro.props;
 ---
 
-<div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-    <div class="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[2/1]">
-      <iframe
-        src={calendarUrl}
-        class="absolute inset-0 w-full h-full"
-        style="border: 1px solid #e5e7eb"
-        loading="lazy"
-        frameborder="0"
-        scrolling="no"
-      >
-      </iframe>
-    </div>
+<div class="bg-white rounded-[32px] shadow-xl overflow-hidden">
+  <div class="relative w-full aspect-[16/10]">
+    <iframe
+      src={calendarUrl}
+      class="absolute inset-0 w-full h-full border-0"
+      frameborder="0"
+      scrolling="no"
+    ></iframe>
   </div>
 </div>
 
 <style>
   iframe {
     background-color: transparent;
-    filter: invert(0.1);
   }
 </style>

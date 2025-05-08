@@ -1,0 +1,57 @@
+---
+interface Props {
+  location: string;
+  groups: {
+    ageRange: string;
+    day: string;
+    time: string;
+  }[];
+}
+
+const { location, groups } = Astro.props;
+---
+
+<div 
+  class="rounded-[32px] w-full lg:w-[400px] p-8 h-full relative"
+  style="
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.03) 100%
+      ),
+      linear-gradient(to left, #ffffff, #ffffff);
+    box-shadow: 0px 15px 45px 0px rgba(0, 0, 0, 0.15),
+      7px 7px 40px 0px rgba(70, 143, 239, 0.15);
+  "
+>
+  <div class="space-y-8">
+    <!-- Grupy -->
+    <div>
+      <h3 class="text-[#575757] font-semibold text-2xl mb-6">Grupy</h3>
+      <div class="space-y-6">
+        {
+          groups.map((group) => (
+            <div class="text-[#575757] text-base">
+              <span class="font-bold">{group.ageRange}</span>
+              <span class="font-normal">{group.day}</span>
+              <span class="font-bold ml-2">{group.time}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Separator -->
+    <div
+      class="border-t-[3px] border-solid w-full"
+      style="border-image: linear-gradient(90deg, rgba(179, 121, 218, 1) 0%, rgba(242, 175, 218, 1) 100%); border-image-slice: 1;"
+    >
+    </div>
+
+    <!-- Lokalizacja -->
+    <div>
+      <h3 class="text-[#575757] font-semibold text-2xl mb-4">Lokalizacja</h3>
+      <p class="text-[#575757] text-base">{location}</p>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,7 @@ const { pdfPath, fileName, buttonText } = Astro.props;
 ---
 
 <button 
-  class="bg-[#00b3d4] hover:bg-[#e3a1a1] text-white px-6 py-3 rounded-lg transition-colors"
+  class="bg-brand-primary hover:bg-brand-accent text-white px-6 py-3 rounded-lg transition-colors"
   id="downloadButton"
   data-pdf-path={pdfPath}
   data-file-name={fileName}
@@ -18,10 +18,12 @@ const { pdfPath, fileName, buttonText } = Astro.props;
       button.addEventListener('click', function() {
         const pdfPath = this.dataset.pdfPath;
         const fileName = this.dataset.fileName;
+        const timestamp = Date.now();
+        const url = `${pdfPath}?v=${timestamp}`;
         
         const link = document.createElement('a');
-        link.href = pdfPath;
-        link.download = fileName;
+        link.href = url;
+        link.download = fileName || '';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

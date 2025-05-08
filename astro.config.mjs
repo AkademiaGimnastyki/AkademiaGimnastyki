@@ -5,6 +5,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
+  output: 'static',
   server: {
     port: 4321,
     host: '127.0.0.1'
