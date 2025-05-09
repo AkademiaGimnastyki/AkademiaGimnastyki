@@ -84,28 +84,54 @@
   <!-- Niestandardowa autoryzacja GitHub -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Ukryj standardowy interfejs Netlify CMS
-      var style = document.createElement('style');
-      style.innerHTML = '.nc-app-container { display: none !important; }';
-      document.head.appendChild(style);
+      // Sprawdzamy, czy użytkownik jest już uwierzytelniony
+      var hashParams = new URLSearchParams(window.location.hash.substr(1));
+      var accessToken = hashParams.get('access_token');
+      
+      if (accessToken) {
+        // Użytkownik jest zalogowany - pokaż interfejs CMS
+        document.getElementById('login-container').style.display = 'none';
+        
+        // Inicjalizacja Netlify CMS z tokenem
+        window.netlifyIdentity = {
+          currentUser: () => ({ token: { access_token: accessToken } }),
+          on: () => {}
+        };
+        
+        // Uruchom CMS
+        var cms = window.netlify.createClass();
+        cms.init();
+        
+        // Pokaż interfejs CMS
+        setTimeout(function() {
+          document.querySelector('.nc-app-container').style.display = 'block';
+        }, 1000);
+        
+        return;
+      }
       
       // Obsługa przycisku logowania przez GitHub
       document.getElementById('github-login').addEventListener('click', function(e) {
         e.preventDefault();
         
+        // Aktualizacja interfejsu
+        document.getElementById('login-container').innerHTML = '<h2>Przekierowywanie do GitHub...</h2><p>Trwa przygotowywanie procesu logowania.</p>';
+        
         // Pełny URL do autoryzacji GitHub
         var clientId = 'Ov23liV1qsqwtczR888m';
-        var redirectUri = window.location.origin + '/admin/';
+        var redirectUri = window.location.origin + '/api/auth'; // Przekierowanie do naszej funkcji Netlify
         var scope = 'repo';
         
         var authUrl = 'https://github.com/login/oauth/authorize' + 
-                       '?client_id=' + clientId + 
-                       '&redirect_uri=' + encodeURIComponent(redirectUri) +
-                       '&scope=' + scope +
-                       '&state=' + Math.random().toString(36).substring(2);
+                     '?client_id=' + clientId + 
+                     '&redirect_uri=' + encodeURIComponent(redirectUri) +
+                     '&scope=' + scope +
+                     '&state=' + Math.random().toString(36).substring(2);
         
         // Przekierowanie do GitHub
-        window.location.href = authUrl;
+        setTimeout(function() {
+          window.location.href = authUrl;
+        }, 1000);
       });
       
       // Sprawdź, czy mamy błąd w URL
@@ -113,29 +139,6 @@
       if (urlParams.has('error')) {
         document.getElementById('error-container').style.display = 'block';
         document.getElementById('error-message').textContent = urlParams.get('error_description') || 'Błąd autoryzacji';
-      }
-      
-      // Sprawdź, czy mamy kod autoryzacyjny
-      if (urlParams.has('code')) {
-        // Tu powinniśmy wysłać kod do backendu do wymiany na token
-        document.getElementById('login-container').innerHTML = '<h2>Autoryzacja w toku...</h2><p>Trwa przetwarzanie danych uwierzytelniających.</p>';
-        
-        // W tym momencie potrzebujemy endpointu do wymiany kodu na token
-        // ale wymaga to serwera - możemy użyć funkcji Netlify
-        // albo usługi autoryzacyjnej GitHub Pages
-        
-        // Tymczasowo wyświetlamy informację o konieczności skonfigurowania backendu
-        setTimeout(function() {
-          document.getElementById('login-container').innerHTML = `
-            <h2 style="color: #e3a1a1;">Wymagana konfiguracja serwera</h2>
-            <p>Aby dokończyć autoryzację GitHub, potrzebny jest dodatkowy serwer proxy OAuth.</p>
-            <p>Można skonfigurować funkcję Netlify dla tego celu lub skorzystać z serwisu GitHub Pages.</p>
-            <p style="margin-top: 1.5rem;"><strong>Rozwiązanie tymczasowe:</strong> Możesz edytować pliki MD bezpośrednio w repozytorium GitHub.</p>
-            <a href="https://github.com/AkademiaGimnastyki/AkademiaGimnastyki/tree/test2/src/content/blog" target="_blank" class="login-button">
-              Edytuj pliki na GitHub
-            </a>
-          `;
-        }, 2000);
       }
     });
   </script>

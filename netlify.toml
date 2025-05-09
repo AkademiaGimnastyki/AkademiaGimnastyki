@@ -1,14 +1,27 @@
 [build]
   command = "npm run build"
   publish = "dist"
+  functions = "netlify/functions"
 
 [dev]
   command = "npm run dev"
   port = 4321
   framework = "astro"
 
+# Przekierowanie dla obsługi SPA
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
   force = false
+
+# Przekierowanie dla funkcji autoryzacji OAuth
+[[redirects]]
+  from = "/api/auth"
+  to = "/.netlify/functions/auth"
+  status = 200
+
+# Zmienne środowiskowe dla funkcji Netlify (do ustawienia w panelu Netlify)
+[template.environment]
+  GITHUB_CLIENT_ID = "Ov23liV1qsqwtczR888m"
+  GITHUB_CLIENT_SECRET = "Id klienta OAuth GitHub"
