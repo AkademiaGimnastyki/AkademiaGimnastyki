@@ -1,6 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import BlogCard from '../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+// Pobierz wpisy bloga z Astro Content Collections
+const blogEntries = await getCollection('blog');
+// Sortowanie postów wg daty (od najnowszych)
+const posts = blogEntries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
 ---
 
 <Layout title="Blog - Małopolska Akademia Gimnastyki">
@@ -12,5 +20,33 @@ import Hero from '../components/Hero.astro';
     >
       Aktualności, porady i ciekawostki ze świata gimnastyki
     </Hero>
+    
+    <section class="py-12 px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
+      <div class="mb-10 text-center">
+        <h2 class="text-3xl mb-4">
+          <span class="font-bold">Najnowsze</span>
+          <span class="font-extralight">wpisy</span>
+        </h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Zapraszamy do lektury artykułów z naszego bloga. Znajdziesz tutaj aktualności z życia Akademii, porady dotyczące treningu oraz ciekawostki ze świata gimnastyki.</p>
+      </div>
+      
+      {posts.length === 0 ? (
+        <div class="text-center py-12">
+          <p class="text-lg text-gray-600">Brak wpisów na blogu. Zapraszamy wkrótce!</p>
+        </div>
+      ) : (
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map((post) => (
+            <BlogCard
+              title={post.data.title}
+              description={post.data.description || 'Kliknij, aby przeczytać więcej'}
+              date={post.data.date}
+              image={post.data.image || '/images/hero/bruce-mars-HHXdPG_eTIQ-unsplash.jpg'}
+              url={`/blog/${post.slug}/`}
+            />
+          ))}
+        </div>
+      )}
+    </section>
   </main>
 </Layout>

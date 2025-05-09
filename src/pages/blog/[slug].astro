@@ -1,0 +1,119 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+// Generowanie statycznych ścieżek dla wszystkich artykułów z kolekcji blog
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry }
+  }));
+}
+
+// Typy dla lepszej pomocy IDE i uniknięcia błędów TypeScript
+interface Props {
+  entry: CollectionEntry<'blog'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// Formatowanie daty w stylu "8 maja 2025"
+const dateFormatter = new Intl.DateTimeFormat('pl-PL', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+const formattedDate = dateFormatter.format(entry.data.date);
+---
+
+<Layout title={`${entry.data.title || 'Wpis na blogu'} - Blog - Małopolska Akademia Gimnastyki`}>
+  <main>
+    <article class="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+      <div class="relative w-full h-64 sm:h-80 md:h-96 mb-8 rounded-lg overflow-hidden">
+        <img 
+          src={entry.data.image || '/images/hero/bruce-mars-HHXdPG_eTIQ-unsplash.jpg'} 
+          alt={entry.data.title || 'Wpis na blogu'} 
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute top-6 left-6 bg-white px-3 py-1.5 rounded-md shadow-sm">
+          <time datetime={entry.data.date.toISOString()} class="text-sm text-gray-700 font-medium">
+            {formattedDate}
+          </time>
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <h1 class="text-4xl mb-4">
+          <span class="font-bold">{entry.data.title?.split(' ')[0] || 'Wpis'}</span>
+          <span class="font-extralight">{entry.data.title?.split(' ').slice(1).join(' ') || 'na blogu'}</span>
+        </h1>
+        <p class="text-lg text-gray-700">{entry.data.description || 'Szczegóły wpisu na blogu'}</p>
+      </div>
+
+      <div class="prose prose-lg max-w-none">
+        <Content />
+      </div>
+
+      <div class="mt-12 flex justify-center">
+        <a 
+          href="/blog" 
+          class="inline-flex items-center px-6 py-3 rounded-md bg-[#00B3D4] text-white hover:bg-[#E3A1A1] transition-colors duration-300"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Powrót do bloga
+        </a>
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  /* Stylizacja zawartości Markdown */
+  .prose h1 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  .prose h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .prose p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: #4b5563;
+  }
+  .prose ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .prose li {
+    margin-bottom: 0.5rem;
+  }
+  .prose img {
+    border-radius: 0.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  .prose a {
+    color: #00B3D4;
+    transition-property: color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+  .prose a:hover {
+    color: #E3A1A1;
+  }
+</style>
