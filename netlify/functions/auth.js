@@ -84,16 +84,21 @@ exports.handler = async (event) => {
     }
     
     // Przekieruj użytkownika do panelu administracyjnego CMS
-    // z tokenem w hash fragments (bezpieczniejsze niż query params)
+    // Decap CMS oczekuje tokena w różnych formatach, spróbujmy kilku wariantów
     const siteUrl = process.env.URL || 'https://akademia-gimnastyki-2025.windsurf.build';
+    
+    // Dodajemy różne formaty tokena, aby zwiększyć szanse na poprawne działanie
+    const token = tokenData.access_token;
     
     console.log(`Przekierowuję do: ${siteUrl}/admin/ z tokenem dostępu`);
     
+    // Format #1: Standardowy format z hash fragmentem
     return {
       statusCode: 302,
       headers: {
-        'Location': `${siteUrl}/admin/#access_token=${tokenData.access_token}`,
-        'Cache-Control': 'no-cache' // Zapobiegamy cachowaniu przekierowania
+        'Location': `${siteUrl}/admin/#access_token=${token}&token_type=Bearer`,
+        'Cache-Control': 'no-cache', // Zapobiegamy cachowaniu przekierowania
+        'Set-Cookie': `nf_jwt=${token}; Path=/; HttpOnly; Secure; SameSite=Strict` // Dodajemy token jako ciasteczko
       },
       body: ''
     };
