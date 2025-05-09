@@ -1,19 +1,28 @@
 backend:
-  name: git-gateway
-  branch: main
+  name: github
+  repo: AkademiaGimnastyki/AkademiaGimnastyki
+  branch: test2 # Gałąź, z której budujemy stronę
 
-media_folder: "public/images/uploads"
-public_folder: "/images/uploads"
+# Adres strony (używany do generowania linków absolutnych)
+site_url: https://akademia-gimnastyki-2025.windsurf.build
 
+# Ścieżka do mediów
+media_folder: "public/images/uploads" # Media files will be stored in the repo under public/images/uploads
+public_folder: "/images/uploads" # The src attribute for uploaded media will begin with /images/uploads
+
+# Publikowanie poprzez system git editorial workflow
+publish_mode: editorial_workflow
+
+# Kolekcje treści zarządzane przez CMS
 collections:
-  - name: "blog"
-    label: "Blog"
-    folder: "src/content/blog"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
+  - name: "blog" # Used in routes, e.g., /admin/collections/blog
+    label: "Blog" # Used in the UI
+    folder: "src/content/blog" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{slug}}" # Filename template, e.g., title.md
+    fields: # The fields for each document
       - {label: "Tytuł", name: "title", widget: "string"}
-      - {label: "Data publikacji", name: "date", widget: "datetime"}
-      - {label: "Opis", name: "description", widget: "text"}
-      - {label: "Zdjęcie główne", name: "image", widget: "image"}
+      - {label: "Data publikacji", name: "date", widget: "datetime", format: "YYYY-MM-DD"}
+      - {label: "Opis", name: "description", widget: "string"}
+      - {label: "Zdjęcie główne", name: "image", widget: "image", allow_multiple: false}
       - {label: "Treść", name: "body", widget: "markdown"}

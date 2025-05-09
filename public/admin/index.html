@@ -1,12 +1,60 @@
 <!doctype html>
-<html>
+<html lang="pl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panel Administracyjny</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <title>Panel Administracyjny Akademii Gimnastyki</title>
+  <style>
+    body {
+      font-family: 'Poppins', 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    /* Dodatkowe style dla panelu administracyjnego */
+    .login-banner {
+      display: none; /* Ukryty element, pojawia się tylko przed załadowaniem CMS */
+      text-align: center;
+      padding: 2rem;
+      font-family: 'Poppins', sans-serif;
+      max-width: 400px;
+      margin: 10% auto 0;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .login-banner h1 {
+      color: #4A4A4A;
+      margin-bottom: 1rem;
+    }
+    .login-banner p {
+      color: #666;
+      margin-bottom: 2rem;
+    }
+    /* Style dla strony ładującej się */
+    #cms-loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    #cms-loading h2 {
+      font-family: 'Poppins', sans-serif;
+      color: #00B3D4;
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
 <body>
+  <!-- Ekran ładowania CMS -->
+  <div id="cms-loading">
+    <h2>Ładowanie panelu administracyjnego</h2>
+    <p>Trwa przygotowywanie interfejsu Decap CMS...</p>
+  </div>
+
+  <!-- Ładowanie Decap CMS -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+  <!-- Skrypt konfiguracyjny dla autoryzacji GitHub -->
+  <script src="github-oauth.js"></script>
 </body>
 </html>
