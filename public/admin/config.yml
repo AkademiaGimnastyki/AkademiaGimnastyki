@@ -4,7 +4,8 @@ backend:
   repo: AkademiaGimnastyki/AkademiaGimnastyki
   branch: test2
   site_url: "https://akademia-gimnastyki-2025.windsurf.build"
-  auth_endpoint: "/.netlify/functions/auth"
+  base_url: "/"
+  auth_endpoint: "/auth"
 
 # Adres strony (używany do generowania linków absolutnych)
 

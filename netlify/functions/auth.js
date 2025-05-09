@@ -157,14 +157,23 @@ exports.handler = async (event) => {
     }
     
     // Przekieruj użytkownika do panelu administracyjnego CMS
+    // Zawsze używaj process.env.URL - to jest gwarantowany poprawny adres publiczny strony
     const siteUrl = process.env.URL || 'https://akademia-gimnastyki-2025.windsurf.build';
     const token = tokenData.access_token;
     
-    console.log(`Przekierowuję do: ${siteUrl}/admin/#/callback z tokenem dostępu`);
+    console.log('Szczegóły przekierowania:', {
+      siteUrl: siteUrl,
+      envUrl: process.env.URL,
+      hasToken: !!token,
+      tokenLength: token?.length
+    });
     
     // Tworzymy URL przekierowania zgodny z dokumentacją Decap CMS
     // https://decapcms.org/docs/external-oauth-clients/
     const redirectUrl = `${siteUrl}/admin/#/callback?access_token=${token}&token_type=Bearer&provider=github`;
+    
+    console.log(`Przekierowuję do: ${redirectUrl}`);
+    console.log('Headers:', { 'Location': redirectUrl, 'Cache-Control': 'no-cache, no-store, must-revalidate' });
     
     // Zwracamy odpowiedź z przekierowaniem i tokenem
     return {
