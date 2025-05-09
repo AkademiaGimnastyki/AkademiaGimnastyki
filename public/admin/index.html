@@ -117,8 +117,8 @@
         // Aktualizacja interfejsu
         document.getElementById('login-container').innerHTML = '<h2>Przekierowywanie do GitHub...</h2><p>Trwa przygotowywanie procesu logowania.</p>';
         
-        // Pełny URL do autoryzacji GitHub
-        var clientId = 'Ov23liV1qsqwtczR888m';
+        // Pobieramy ID klienta z parametrów URL (będzie ustawiane dynamicznie przez serwer)
+        var clientId = new URLSearchParams(window.location.search).get('client_id') || '';
         var redirectUri = window.location.origin + '/api/auth'; // Przekierowanie do naszej funkcji Netlify
         var scope = 'repo';
         

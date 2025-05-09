@@ -15,6 +15,12 @@
   status = 200
   force = false
 
+# Przekierowanie dla bezpiecznego panelu administracyjnego
+[[redirects]]
+  from = "/admin"
+  to = "/.netlify/functions/admin-auth"
+  status = 200
+
 # Przekierowanie dla funkcji autoryzacji OAuth
 [[redirects]]
   from = "/api/auth"
