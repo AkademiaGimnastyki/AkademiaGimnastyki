@@ -1,9 +1,10 @@
 backend:
-  name: git-gateway
-  branch: main # Branch to update (optional; defaults to master)
+  name: github
+  repo: AkademiaGimnastyki/AkademiaGimnastyki
+  branch: test2 # Gałąź, z której budujemy stronę
 
 # Adres strony (używany do generowania linków absolutnych)
-site_url: https://akademia-gimnastyki.netlify.app
+site_url: https://akademia-gimnastyki-2025.windsurf.build
 
 # Ścieżka do mediów
 media_folder: "public/images/uploads" # Media files will be stored in the repo under public/images/uploads
