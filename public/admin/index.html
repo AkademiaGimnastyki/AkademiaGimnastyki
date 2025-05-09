@@ -13,27 +13,12 @@
   </style>
 </head>
 <body>
-  <!-- Skrypt Decap CMS -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <!-- Użyjmy sprawdzonej wersji Netlify CMS zamiast Decap CMS -->
+  <script src="https://unpkg.com/netlify-cms@^2.10.192/dist/netlify-cms.js"></script>
   
-  <!-- Konfiguracja bezpośrednia Decap CMS -->
+  <!-- Najprostsza możliwa konfiguracja -->
   <script>
-    // Podstawowa konfiguracja
-    var CMS = window.CMS;
-    CMS.registerBackend('github', {
-      init: options => ({
-        backend: {
-          repo: 'AkademiaGimnastyki/AkademiaGimnastyki',
-          branch: 'test2',
-          auth_type: 'implicit',
-          app_id: 'Ov23liV1qsqwtczR888m',
-          base_url: 'https://api.github.com'
-        }
-      }),
-    });
-    
-    // Uruchomienie CMS
-    CMS.init();
+    // Konfiguracja będzie ładowana z config.yml
   </script>
 </body>
 </html>
