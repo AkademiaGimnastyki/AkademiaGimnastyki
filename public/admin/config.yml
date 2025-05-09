@@ -3,9 +3,6 @@ backend:
   name: github
   repo: AkademiaGimnastyki/AkademiaGimnastyki
   branch: test2 # Gałąź, z której budujemy stronę
-  auth_scope: repo # Pełny dostęp do repozytorium
-  app_id: Ov23liV1qsqwtczR888m # Client ID aplikacji OAuth
-  auth_endpoint: https://github.com/login/oauth/authorize
 
 # Adres strony (używany do generowania linków absolutnych)
 site_url: https://akademia-gimnastyki-2025.windsurf.build
