@@ -42,10 +42,13 @@ exports.handler = async (event) => {
     
     // Przekieruj użytkownika do panelu administracyjnego CMS
     // z tokenem w hash fragments (bezpieczniejsze niż query params)
+    // KLUCZOWE: użyj pełnego URL zamiast względnego
+    const siteUrl = process.env.URL || 'https://akademia-gimnastyki-2025.windsurf.build';
+    
     return {
       statusCode: 302,
       headers: {
-        'Location': `/admin/#/access_token=${tokenData.access_token}`,
+        'Location': `${siteUrl}/admin/#access_token=${tokenData.access_token}`,
         'Cache-Control': 'no-cache' // Zapobiegamy cachowaniu przekierowania
       },
       body: ''

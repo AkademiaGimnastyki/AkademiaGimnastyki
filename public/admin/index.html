@@ -131,7 +131,19 @@
       // Funkcja do pobierania parametrów z URL
       function getHashParam(name) {
         const hash = window.location.hash.substring(1);
-        const params = new URLSearchParams('?' + hash);
+        
+        // Obsługa dwóch możliwych formatów tokena
+        // Format 1: #access_token=abc123 (standardowy format)
+        if (hash.indexOf(name) !== -1) {
+          const tokenPart = hash.split('&').find(part => part.startsWith(name));
+          if (tokenPart) {
+            return tokenPart.split('=')[1];
+          }
+        }
+        
+        // Format 2: #/access_token=abc123 (format z dodatkowym /)
+        const altHash = hash.startsWith('/') ? hash.substring(1) : hash;
+        const params = new URLSearchParams('?' + altHash);
         return params.get(name);
       }
       
