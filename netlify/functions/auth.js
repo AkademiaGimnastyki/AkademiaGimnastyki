@@ -1,6 +1,5 @@
 // Funkcja Netlify dla autoryzacji GitHub OAuth
-const axios = require('axios');
-const qs = require('querystring');
+// Wykorzystujemy natywny fetch zamiast zależności zewnętrznych
 
 // Sekrety aplikacji OAuth GitHub
 const OAUTH_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
@@ -25,28 +24,30 @@ exports.handler = async (event) => {
 
   try {
     // Wyślij żądanie do GitHub aby wymienić kod na token dostępu
-    const tokenResponse = await axios({
-      method: 'post',
-      url: 'https://github.com/login/oauth/access_token',
+    // Używamy natywnego fetch zamiast axios
+    const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
+      method: 'POST',
       headers: {
-        Accept: 'application/json'
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       },
-      data: {
+      body: JSON.stringify({
         client_id: OAUTH_CLIENT_ID,
         client_secret: OAUTH_CLIENT_SECRET,
         code: code
-      }
+      })
     });
 
-    // Przygotuj odpowiedź dla klienta
-    const tokenData = tokenResponse.data;
+    // Przetwarzamy odpowiedź JSON
+    const tokenData = await tokenResponse.json();
     
     // Przekieruj użytkownika z powrotem do panelu administracyjnego
     // z tokenem jako parametr hash (bezpieczniejsze niż query string)
     return {
       statusCode: 302,
       headers: {
-        Location: `/admin/#access_token=${tokenData.access_token}&token_type=bearer`
+        'Location': `/admin/#access_token=${tokenData.access_token}&token_type=bearer`,
+        'Cache-Control': 'no-cache' // Zapobiegamy cachowaniu przekierowania
       },
       body: ''
     };
@@ -57,7 +58,7 @@ exports.handler = async (event) => {
       statusCode: 500,
       body: JSON.stringify({ 
         error: 'Wystąpił błąd podczas autoryzacji.',
-        details: error.message
+        details: error.message || 'Nieznany błąd'
       })
     };
   }
