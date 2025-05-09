@@ -27,5 +27,11 @@
   to = "/.netlify/functions/auth"
   status = 200
 
+# Przekierowanie dla nowej funkcji authorize.js
+[[redirects]]
+  from = "/api/authorize"
+  to = "/.netlify/functions/authorize"
+  status = 200
+
 # Uwaga: Zmienne środowiskowe (GITHUB_CLIENT_ID i GITHUB_CLIENT_SECRET) są ustawione w panelu Netlify
 # NIE umieszczaj ich w plikach źródłowych ze względów bezpieczeństwa!

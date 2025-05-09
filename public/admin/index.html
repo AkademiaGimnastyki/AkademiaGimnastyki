@@ -117,24 +117,10 @@
         // Aktualizacja interfejsu
         document.getElementById('login-container').innerHTML = '<h2>Przekierowywanie do GitHub...</h2><p>Trwa przygotowywanie procesu logowania.</p>';
         
-        // Pobieramy ID klienta z parametrów URL (będzie ustawiane dynamicznie przez serwer)
-        var clientId = new URLSearchParams(window.location.search).get('client_id') || '';
-        
-        // WAŻNE: Ten URL musi dokładnie odpowiadać ustawieniom w aplikacji GitHub OAuth
-        // Proszę upewnić się, że wpisano dokładnie ten sam URL w ustawieniach aplikacji GitHub
-        var redirectUri = 'https://akademia-gimnastyki-2025.windsurf.build/api/auth';
-        var scope = 'repo';
-        
-        var authUrl = 'https://github.com/login/oauth/authorize' + 
-                     '?client_id=' + clientId + 
-                     '&redirect_uri=' + encodeURIComponent(redirectUri) +
-                     '&scope=' + scope +
-                     '&state=' + Math.random().toString(36).substring(2);
-        
-        // Przekierowanie do GitHub
+        // Przekierowanie na dedykowaną funkcję Netlify, która poprawnie zainicjuje proces autoryzacji
         setTimeout(function() {
-          window.location.href = authUrl;
-        }, 1000);
+          window.location.href = '/api/authorize';
+        }, 500);
       });
       
       // Sprawdź, czy mamy błąd w URL
