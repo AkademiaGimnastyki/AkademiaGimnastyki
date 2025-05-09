@@ -119,7 +119,10 @@
         
         // Pobieramy ID klienta z parametrów URL (będzie ustawiane dynamicznie przez serwer)
         var clientId = new URLSearchParams(window.location.search).get('client_id') || '';
-        var redirectUri = window.location.origin + '/api/auth'; // Przekierowanie do naszej funkcji Netlify
+        
+        // WAŻNE: Ten URL musi dokładnie odpowiadać ustawieniom w aplikacji GitHub OAuth
+        // Proszę upewnić się, że wpisano dokładnie ten sam URL w ustawieniach aplikacji GitHub
+        var redirectUri = 'https://akademia-gimnastyki-2025.windsurf.build/api/auth';
         var scope = 'repo';
         
         var authUrl = 'https://github.com/login/oauth/authorize' + 
