@@ -4,38 +4,56 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panel Administracyjny Akademii Gimnastyki</title>
+  
+  <!-- Fonty zgodne z identyfikacją wizualną -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Roboto:wght@400;500&display=swap" />
+  
+  <!-- Netlify CMS Script -->
   <script src="https://unpkg.com/netlify-cms@^2.10.192/dist/netlify-cms.js"></script>
+  
   <style>
     body {
-      font-family: 'Poppins', 'Roboto', sans-serif;
+      font-family: 'Roboto', sans-serif;
       margin: 0;
       padding: 0;
       background-color: #f8f9fa;
       color: #4A4A4A;
     }
-    .login-box {
-      max-width: 400px;
-      margin: 100px auto;
-      padding: 2rem;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    
+    .login-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       text-align: center;
+      max-width: 450px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
+    
     .logo {
       width: 80px;
       height: 80px;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
+    
     h1 {
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
+      font-size: 1.8rem;
       color: #00B3D4;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
-    .login-button {
-      display: inline-block;
+    
+    p {
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    
+    .github-login {
+      display: inline-flex;
+      align-items: center;
       background: #24292e;
       color: white;
       border: none;
@@ -45,100 +63,116 @@
       border-radius: 4px;
       cursor: pointer;
       text-decoration: none;
-      margin-top: 1rem;
+      transition: background 0.3s ease;
     }
-    .login-button:hover {
+    
+    .github-login:hover {
       background: #2c3136;
     }
-    .error-box {
-      background: #fff3f3;
+    
+    .github-login svg {
+      margin-right: 8px;
+    }
+    
+    .cms-content {
+      display: none;
+    }
+    
+    .loading-message {
+      margin-top: 20px;
+      font-style: italic;
+      color: #717171;
+    }
+    
+    .error-message {
+      margin-top: 16px;
+      padding: 12px;
+      background-color: #fff3f3;
       border: 1px solid #ffcaca;
-      padding: 1rem;
       border-radius: 4px;
-      margin-top: 1.5rem;
       color: #d63031;
+      font-size: 0.9rem;
       display: none;
     }
   </style>
 </head>
 <body>
-  <!-- Ekran logowania przed załadowaniem CMS -->
-  <div id="login-container" class="login-box">
+  <!-- Ekran logowania -->
+  <div id="login-screen" class="login-screen">
     <img src="/images/hero/logo.png" alt="Logo Akademii Gimnastyki" class="logo" onerror="this.src='https://placehold.it/80x80?text=MAG'">
     <h1>Panel Administracyjny</h1>
-    <p>Zaloguj się, aby zarządzać treścią strony.</p>
+    <p>Zaloguj się, aby zarządzać treścią strony Akademii Gimnastyki.</p>
     
-    <a href="#" id="github-login" class="login-button">
-      <svg style="width:16px; height:16px; vertical-align: text-bottom; margin-right: 8px;" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill="white" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+    <a href="#" id="github-login" class="github-login">
+      <svg style="width:16px; height:16px;" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill="white" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
       Zaloguj przez GitHub
     </a>
     
-    <div id="error-container" class="error-box">
-      <strong>Wystąpił błąd: </strong>
-      <span id="error-message">Błąd autoryzacji</span>
+    <div id="loading-message" class="loading-message" style="display: none">
+      Trwa łączenie z GitHub, proszę czekać...
+    </div>
+    
+    <div id="error-message" class="error-message">
+      Błąd autoryzacji. Sprawdź swoje uprawnienia do repozytorium lub spróbuj ponownie później.
     </div>
   </div>
+  
+  <!-- Zawartość CMS będzie renderowana tutaj -->
+  <div id="cms-content" class="cms-content"></div>
 
-  <!-- Skrypt inicjalizujący CMS -->
   <script>
-    // Funkcja do wykrywania parametrów URL i hash
-    function getUrlParameter(name, searchIn) {
-      searchIn = searchIn || window.location.search;
-      var results = new RegExp('[?&]' + name + '=([^&#]*)').exec(searchIn);
-      return results === null ? '' : decodeURIComponent(results[1]);
-    }
-
-    // Funkcja do wykrywania parametrów hash
-    function getHashParameter(name) {
-      if (!window.location.hash) return '';
-      var search = window.location.hash.substring(1);
-      return getUrlParameter(name, '?' + search);
-    }
-
     document.addEventListener('DOMContentLoaded', function() {
-      // Obsługa błędów
-      var errorMessage = getUrlParameter('error');
-      if (errorMessage) {
-        document.getElementById('error-container').style.display = 'block';
-        document.getElementById('error-message').innerText = errorMessage;
+      const loginScreen = document.getElementById('login-screen');
+      const cmsContent = document.getElementById('cms-content');
+      const githubLogin = document.getElementById('github-login');
+      const loadingMessage = document.getElementById('loading-message');
+      const errorMessage = document.getElementById('error-message');
+      
+      // Funkcja do pobierania parametrów z URL
+      function getHashParam(name) {
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams('?' + hash);
+        return params.get(name);
       }
       
-      // Sprawdzenie tokenu dostępu z GitHub
-      var accessToken = getHashParameter('access_token');
+      // Sprawdź, czy w URL jest token dostępu
+      const accessToken = getHashParam('access_token');
       
       if (accessToken) {
         console.log('Token dostępu GitHub znaleziony, inicjalizacja CMS...');
         // Ukryj ekran logowania
-        document.getElementById('login-container').style.display = 'none';
+        loginScreen.style.display = 'none';
+        cmsContent.style.display = 'block';
         
-        // Konfiguracja CMS dla GitHub
-        window.CMS.registerBackend('github', {
-          auth_type: 'implicit',
-          base_url: 'https://api.github.com',
-          auth_endpoint: 'login/oauth/authorize',
-          app_id: getUrlParameter('client_id') || ''
-        });
+        // Zapisz token w localStorage dla CMS
+        localStorage.setItem('netlify-cms-user', JSON.stringify({
+          token: {
+            access_token: accessToken
+          }
+        }));
         
-        // Ustaw token uwierzytelniający
-        localStorage.setItem('github_token', accessToken);
-        
-        // Inicjalizacja CMS
+        // Inicjalizuj CMS
         window.CMS.init();
-      } else {
-        console.log('Brak tokenu dostępu, wyświetlanie ekranu logowania');
       }
       
       // Obsługa przycisku logowania
-      document.getElementById('github-login').addEventListener('click', function(e) {
+      githubLogin.addEventListener('click', function(e) {
         e.preventDefault();
-        console.log('Przekierowywanie do procesu autoryzacji GitHub...');
-        document.getElementById('login-container').innerHTML = '<h2>Przekierowywanie do GitHub...</h2><p>Trwa inicjalizacja logowania.</p>';
+        loadingMessage.style.display = 'block';
+        githubLogin.style.opacity = '0.7';
+        githubLogin.style.pointerEvents = 'none';
         
-        // Przekierowanie na stronę autoryzacji
+        // Krótkie opóźnienie dla UX
         setTimeout(function() {
-          window.location.href = '/api/authorize';
+          // Przekierowanie do funkcji Netlify authorize.js
+          window.location.href = '/.netlify/functions/authorize';
         }, 800);
       });
+      
+      // Obsługa błędów
+      if (window.location.search.includes('error')) {
+        errorMessage.style.display = 'block';
+      }
     });
   </script>
 </body>

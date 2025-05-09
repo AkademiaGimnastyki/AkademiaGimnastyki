@@ -15,25 +15,30 @@
   status = 200
   force = false
 
-# Przekierowanie dla bezpiecznego panelu administracyjnego
+# Bezpośredni dostęp do panelu /admin
 [[redirects]]
   from = "/admin"
-  to = "/.netlify/functions/admin-auth"
+  to = "/admin/index.html"
   status = 200
 
-# Przekierowanie dla funkcji autoryzacji OAuth
-# Przekierowanie dla funkcji authorize.js, która inicjuje proces autoryzacji GitHub
+# Przekierowanie dla funkcji authorize (inicjuje flow OAuth)
 [[redirects]]
-  from = "/api/authorize"
+  from = "/authorize"
   to = "/.netlify/functions/authorize"
   status = 200
 
-# Przekierowanie dla standardowego przepływu OAuth Netlify
+# Przekierowanie dla funkcji auth (callback OAuth)
 [[redirects]]
   from = "/auth"
-  to = "https://api.netlify.com/auth"
+  to = "/.netlify/functions/auth"
   status = 200
+
+# Przekierowanie dla GitHub OAuth
+[[redirects]]
+  from = "/callback"
+  to = "/admin/#/callback"
+  status = 301
   force = true
 
-# Uwaga: Zmienne środowiskowe (GITHUB_CLIENT_ID i GITHUB_CLIENT_SECRET) są ustawione w panelu Netlify
-# NIE umieszczaj ich w plikach źródłowych ze względów bezpieczeństwa!
+# Uwaga: Upewnij się, że masz skonfigurowane zmienne środowiskowe w panelu Netlify:
+# GITHUB_CLIENT_ID i GITHUB_CLIENT_SECRET

@@ -1,11 +1,10 @@
-# Konfiguracja backendu
+# Konfiguracja backendu dla bezpośredniej autoryzacji GitHub
 backend:
   name: github
   repo: AkademiaGimnastyki/AkademiaGimnastyki
   branch: test2 # Gałąź, z której budujemy stronę
   base_url: https://api.netlify.com
   auth_endpoint: auth
-  # Standardowy callback URL dla Netlify OAuth: https://api.netlify.com/auth/done
 
 # Adres strony (używany do generowania linków absolutnych)
 site_url: https://akademia-gimnastyki-2025.windsurf.build
