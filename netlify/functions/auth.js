@@ -41,12 +41,12 @@ exports.handler = async (event) => {
     // Przetwarzamy odpowiedź JSON
     const tokenData = await tokenResponse.json();
     
-    // Przekieruj użytkownika z powrotem do panelu administracyjnego
+    // Przekieruj użytkownika bezpośrednio do panelu administracyjnego CMS
     // z tokenem jako parametr hash (bezpieczniejsze niż query string)
     return {
       statusCode: 302,
       headers: {
-        'Location': `/admin/#access_token=${tokenData.access_token}&token_type=bearer`,
+        'Location': `/admin/index.html#access_token=${tokenData.access_token}&token_type=bearer`,
         'Cache-Control': 'no-cache' // Zapobiegamy cachowaniu przekierowania
       },
       body: ''

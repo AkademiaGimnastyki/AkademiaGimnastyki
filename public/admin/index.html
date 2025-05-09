@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panel Administracyjny Akademii Gimnastyki</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Roboto:wght@400;500&display=swap" />
+  <script src="https://unpkg.com/netlify-cms@^2.10.192/dist/netlify-cms.js"></script>
   <style>
     body {
       font-family: 'Poppins', 'Roboto', sans-serif;
@@ -78,57 +79,66 @@
     </div>
   </div>
 
-  <!-- Skrypty Netlify CMS -->
-  <script src="https://unpkg.com/netlify-cms@^2.10.192/dist/netlify-cms.js"></script>
-  
-  <!-- Niestandardowa autoryzacja GitHub -->
+  <!-- Skrypt inicjalizujący CMS -->
   <script>
+    // Funkcja do wykrywania parametrów URL i hash
+    function getUrlParameter(name, searchIn) {
+      searchIn = searchIn || window.location.search;
+      var results = new RegExp('[?&]' + name + '=([^&#]*)').exec(searchIn);
+      return results === null ? '' : decodeURIComponent(results[1]);
+    }
+
+    // Funkcja do wykrywania parametrów hash
+    function getHashParameter(name) {
+      if (!window.location.hash) return '';
+      var search = window.location.hash.substring(1);
+      return getUrlParameter(name, '?' + search);
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
-      // Sprawdzamy, czy użytkownik jest już uwierzytelniony
-      var hashParams = new URLSearchParams(window.location.hash.substr(1));
-      var accessToken = hashParams.get('access_token');
+      // Obsługa błędów
+      var errorMessage = getUrlParameter('error');
+      if (errorMessage) {
+        document.getElementById('error-container').style.display = 'block';
+        document.getElementById('error-message').innerText = errorMessage;
+      }
+      
+      // Sprawdzenie tokenu dostępu z GitHub
+      var accessToken = getHashParameter('access_token');
       
       if (accessToken) {
-        // Użytkownik jest zalogowany - pokaż interfejs CMS
+        console.log('Token dostępu GitHub znaleziony, inicjalizacja CMS...');
+        // Ukryj ekran logowania
         document.getElementById('login-container').style.display = 'none';
         
-        // Inicjalizacja Netlify CMS z tokenem
-        window.netlifyIdentity = {
-          currentUser: () => ({ token: { access_token: accessToken } }),
-          on: () => {}
-        };
+        // Konfiguracja CMS dla GitHub
+        window.CMS.registerBackend('github', {
+          auth_type: 'implicit',
+          base_url: 'https://api.github.com',
+          auth_endpoint: 'login/oauth/authorize',
+          app_id: getUrlParameter('client_id') || ''
+        });
         
-        // Uruchom CMS
-        var cms = window.netlify.createClass();
-        cms.init();
+        // Ustaw token uwierzytelniający
+        localStorage.setItem('github_token', accessToken);
         
-        // Pokaż interfejs CMS
-        setTimeout(function() {
-          document.querySelector('.nc-app-container').style.display = 'block';
-        }, 1000);
-        
-        return;
+        // Inicjalizacja CMS
+        window.CMS.init();
+      } else {
+        console.log('Brak tokenu dostępu, wyświetlanie ekranu logowania');
       }
       
-      // Obsługa przycisku logowania przez GitHub
+      // Obsługa przycisku logowania
       document.getElementById('github-login').addEventListener('click', function(e) {
         e.preventDefault();
+        console.log('Przekierowywanie do procesu autoryzacji GitHub...');
+        document.getElementById('login-container').innerHTML = '<h2>Przekierowywanie do GitHub...</h2><p>Trwa inicjalizacja logowania.</p>';
         
-        // Aktualizacja interfejsu
-        document.getElementById('login-container').innerHTML = '<h2>Przekierowywanie do GitHub...</h2><p>Trwa przygotowywanie procesu logowania.</p>';
-        
-        // Przekierowanie na dedykowaną funkcję Netlify, która poprawnie zainicjuje proces autoryzacji
+        // Przekierowanie na stronę autoryzacji
         setTimeout(function() {
           window.location.href = '/api/authorize';
-        }, 500);
+        }, 800);
       });
-      
-      // Sprawdź, czy mamy błąd w URL
-      var urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.has('error')) {
-        document.getElementById('error-container').style.display = 'block';
-        document.getElementById('error-message').textContent = urlParams.get('error_description') || 'Błąd autoryzacji';
-      }
     });
   </script>
 </body>
