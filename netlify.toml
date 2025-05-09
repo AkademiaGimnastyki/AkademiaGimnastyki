@@ -27,7 +27,5 @@
   to = "/.netlify/functions/auth"
   status = 200
 
-# Zmienne środowiskowe dla funkcji Netlify (do ustawienia w panelu Netlify)
-[template.environment]
-  GITHUB_CLIENT_ID = "Ov23liV1qsqwtczR888m"
-  GITHUB_CLIENT_SECRET = "Id klienta OAuth GitHub"
+# Uwaga: Zmienne środowiskowe (GITHUB_CLIENT_ID i GITHUB_CLIENT_SECRET) są ustawione w panelu Netlify
+# NIE umieszczaj ich w plikach źródłowych ze względów bezpieczeństwa!
