@@ -8,8 +8,19 @@
   <!-- Fonty zgodne z identyfikacją wizualną -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Roboto:wght@400;500&display=swap" />
   
-  <!-- Netlify CMS Script -->
-  <script src="https://unpkg.com/netlify-cms@^2.10.192/dist/netlify-cms.js"></script>
+  <!-- Decap CMS Scripts (dawniej Netlify CMS) -->
+  <script>
+    // Funkcja monitorująca błędy ładowania skryptów
+    window.cmsLoadError = function(error) {
+      console.error('Błąd ładowania Decap CMS:', error);
+      document.getElementById('debug-content').innerHTML = 
+        '<p><strong>Błąd ładowania Decap CMS:</strong></p>' +
+        '<pre style="background-color: #f0f0f0; padding: 8px;">' + error + '</pre>' +
+        '<p>Spróbuj odświeżyć stronę lub wyczyścić pamięć podręczną przeglądarki.</p>';
+    };
+  </script>
+  <!-- Używamy pełnego adresu URL do najnowszej stabilnej wersji Decap CMS -->
+  <script src="https://unpkg.com/@staticcms/core@%5E3.0.0/dist/static-cms-core.js" onerror="window.cmsLoadError('Nie można załadować skryptu Decap CMS')"></script>
   
   <style>
     body {
@@ -99,7 +110,7 @@
 <body>
   <!-- Ekran logowania -->
   <div id="login-screen" class="login-screen">
-    <img src="/images/hero/logo.png" alt="Logo Akademii Gimnastyki" class="logo" onerror="this.src='https://placehold.it/80x80?text=MAG'">
+    <img src="/images/hero/logo.png" alt="Logo Akademii Gimnastyki" class="logo" onerror="this.src='https://via.placeholder.com/80x80?text=MAG'">
     <h1>Panel Administracyjny</h1>
     <p>Zaloguj się, aby zarządzać treścią strony Akademii Gimnastyki.</p>
     
@@ -110,6 +121,11 @@
     
     <div id="loading-message" class="loading-message" style="display: none">
       Trwa łączenie z GitHub, proszę czekać...
+    </div>
+    
+    <div id="debug-info" style="margin-top: 20px; text-align: left; font-size: 14px; background: #f5f5f5; padding: 15px; border-radius: 4px; max-width: 100%; overflow-wrap: break-word;">
+      <h3 style="margin-top: 0;">Informacje diagnostyczne:</h3>
+      <div id="debug-content">Kliknij przycisk logowania, aby zobaczyć informacje.</div>
     </div>
     
     <div id="error-message" class="error-message">
@@ -127,44 +143,100 @@
       const githubLogin = document.getElementById('github-login');
       const loadingMessage = document.getElementById('loading-message');
       const errorMessage = document.getElementById('error-message');
+      const debugContent = document.getElementById('debug-content');
+      
+      // Funkcja do wyświetlania informacji diagnostycznych
+      function updateDebug(message, data = null) {
+        let debugText = `<p><strong>${message}</strong></p>`;
+        
+        if (data) {
+          debugText += '<pre style="background-color: #f0f0f0; padding: 8px; overflow: auto;">';
+          debugText += JSON.stringify(data, null, 2);
+          debugText += '</pre>';
+        }
+        
+        debugContent.innerHTML = debugText;
+      }
+      
+      // Sprawdzanie stanu początkowego
+      updateDebug('Stan początkowy', {
+        url: window.location.href,
+        hash: window.location.hash,
+        search: window.location.search,
+        localStorage: 'netlify-cms-user' in localStorage ? 'istnieje' : 'brak',
+        netlify_cms_loaded: typeof window.CMS !== 'undefined'
+      });
       
       // Funkcja do pobierania parametrów z URL
       function getHashParam(name) {
         const hash = window.location.hash.substring(1);
+        updateDebug('Parsowanie hash', { hash: hash });
         
         // Obsługa dwóch możliwych formatów tokena
         // Format 1: #access_token=abc123 (standardowy format)
         if (hash.indexOf(name) !== -1) {
           const tokenPart = hash.split('&').find(part => part.startsWith(name));
           if (tokenPart) {
-            return tokenPart.split('=')[1];
+            const token = tokenPart.split('=')[1];
+            updateDebug('Znaleziono token w formacie standardowym', { tokenFormat: 'standard', tokenExists: !!token });
+            return token;
           }
         }
         
         // Format 2: #/access_token=abc123 (format z dodatkowym /)
         const altHash = hash.startsWith('/') ? hash.substring(1) : hash;
         const params = new URLSearchParams('?' + altHash);
-        return params.get(name);
+        const token = params.get(name);
+        
+        if (token) {
+          updateDebug('Znaleziono token w formacie alternatywnym', { tokenFormat: 'alternatywny', tokenExists: !!token });
+        } else {
+          updateDebug('Nie znaleziono tokenu dostępu w URL');
+        }
+        
+        return token;
       }
       
       // Sprawdź, czy w URL jest token dostępu
       const accessToken = getHashParam('access_token');
       
       if (accessToken) {
-        console.log('Token dostępu GitHub znaleziony, inicjalizacja CMS...');
-        // Ukryj ekran logowania
-        loginScreen.style.display = 'none';
-        cmsContent.style.display = 'block';
+        console.log('Token dostępu GitHub znaleziony, inicjalizacja CMS:', accessToken);
+        updateDebug('Token dostępu znaleziony', { tokenLength: accessToken.length, tokenStart: accessToken.substring(0, 5) + '...' });
         
-        // Zapisz token w localStorage dla CMS
-        localStorage.setItem('netlify-cms-user', JSON.stringify({
-          token: {
-            access_token: accessToken
+        try {
+          // Ukryj ekran logowania
+          loginScreen.style.display = 'none';
+          cmsContent.style.display = 'block';
+          
+          // Zapisz token w localStorage dla CMS
+          localStorage.setItem('netlify-cms-user', JSON.stringify({
+            token: {
+              access_token: accessToken
+            }
+          }));
+          
+          updateDebug('Token zapisany w localStorage', { status: 'sukces' });
+          
+          // Inicjalizuj CMS (obsługuje zarówno Netlify CMS jak i Static CMS / Decap CMS)
+          if (window.CMS) {
+            // Starsza wersja - Netlify CMS
+            window.CMS.init();
+            updateDebug('Netlify CMS zainicjowany');
+          } else if (window.StaticCmsCore) {
+            // Nowa wersja - Static CMS / Decap CMS
+            window.StaticCmsCore.init();
+            updateDebug('Static CMS (Decap CMS) zainicjowany');
+          } else {
+            updateDebug('Błąd: Nie znaleziono obiektu CMS', { 
+              dostepne_obiekty: Object.keys(window).filter(k => 
+                k.includes('CMS') || k.includes('Static') || k.includes('Netlify') || k.includes('Decap')
+              ) 
+            });
           }
-        }));
-        
-        // Inicjalizuj CMS
-        window.CMS.init();
+        } catch (error) {
+          updateDebug('Błąd podczas inicjalizacji CMS', { errorMessage: error.message, errorStack: error.stack });
+        }
       }
       
       // Obsługa przycisku logowania
@@ -174,17 +246,34 @@
         githubLogin.style.opacity = '0.7';
         githubLogin.style.pointerEvents = 'none';
         
+        updateDebug('Rozpoczynam proces logowania...', { timestamp: new Date().toISOString() });
+        
         // Krótkie opóźnienie dla UX
         setTimeout(function() {
+          // Zapisanie informacji diagnostycznych przed przekierowaniem
+          const redirectUrl = '/.netlify/functions/authorize';
+          updateDebug('Przekierowuję do:', { url: redirectUrl, timestamp: new Date().toISOString() });
+          
           // Przekierowanie do funkcji Netlify authorize.js
-          window.location.href = '/.netlify/functions/authorize';
+          window.location.href = redirectUrl;
         }, 800);
       });
       
       // Obsługa błędów
       if (window.location.search.includes('error')) {
+        updateDebug('Wykryto błąd w parametrach URL', { search: window.location.search });
         errorMessage.style.display = 'block';
       }
+      
+      // Listener na zmiany w hash (na wypadek, gdyby token pojawił się po załadowaniu strony)
+      window.addEventListener('hashchange', function() {
+        updateDebug('Zmieniono hash URL', { newHash: window.location.hash });
+        const newToken = getHashParam('access_token');
+        if (newToken && newToken !== accessToken) {
+          updateDebug('Wykryto nowy token po zmianie hash', { action: 'odświeżanie strony' });
+          window.location.reload();
+        }
+      });
     });
   </script>
 </body>
