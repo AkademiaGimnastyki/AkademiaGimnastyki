@@ -24,15 +24,35 @@
 <body>
   <!-- Zawartość CMS będzie renderowana tutaj automatycznie -->
   <div id="nc-root"></div>
+  <div id="cms-debug" style="background:#ffe3e3;color:#b00;padding:12px 20px;margin:24px auto 0;max-width:600px;font-family:monospace;display:none;"></div>
 
-  <!-- Skrypty CMS dokładnie według oficjalnej dokumentacji -->
-  <script src="https://unpkg.com/react@^18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@^18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/decap-cms-app/dist/decap-cms-app.js"></script>
-  
-  <!-- Inicjalizacja CMS zgodnie z dokumentacją -->
+  <!-- Skrypty CMS dokładnie według oficjalnej dokumentacji, z obsługą błędów -->
   <script>
-    DecapCmsApp.init();
+    function showDebug(msg) {
+      var el = document.getElementById('cms-debug');
+      el.style.display = 'block';
+      el.innerText = '[CMS DEBUG] ' + msg;
+    }
+    function loadScript(src, onload, onerror) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = onload;
+      s.onerror = function(e) {
+        showDebug('Błąd ładowania skryptu: ' + src);
+      };
+      document.body.appendChild(s);
+    }
+    loadScript('https://unpkg.com/react@^18/umd/react.production.min.js', function() {
+      loadScript('https://unpkg.com/react-dom@^18/umd/react-dom.production.min.js', function() {
+        loadScript('https://unpkg.com/decap-cms-app/dist/decap-cms-app.js', function() {
+          try {
+            DecapCmsApp.init();
+          } catch(e) {
+            showDebug('Błąd inicjalizacji DecapCmsApp: ' + e.message);
+          }
+        });
+      });
+    });
   </script>
 </body>
 </html>
