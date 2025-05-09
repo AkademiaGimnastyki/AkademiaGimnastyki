@@ -3,8 +3,8 @@ backend:
   name: github
   repo: AkademiaGimnastyki/AkademiaGimnastyki
   branch: test2
-  base_url: https://akademia-gimnastyki-2025.windsurf.build
-  auth_endpoint: /.netlify/functions/auth
+  site_url: "https://akademia-gimnastyki-2025.windsurf.build"
+  auth_endpoint: "https://akademia-gimnastyki-2025.windsurf.build/.netlify/functions/auth"
 
 # Adres strony (używany do generowania linków absolutnych)
 
