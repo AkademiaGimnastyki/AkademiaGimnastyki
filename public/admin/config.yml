@@ -2,13 +2,11 @@
 backend:
   name: github
   repo: AkademiaGimnastyki/AkademiaGimnastyki
-  branch: test2 # Gałąź, z której budujemy stronę
-  base_url: https://api.netlify.com
-  auth_endpoint: auth
+  branch: test2
+  base_url: https://akademia-gimnastyki-2025.windsurf.build
+  auth_endpoint: /.netlify/functions/auth
 
 # Adres strony (używany do generowania linków absolutnych)
-site_url: https://akademia-gimnastyki-2025.windsurf.build
-local_backend: false
 
 # Ścieżka do mediów
 media_folder: "public/images/uploads" # Media files will be stored in the repo under public/images/uploads
