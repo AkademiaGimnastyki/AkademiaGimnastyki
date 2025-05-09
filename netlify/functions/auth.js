@@ -160,11 +160,11 @@ exports.handler = async (event) => {
     const siteUrl = process.env.URL || 'https://akademia-gimnastyki-2025.windsurf.build';
     const token = tokenData.access_token;
     
-    console.log(`Przekierowuję do: ${siteUrl}/admin/ z tokenem dostępu`);
+    console.log(`Przekierowuję do: ${siteUrl}/admin/#/callback z tokenem dostępu`);
     
     // Tworzymy URL przekierowania zgodny z dokumentacją Decap CMS
     // https://decapcms.org/docs/external-oauth-clients/
-    const redirectUrl = `${siteUrl}/admin/#access_token=${token}&token_type=Bearer&provider=github`;
+    const redirectUrl = `${siteUrl}/admin/#/callback?access_token=${token}&token_type=Bearer&provider=github`;
     
     // Zwracamy odpowiedź z przekierowaniem i tokenem
     return {
