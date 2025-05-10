@@ -48,11 +48,12 @@ export async function getBlogEntries() {
       return [];
     }
     
+    // Pobieramy tylko opublikowane wpisy (wpisy muszą mieć status "Published")
     const entries = await contentfulClient.getEntries({
       content_type: 'blogPost', // ID typu treści w Contentful
       order: ['-sys.createdAt'], // Sortowanie od najnowszych (jako tablica)
       include: 2, // Poziom zagnieżdżenia referencji
-    });
+    } as any);
     
     return entries.items;
   } catch (error) {
