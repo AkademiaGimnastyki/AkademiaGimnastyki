@@ -10,8 +10,8 @@ import { createClient } from 'contentful';
 
 // Klucze dostępu do Contentful
 const CONTENTFUL_SPACE_ID = '7tr2fubum8df'; // Space ID
-const CONTENTFUL_ACCESS_TOKEN = 'XZoxFkBA3hirSEHFkQHZ7nPG-7cUiQ7CTE24K0IFTdc'; // Content Delivery API token
-const CONTENTFUL_PREVIEW_TOKEN = 'aZYwZiZeig6HVXyctO5MXC8cfFoy8kFoClYbmg0-OhI'; // Content Preview API token
+const CONTENTFUL_ACCESS_TOKEN = '5ePxwYB_otXIV672r_3PmiZdjJAFNfk2GflRxhe6FE8'; // Content Delivery API token z przykładu
+const CONTENTFUL_PREVIEW_TOKEN = ''; // Content Preview API token - opcjonalny
 
 // Tworzymy klienta Contentful
 export const contentfulClient = createClient({
