@@ -49,7 +49,7 @@ export async function getBlogEntries() {
     }
     
     const entries = await contentfulClient.getEntries({
-      content_type: 'blogPost', // ID typu treści w Contentful
+      content_type: 'akademiaGimnastyki', // ID typu treści w Contentful (widoczne na zrzucie ekranu)
       order: ['-sys.createdAt'], // Sortowanie od najnowszych (jako tablica)
       include: 2, // Poziom zagnieżdżenia referencji
     });
@@ -90,7 +90,7 @@ export async function getBlogEntryBySlug(slug: string) {
     }
     
     const entries = await contentfulClient.getEntries({
-      content_type: 'blogPost',
+      content_type: 'akademiaGimnastyki',
       'fields.slug': slug,
       include: 2,
       limit: 1, // Pobieramy tylko jeden wpis

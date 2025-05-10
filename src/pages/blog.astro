@@ -2,22 +2,18 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import BlogCard from '../components/BlogCard.astro';
-import { getBlogPosts, ContentSource, isContentSource } from '../lib/contentAdapter';
+import { getBlogPosts, ContentSource } from '../lib/contentAdapter';
 
-// Określ źródło treści (LOCAL lub CONTENTFUL)
-// LOCAL jest tylko backupem, domyślnie używamy Contentful
-const contentSource = ContentSource.CONTENTFUL; // Główne źródło treści
+// Korzystamy z Contentful jako głównego źródła treści
+// Lokalne wpisy są używane tylko jako fallback, gdy Contentful jest niedostępny
+const contentSource = ContentSource.CONTENTFUL;
 
-// Pobierz wpisy bloga z wybranego źródła (lokalnego lub Contentful)
+// Pobierz wpisy bloga z Contentful
 const posts = await getBlogPosts(contentSource);
 
 // Informacja o aktualnym źródle treści (tylko do celów deweloperskich)
-let sourceInfo = "nieznanego źródła";
-if (contentSource === ContentSource.LOCAL) {
-  sourceInfo = "lokalnych plików Markdown";
-} else if (contentSource === ContentSource.CONTENTFUL) {
-  sourceInfo = "Contentful CMS";
-}
+let sourceInfo = "Contentful CMS";
+// W przypadku zmiany źródła treści na lokalne, zmień również tę informację
 ---
 
 <Layout title="Blog - Małopolska Akademia Gimnastyki">

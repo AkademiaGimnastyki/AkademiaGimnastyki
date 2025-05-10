@@ -3,8 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import { getBlogPostBySlug, ContentSource } from '../../lib/contentAdapter';
 import { getCollection } from 'astro:content';
 
-// Określ źródło treści (LOCAL lub CONTENTFUL)
-// LOCAL jest tylko backupem, domyślnie używamy Contentful
+// Korzystamy z Contentful jako głównego źródła treści
+// Lokalne wpisy są używane tylko jako fallback, gdy Contentful jest niedostępny
 const contentSource = ContentSource.CONTENTFUL; // Główne źródło treści
 
 // Generowanie statycznych ścieżek dla wszystkich artykułów
@@ -105,7 +105,17 @@ try {
         {post.source === ContentSource.LOCAL ? (
           <Fragment set:html={post.content} />
         ) : (
-          <div set:html={post.content} />
+          <div>
+            {typeof post.content === 'string' ? (
+              <div set:html={post.content} />
+            ) : (
+              <div class="content-richtext">
+                <p>{post.description || ''}</p>
+                <!-- Jeśli treść nie jest stringiem, może być obiektem Rich Text z Contentful -->
+                <p class="text-gray-500 text-sm mt-4">Aby edytować pełną treść wpisu, przejdź do panelu Contentful.</p>
+              </div>
+            )}
+          </div>
         )}
       </div>
 

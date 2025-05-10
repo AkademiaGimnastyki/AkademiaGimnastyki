@@ -25,8 +25,8 @@ export function isContentSource(source: ContentSource, target: ContentSource): b
   return source === target;
 }
 
-// Domyślne źródło treści - można zmienić na CONTENTFUL gdy będziemy gotowi
-const DEFAULT_SOURCE: ContentSource = ContentSource.LOCAL;
+// Domyślne źródło treści - używamy Contentful jako głównego źródła
+const DEFAULT_SOURCE: ContentSource = ContentSource.CONTENTFUL;
 
 // Adapter dla wpisów blogowych - obsługuje zarówno lokalne jak i Contentful
 export async function getBlogPosts(source: ContentSource = DEFAULT_SOURCE): Promise<UnifiedBlogPost[]> {
@@ -129,15 +129,48 @@ function transformContentfulEntry(entry: Entry<any>): UnifiedBlogPost {
   
   // Bezpieczne pobieranie wartości z pól
   const title = typeof fields.title === 'string' ? fields.title : 'Bez tytułu';
-  const slug = typeof fields.slug === 'string' ? fields.slug : entry.sys.id;
-  const description = typeof fields.description === 'string' ? fields.description : '';
-  const date = fields.date || entry.sys.createdAt;
+  
+  // Sprawdź, czy mamy pole slug, jeśli nie, użyj ID wpisu
+  let slug = entry.sys.id;
+  if (typeof fields.slug === 'string' && fields.slug) {
+    slug = fields.slug;
+  }
+  
+  // Opis - może być w polu opis lub description
+  let description = '';
+  if (typeof fields.description === 'string') {
+    description = fields.description;
+  } else if (typeof fields.opis === 'string') {
+    description = fields.opis;
+  }
+  
+  // Data - może być w różnych formatach
+  let date = entry.sys.createdAt;
+  if (fields.date) {
+    date = fields.date;
+  }
   
   // Bezpieczne pobieranie URL obrazu
   let imageUrl = '/images/placeholder.jpg';
   if (fields.image && typeof fields.image === 'object' && fields.image.fields && 
       fields.image.fields.file && fields.image.fields.file.url) {
     imageUrl = `https:${fields.image.fields.file.url}`;
+  }
+  
+  // Treść - może być w różnych polach i formatach
+  let content = '';
+  
+  // Sprawdź dostępne pola dla treści
+  if (fields.content) {
+    // Jeśli jest to obj Rich Text, konwertujemy go do HTML
+    if (typeof fields.content === 'object' && fields.content.nodeType === 'document') {
+      // Najprostsze podejście - konwersja do tekstu
+      content = JSON.stringify(fields.content);
+    } else {
+      content = fields.content;
+    }
+  } else if (fields.tresc) {
+    content = fields.tresc;
   }
   
   return {
@@ -147,7 +180,7 @@ function transformContentfulEntry(entry: Entry<any>): UnifiedBlogPost {
     date: date,
     description: description,
     image: imageUrl,
-    content: fields.content || '', // Treść w formacie Rich Text lub Markdown
+    content: content,
     source: ContentSource.CONTENTFUL
   };
 }
