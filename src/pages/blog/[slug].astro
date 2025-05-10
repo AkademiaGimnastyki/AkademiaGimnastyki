@@ -56,25 +56,26 @@ try {
 <Layout title={`${post.title || 'Wpis na blogu'} - Blog - Małopolska Akademia Gimnastyki`}>
   <main>
     <article class="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-      <div class="relative w-full h-64 sm:h-80 md:h-96 mb-8 rounded-lg overflow-hidden">
-        <img 
-          src={post.image || '/images/hero/bruce-mars-HHXdPG_eTIQ-unsplash.jpg'} 
-          alt={post.title || 'Wpis na blogu'} 
-          class="w-full h-full object-cover"
-        />
-        <div class="absolute top-6 left-6 bg-white px-3 py-1.5 rounded-md shadow-sm">
-          <time datetime={post.date instanceof Date ? post.date.toISOString() : new Date(post.date).toISOString()} class="text-sm text-gray-700 font-medium">
+      <div class="mb-12">
+        <h1 class="text-4xl mb-4">
+          <span class="font-bold">{post.title?.split(' ')[0] || 'Wpis'}</span>
+          <span class="font-extralight">{post.title?.split(' ').slice(1).join(' ') || 'na blogu'}</span>
+        </h1>
+        <p class="text-lg text-gray-700 mb-6">{post.description || 'Szczegóły wpisu na blogu'}</p>
+        
+        <div class="flex items-center mb-8">
+          <time datetime={post.date instanceof Date ? post.date.toISOString() : new Date(post.date).toISOString()} class="text-sm text-gray-600 font-medium bg-gray-100 px-3 py-1.5 rounded-md inline-block">
             {formattedDate}
           </time>
         </div>
       </div>
 
-      <div class="mb-8">
-        <h1 class="text-4xl mb-4">
-          <span class="font-bold">{post.title?.split(' ')[0] || 'Wpis'}</span>
-          <span class="font-extralight">{post.title?.split(' ').slice(1).join(' ') || 'na blogu'}</span>
-        </h1>
-        <p class="text-lg text-gray-700">{post.description || 'Szczegóły wpisu na blogu'}</p>
+      <div class="relative w-full h-72 sm:h-96 md:h-[500px] mb-12 rounded-lg overflow-hidden shadow-lg">
+        <img 
+          src={post.image || '/images/hero/bruce-mars-HHXdPG_eTIQ-unsplash.jpg'} 
+          alt={post.title || 'Wpis na blogu'} 
+          class="w-full h-full object-cover"
+        />
       </div>
 
       <div class="prose prose-lg max-w-none">
@@ -83,9 +84,35 @@ try {
             <div set:html={post.content} />
           ) : (
             <div class="content-richtext">
-              <p>{post.description || ''}</p>
-              <!-- Jeśli treść nie jest stringiem, może być obiektem Rich Text z Contentful -->
-              <p class="text-gray-500 text-sm mt-4">Aby edytować pełną treść wpisu, przejdź do panelu Contentful.</p>
+              {(() => {
+                // Próba parsowania JSON jeśli to obiekt Rich Text z Contentful
+                try {
+                  // Jeśli to JSON w formie stringa, spróbuj go sparsować
+                  if (typeof post.content === 'string' && post.content.startsWith('{')) {
+                    const parsedContent = JSON.parse(post.content);
+                    // Wyświetl treść z pola 'content' w Rich Text Document
+                    if (parsedContent?.content) {
+                      return <div class="rich-text-content">
+                        {parsedContent.content.map((node: any) => {
+                          if (node.nodeType === 'paragraph') {
+                            return <p>{node.content?.map((textNode: any) => 
+                              textNode.value || '').join('')}</p>;
+                          }
+                          return null;
+                        })}
+                      </div>;
+                    }
+                  }
+                } catch (e) {
+                  console.error('Error parsing content:', e);
+                }
+                
+                // Fallback - pokaż opis i informację
+                return <>
+                  <p>{post.description || ''}</p>
+                  <p class="text-gray-500 text-sm mt-4">Aby edytować pełną treść wpisu, przejdź do panelu Contentful.</p>
+                </>;
+              })()}
             </div>
           )}
         </div>
