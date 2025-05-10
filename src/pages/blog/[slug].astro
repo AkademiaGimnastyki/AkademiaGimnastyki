@@ -1,49 +1,25 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getBlogPostBySlug, ContentSource } from '../../lib/contentAdapter';
-import { getCollection } from 'astro:content';
-
-// Korzystamy z Contentful jako głównego źródła treści
-// Lokalne wpisy są używane tylko jako fallback, gdy Contentful jest niedostępny
-const contentSource = ContentSource.CONTENTFUL; // Główne źródło treści
+import { getBlogPostBySlug } from '../../lib/contentAdapter';
 
 // Generowanie statycznych ścieżek dla wszystkich artykułów
 export async function getStaticPaths() {
   try {
-    // Sprawdzamy źródło treści
-    const source = contentSource.toString();
+    // Importujemy funkcję do pobierania wpisów z Contentful
+    const { getBlogEntries } = await import('../../lib/contentful');
+    const entries = await getBlogEntries();
     
-    // Dla lokalnych Content Collections
-    if (source === 'local') {
-      const blogEntries = await getCollection('blog');
+    // Generujemy ścieżki dla każdego wpisu
+    return entries.map(entry => {
+      // Bezpieczne pobieranie slug
+      const fields = entry.fields as Record<string, any>;
+      const slug = fields.slug || entry.sys.id;
       
-      return blogEntries.map(entry => ({
-        params: { slug: entry.slug },
-        props: { slug: entry.slug }
-      }));
-    } 
-    
-    // Dla Contentful - pobieramy wszystkie wpisy i generujemy ścieżki
-    if (source === 'contentful') {
-      // Importujemy funkcję do pobierania wpisów z Contentful
-      const { getBlogEntries } = await import('../../lib/contentful');
-      const entries = await getBlogEntries();
-      
-      // Generujemy ścieżki dla każdego wpisu
-      return entries.map(entry => {
-        // Bezpieczne pobieranie slug
-        const fields = entry.fields as Record<string, any>;
-        const slug = fields.slug || entry.sys.id;
-        
-        return {
-          params: { slug },
-          props: { slug }
-        };
-      });
-    }
-    
-    // Domyślnie zwracamy pustą tablicę
-    return [];
+      return {
+        params: { slug },
+        props: { slug }
+      };
+    });
   } catch (error) {
     console.error('Błąd podczas generowania ścieżek:', error);
     return [];
@@ -52,7 +28,7 @@ export async function getStaticPaths() {
 
 // Pobierz dane wpisu na podstawie slug
 const { slug } = Astro.params;
-const post = await getBlogPostBySlug(slug as string, contentSource);
+const post = await getBlogPostBySlug(slug as string);
 
 // Jeśli nie znaleziono wpisu, przekieruj na stronę bloga
 if (!post) {
@@ -102,21 +78,17 @@ try {
       </div>
 
       <div class="prose prose-lg max-w-none">
-        {post.source === ContentSource.LOCAL ? (
-          <Fragment set:html={post.content} />
-        ) : (
-          <div>
-            {typeof post.content === 'string' ? (
-              <div set:html={post.content} />
-            ) : (
-              <div class="content-richtext">
-                <p>{post.description || ''}</p>
-                <!-- Jeśli treść nie jest stringiem, może być obiektem Rich Text z Contentful -->
-                <p class="text-gray-500 text-sm mt-4">Aby edytować pełną treść wpisu, przejdź do panelu Contentful.</p>
-              </div>
-            )}
-          </div>
-        )}
+        <div>
+          {typeof post.content === 'string' ? (
+            <div set:html={post.content} />
+          ) : (
+            <div class="content-richtext">
+              <p>{post.description || ''}</p>
+              <!-- Jeśli treść nie jest stringiem, może być obiektem Rich Text z Contentful -->
+              <p class="text-gray-500 text-sm mt-4">Aby edytować pełną treść wpisu, przejdź do panelu Contentful.</p>
+            </div>
+          )}
+        </div>
       </div>
 
       <div class="mt-12 flex justify-center">

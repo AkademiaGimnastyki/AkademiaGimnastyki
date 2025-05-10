@@ -2,18 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import BlogCard from '../components/BlogCard.astro';
-import { getBlogPosts, ContentSource } from '../lib/contentAdapter';
-
-// Korzystamy z Contentful jako głównego źródła treści
-// Lokalne wpisy są używane tylko jako fallback, gdy Contentful jest niedostępny
-const contentSource = ContentSource.CONTENTFUL;
+import { getBlogPosts } from '../lib/contentAdapter';
 
 // Pobierz wpisy bloga z Contentful
-const posts = await getBlogPosts(contentSource);
-
-// Informacja o aktualnym źródle treści (tylko do celów deweloperskich)
-let sourceInfo = "Contentful CMS";
-// W przypadku zmiany źródła treści na lokalne, zmień również tę informację
+const posts = await getBlogPosts();
 ---
 
 <Layout title="Blog - Małopolska Akademia Gimnastyki">
@@ -34,9 +26,9 @@ let sourceInfo = "Contentful CMS";
         </h2>
         <p class="text-gray-600 max-w-2xl mx-auto">Zapraszamy do lektury artykułów z naszego bloga. Znajdziesz tutaj aktualności z życia Akademii, porady dotyczące treningu oraz ciekawostki ze świata gimnastyki.</p>
         
-        {/* Informacja o źródle treści - tylko dla celów deweloperskich */}
+        {/* Informacja o źródle treści */}
         <div class="mt-2 text-xs text-gray-400 italic">
-          Źródło treści: {sourceInfo}
+          źródło treści: Contentful CMS
         </div>
       </div>
       
