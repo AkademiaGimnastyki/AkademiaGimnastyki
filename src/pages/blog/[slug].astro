@@ -1,24 +1,63 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getBlogPostBySlug, ContentSource } from '../../lib/contentAdapter';
+import { getCollection } from 'astro:content';
 
-// Generowanie statycznych ścieżek dla wszystkich artykułów z kolekcji blog
+// Określ źródło treści (LOCAL lub CONTENTFUL)
+// LOCAL jest tylko backupem, domyślnie używamy Contentful
+const contentSource = ContentSource.CONTENTFUL; // Główne źródło treści
+
+// Generowanie statycznych ścieżek dla wszystkich artykułów
 export async function getStaticPaths() {
-  const blogEntries = await getCollection('blog');
-  
-  return blogEntries.map(entry => ({
-    params: { slug: entry.slug },
-    props: { entry }
-  }));
+  try {
+    // Sprawdzamy źródło treści
+    const source = contentSource.toString();
+    
+    // Dla lokalnych Content Collections
+    if (source === 'local') {
+      const blogEntries = await getCollection('blog');
+      
+      return blogEntries.map(entry => ({
+        params: { slug: entry.slug },
+        props: { slug: entry.slug }
+      }));
+    } 
+    
+    // Dla Contentful - pobieramy wszystkie wpisy i generujemy ścieżki
+    if (source === 'contentful') {
+      // Importujemy funkcję do pobierania wpisów z Contentful
+      const { getBlogEntries } = await import('../../lib/contentful');
+      const entries = await getBlogEntries();
+      
+      // Generujemy ścieżki dla każdego wpisu
+      return entries.map(entry => {
+        // Bezpieczne pobieranie slug
+        const fields = entry.fields as Record<string, any>;
+        const slug = fields.slug || entry.sys.id;
+        
+        return {
+          params: { slug },
+          props: { slug }
+        };
+      });
+    }
+    
+    // Domyślnie zwracamy pustą tablicę
+    return [];
+  } catch (error) {
+    console.error('Błąd podczas generowania ścieżek:', error);
+    return [];
+  }
 }
 
-// Typy dla lepszej pomocy IDE i uniknięcia błędów TypeScript
-interface Props {
-  entry: CollectionEntry<'blog'>;
-}
+// Pobierz dane wpisu na podstawie slug
+const { slug } = Astro.params;
+const post = await getBlogPostBySlug(slug as string, contentSource);
 
-const { entry } = Astro.props;
-const { Content } = await entry.render();
+// Jeśli nie znaleziono wpisu, przekieruj na stronę bloga
+if (!post) {
+  return Astro.redirect('/blog');
+}
 
 // Formatowanie daty w stylu "8 maja 2025"
 const dateFormatter = new Intl.DateTimeFormat('pl-PL', {
@@ -26,20 +65,29 @@ const dateFormatter = new Intl.DateTimeFormat('pl-PL', {
   month: 'long',
   year: 'numeric',
 });
-const formattedDate = dateFormatter.format(entry.data.date);
+
+// Bezpieczne formatowanie daty
+let formattedDate = '';
+try {
+  const dateObj = post.date instanceof Date ? post.date : new Date(post.date);
+  formattedDate = dateFormatter.format(dateObj);
+} catch (error) {
+  console.error('Błąd formatowania daty:', error);
+  formattedDate = 'Data publikacji niedostępna';
+}
 ---
 
-<Layout title={`${entry.data.title || 'Wpis na blogu'} - Blog - Małopolska Akademia Gimnastyki`}>
+<Layout title={`${post.title || 'Wpis na blogu'} - Blog - Małopolska Akademia Gimnastyki`}>
   <main>
     <article class="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
       <div class="relative w-full h-64 sm:h-80 md:h-96 mb-8 rounded-lg overflow-hidden">
         <img 
-          src={entry.data.image || '/images/hero/bruce-mars-HHXdPG_eTIQ-unsplash.jpg'} 
-          alt={entry.data.title || 'Wpis na blogu'} 
+          src={post.image || '/images/hero/bruce-mars-HHXdPG_eTIQ-unsplash.jpg'} 
+          alt={post.title || 'Wpis na blogu'} 
           class="w-full h-full object-cover"
         />
         <div class="absolute top-6 left-6 bg-white px-3 py-1.5 rounded-md shadow-sm">
-          <time datetime={entry.data.date.toISOString()} class="text-sm text-gray-700 font-medium">
+          <time datetime={post.date instanceof Date ? post.date.toISOString() : new Date(post.date).toISOString()} class="text-sm text-gray-700 font-medium">
             {formattedDate}
           </time>
         </div>
@@ -47,14 +95,18 @@ const formattedDate = dateFormatter.format(entry.data.date);
 
       <div class="mb-8">
         <h1 class="text-4xl mb-4">
-          <span class="font-bold">{entry.data.title?.split(' ')[0] || 'Wpis'}</span>
-          <span class="font-extralight">{entry.data.title?.split(' ').slice(1).join(' ') || 'na blogu'}</span>
+          <span class="font-bold">{post.title?.split(' ')[0] || 'Wpis'}</span>
+          <span class="font-extralight">{post.title?.split(' ').slice(1).join(' ') || 'na blogu'}</span>
         </h1>
-        <p class="text-lg text-gray-700">{entry.data.description || 'Szczegóły wpisu na blogu'}</p>
+        <p class="text-lg text-gray-700">{post.description || 'Szczegóły wpisu na blogu'}</p>
       </div>
 
       <div class="prose prose-lg max-w-none">
-        <Content />
+        {post.source === ContentSource.LOCAL ? (
+          <Fragment set:html={post.content} />
+        ) : (
+          <div set:html={post.content} />
+        )}
       </div>
 
       <div class="mt-12 flex justify-center">

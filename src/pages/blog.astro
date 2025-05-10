@@ -2,13 +2,22 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import BlogCard from '../components/BlogCard.astro';
-import { getCollection } from 'astro:content';
+import { getBlogPosts, ContentSource, isContentSource } from '../lib/contentAdapter';
 
-// Pobierz wpisy bloga z Astro Content Collections
-const blogEntries = await getCollection('blog');
-// Sortowanie postów wg daty (od najnowszych)
-const posts = blogEntries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+// Określ źródło treści (LOCAL lub CONTENTFUL)
+// LOCAL jest tylko backupem, domyślnie używamy Contentful
+const contentSource = ContentSource.CONTENTFUL; // Główne źródło treści
 
+// Pobierz wpisy bloga z wybranego źródła (lokalnego lub Contentful)
+const posts = await getBlogPosts(contentSource);
+
+// Informacja o aktualnym źródle treści (tylko do celów deweloperskich)
+let sourceInfo = "nieznanego źródła";
+if (contentSource === ContentSource.LOCAL) {
+  sourceInfo = "lokalnych plików Markdown";
+} else if (contentSource === ContentSource.CONTENTFUL) {
+  sourceInfo = "Contentful CMS";
+}
 ---
 
 <Layout title="Blog - Małopolska Akademia Gimnastyki">
@@ -28,6 +37,11 @@ const posts = blogEntries.sort((a, b) => b.data.date.getTime() - a.data.date.get
           <span class="font-extralight">wpisy</span>
         </h2>
         <p class="text-gray-600 max-w-2xl mx-auto">Zapraszamy do lektury artykułów z naszego bloga. Znajdziesz tutaj aktualności z życia Akademii, porady dotyczące treningu oraz ciekawostki ze świata gimnastyki.</p>
+        
+        {/* Informacja o źródle treści - tylko dla celów deweloperskich */}
+        <div class="mt-2 text-xs text-gray-400 italic">
+          Źródło treści: {sourceInfo}
+        </div>
       </div>
       
       {posts.length === 0 ? (
@@ -38,10 +52,10 @@ const posts = blogEntries.sort((a, b) => b.data.date.getTime() - a.data.date.get
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post) => (
             <BlogCard
-              title={post.data.title}
-              description={post.data.description || 'Kliknij, aby przeczytać więcej'}
-              date={post.data.date}
-              image={post.data.image || '/images/hero/bruce-mars-HHXdPG_eTIQ-unsplash.jpg'}
+              title={post.title}
+              description={post.description || 'Kliknij, aby przeczytać więcej'}
+              date={post.date instanceof Date ? post.date : new Date(post.date)}
+              image={post.image || '/images/hero/bruce-mars-HHXdPG_eTIQ-unsplash.jpg'}
               url={`/blog/${post.slug}/`}
             />
           ))}
