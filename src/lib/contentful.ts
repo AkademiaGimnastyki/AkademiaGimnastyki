@@ -13,25 +13,41 @@ const CONTENTFUL_SPACE_ID = '7tr2fubum8df'; // Space ID
 const CONTENTFUL_ACCESS_TOKEN = '5ePxwYB_otXIV672r_3PmiZdjJAFNfk2GflRxhe6FE8'; // Content Delivery API token z przykładu
 const CONTENTFUL_PREVIEW_TOKEN = ''; // Content Preview API token - opcjonalny
 
-// Tworzymy klienta Contentful
-export const contentfulClient = createClient({
-  space: CONTENTFUL_SPACE_ID,
-  accessToken: CONTENTFUL_ACCESS_TOKEN,
-  // Ustawienia opcjonalne
-  environment: 'master', // domyślne środowisko
-});
+// Sprawdzamy, czy mamy token dostępu
+const hasValidConfig = CONTENTFUL_SPACE_ID && CONTENTFUL_ACCESS_TOKEN;
+
+// Tworzymy klienta Contentful tylko jeśli mamy poprawne dane konfiguracyjne
+export const contentfulClient = hasValidConfig 
+  ? createClient({
+      space: CONTENTFUL_SPACE_ID,
+      accessToken: CONTENTFUL_ACCESS_TOKEN,
+      // Ustawienia opcjonalne
+      environment: 'master', // domyślne środowisko
+    })
+  : null;
+
+// Sprawdzamy, czy mamy token podglądu
+const hasValidPreviewConfig = CONTENTFUL_SPACE_ID && CONTENTFUL_PREVIEW_TOKEN;
 
 // Klient do podglądu wersji roboczych (opcjonalnie)
-export const contentfulPreviewClient = createClient({
-  space: CONTENTFUL_SPACE_ID,
-  accessToken: CONTENTFUL_PREVIEW_TOKEN,
-  host: 'preview.contentful.com', // host dla wersji podglądowych
-  environment: 'master',
-});
+export const contentfulPreviewClient = hasValidPreviewConfig 
+  ? createClient({
+      space: CONTENTFUL_SPACE_ID,
+      accessToken: CONTENTFUL_PREVIEW_TOKEN,
+      host: 'preview.contentful.com', // host dla wersji podglądowych
+      environment: 'master',
+    })
+  : null;
 
 // Funkcja pomocnicza do pobierania wpisów blogowych
 export async function getBlogEntries() {
   try {
+    // Sprawdzamy, czy klient Contentful jest dostępny
+    if (!contentfulClient) {
+      console.warn('Klient Contentful nie jest skonfigurowany. Sprawdź token dostępu.');
+      return [];
+    }
+    
     const entries = await contentfulClient.getEntries({
       content_type: 'blogPost', // ID typu treści w Contentful
       order: ['-sys.createdAt'], // Sortowanie od najnowszych (jako tablica)
@@ -67,6 +83,12 @@ export async function getBlogEntries() {
 // Funkcja pomocnicza do pobierania pojedynczego wpisu po slug
 export async function getBlogEntryBySlug(slug: string) {
   try {
+    // Sprawdzamy, czy klient Contentful jest dostępny
+    if (!contentfulClient) {
+      console.warn('Klient Contentful nie jest skonfigurowany. Sprawdź token dostępu.');
+      return null;
+    }
+    
     const entries = await contentfulClient.getEntries({
       content_type: 'blogPost',
       'fields.slug': slug,
