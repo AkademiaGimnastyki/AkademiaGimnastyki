@@ -10,6 +10,7 @@ export interface UnifiedBlogPost {
   description: string;
   image: string;
   content: any;
+  attachments?: any[]; // Dodatkowe załączniki (np. pliki PDF, obrazy)
   source: string;
 }
 
@@ -90,6 +91,13 @@ function transformContentfulEntry(entry: Entry<any>): UnifiedBlogPost {
     content = fields.tresc;
   }
   
+  // Obsługa dodatkowych załączników
+  let attachments = [];
+  if (fields.attachments && Array.isArray(fields.attachments)) {
+    // Jeśli pole attachments jest tablicą referencji do zasobów
+    attachments = fields.attachments;
+  }
+  
   return {
     id: entry.sys.id,
     slug: slug,
@@ -98,6 +106,7 @@ function transformContentfulEntry(entry: Entry<any>): UnifiedBlogPost {
     description: description,
     image: imageUrl,
     content: content,
+    attachments: attachments,
     source: ContentSource.CONTENTFUL
   };
 }

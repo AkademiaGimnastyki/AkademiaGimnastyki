@@ -51,26 +51,100 @@ try {
   console.error('Błąd formatowania daty:', error);
   formattedDate = 'Data publikacji niedostępna';
 }
+
+// Funkcja pomocnicza do renderowania treści Rich Text z Contentful
+function renderRichTextContent(content: any) {
+  if (!content) return '';
+  
+  try {
+    // Jeśli to string w formacie JSON, spróbuj go sparsować
+    let contentObj = content;
+    if (typeof content === 'string' && (content.startsWith('{') || content.includes('nodeType'))) {
+      contentObj = JSON.parse(content);
+    }
+    
+    // Jeśli to obiekt Rich Text z Contentful
+    if (contentObj && contentObj.nodeType === 'document') {
+      // Proste renderowanie paragrafów i nagłówków
+      let html = '';
+      
+      if (Array.isArray(contentObj.content)) {
+        contentObj.content.forEach((node: any) => {
+          if (node.nodeType === 'paragraph' && Array.isArray(node.content)) {
+            const text = node.content
+              .map((textNode: any) => textNode.value || '')
+              .join('');
+            html += `<p>${text}</p>`;
+          } else if (node.nodeType === 'heading-1' && Array.isArray(node.content)) {
+            const text = node.content
+              .map((textNode: any) => textNode.value || '')
+              .join('');
+            html += `<h1>${text}</h1>`;
+          } else if (node.nodeType === 'heading-2' && Array.isArray(node.content)) {
+            const text = node.content
+              .map((textNode: any) => textNode.value || '')
+              .join('');
+            html += `<h2>${text}</h2>`;
+          } else if (node.nodeType === 'heading-3' && Array.isArray(node.content)) {
+            const text = node.content
+              .map((textNode: any) => textNode.value || '')
+              .join('');
+            html += `<h3>${text}</h3>`;
+          } else if (node.nodeType === 'unordered-list' && Array.isArray(node.content)) {
+            html += '<ul>';
+            node.content.forEach((listItem: any) => {
+              if (listItem.nodeType === 'list-item' && Array.isArray(listItem.content)) {
+                html += '<li>';
+                listItem.content.forEach((paragraph: any) => {
+                  if (paragraph.nodeType === 'paragraph' && Array.isArray(paragraph.content)) {
+                    const text = paragraph.content
+                      .map((textNode: any) => textNode.value || '')
+                      .join('');
+                    html += text;
+                  }
+                });
+                html += '</li>';
+              }
+            });
+            html += '</ul>';
+          }
+        });
+      }
+      
+      return html;
+    }
+    
+    // Fallback dla zwykłego tekstu
+    return typeof content === 'string' ? content : '';
+  } catch (error) {
+    console.error('Błąd renderowania treści Rich Text:', error);
+    return typeof content === 'string' ? content : '';
+  }
+}
+
+// Renderuj treść
+const renderedContent = renderRichTextContent(post.content);
 ---
 
 <Layout title={`${post.title || 'Wpis na blogu'} - Blog - Małopolska Akademia Gimnastyki`}>
-  <main>
-    <article class="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-      <div class="mb-12">
+  <main class="pt-24"> <!-- Zwiększony odstęp od góry, aby uniknąć nachodzenia na menu -->
+    <article class="max-w-4xl mx-auto px-4 pb-12 sm:px-6 lg:px-8">
+      <!-- 1. TYTUŁ -->
+      <header class="mb-8">
         <h1 class="text-4xl mb-4">
           <span class="font-bold">{post.title?.split(' ')[0] || 'Wpis'}</span>
           <span class="font-extralight">{post.title?.split(' ').slice(1).join(' ') || 'na blogu'}</span>
         </h1>
-        <p class="text-lg text-gray-700 mb-6">{post.description || 'Szczegóły wpisu na blogu'}</p>
         
-        <div class="flex items-center mb-8">
+        <div class="flex items-center mb-2">
           <time datetime={post.date instanceof Date ? post.date.toISOString() : new Date(post.date).toISOString()} class="text-sm text-gray-600 font-medium bg-gray-100 px-3 py-1.5 rounded-md inline-block">
             {formattedDate}
           </time>
         </div>
-      </div>
+      </header>
 
-      <div class="relative w-full h-72 sm:h-96 md:h-[500px] mb-12 rounded-lg overflow-hidden shadow-lg">
+      <!-- 2. GRAFIKA GŁÓWNA -->
+      <div class="relative w-full h-72 sm:h-96 md:h-[500px] mb-8 rounded-lg overflow-hidden shadow-lg">
         <img 
           src={post.image || '/images/hero/bruce-mars-HHXdPG_eTIQ-unsplash.jpg'} 
           alt={post.title || 'Wpis na blogu'} 
@@ -78,46 +152,56 @@ try {
         />
       </div>
 
-      <div class="prose prose-lg max-w-none">
-        <div>
-          {typeof post.content === 'string' ? (
-            <div set:html={post.content} />
-          ) : (
-            <div class="content-richtext">
-              {(() => {
-                // Próba parsowania JSON jeśli to obiekt Rich Text z Contentful
-                try {
-                  // Jeśli to JSON w formie stringa, spróbuj go sparsować
-                  if (typeof post.content === 'string' && post.content.startsWith('{')) {
-                    const parsedContent = JSON.parse(post.content);
-                    // Wyświetl treść z pola 'content' w Rich Text Document
-                    if (parsedContent?.content) {
-                      return <div class="rich-text-content">
-                        {parsedContent.content.map((node: any) => {
-                          if (node.nodeType === 'paragraph') {
-                            return <p>{node.content?.map((textNode: any) => 
-                              textNode.value || '').join('')}</p>;
-                          }
-                          return null;
-                        })}
-                      </div>;
-                    }
-                  }
-                } catch (e) {
-                  console.error('Error parsing content:', e);
-                }
-                
-                // Fallback - pokaż opis i informację
-                return <>
-                  <p>{post.description || ''}</p>
-                  <p class="text-gray-500 text-sm mt-4">Aby edytować pełną treść wpisu, przejdź do panelu Contentful.</p>
-                </>;
-              })()}
-            </div>
-          )}
-        </div>
+      <!-- 3. OPIS -->
+      <div class="mb-8">
+        <p class="text-lg text-gray-700">{post.description || 'Szczegóły wpisu na blogu'}</p>
       </div>
 
+      <!-- 4. TREŚĆ -->
+      <div class="prose prose-lg max-w-none mb-12">
+        {renderedContent ? (
+          <div set:html={renderedContent} />
+        ) : (
+          <div class="text-gray-500 text-sm mt-4">
+            <p>Treść wpisu nie jest dostępna. Aby edytować pełną treść wpisu, przejdź do panelu Contentful.</p>
+          </div>
+        )}
+      </div>
+
+      <!-- 5. DODATKOWE ZAŁĄCZNIKI (opcjonalnie) -->
+      {post.attachments && Array.isArray(post.attachments) && post.attachments.length > 0 && (
+        <div class="mt-8 mb-12">
+          <h3 class="text-2xl mb-4">
+            <span class="font-bold">Dodatkowe</span>
+            <span class="font-extralight">materiały</span>
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {post.attachments.map((attachment: any) => (
+              <div class="border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+                {attachment.fields?.file?.url && (
+                  <a 
+                    href={`https:${attachment.fields.file.url}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="flex flex-col items-center"
+                  >
+                    <div class="w-full h-40 bg-gray-100 rounded-md flex items-center justify-center mb-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    </div>
+                    <span class="text-[#00B3D4] font-medium text-center">
+                      {attachment.fields?.title || 'Pobierz załącznik'}
+                    </span>
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- PRZYCISK POWROTU -->
       <div class="mt-12 flex justify-center">
         <a 
           href="/blog" 
@@ -134,7 +218,7 @@ try {
 </Layout>
 
 <style>
-  /* Stylizacja zawartości Markdown */
+  /* Stylizacja zawartości Markdown i Rich Text */
   .prose h1 {
     font-size: 1.875rem;
     line-height: 2.25rem;
@@ -147,6 +231,13 @@ try {
     line-height: 2rem;
     margin-top: 1.5rem;
     margin-bottom: 0.75rem;
+  }
+  .prose h3 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
   }
   .prose p {
     margin-top: 1rem;
@@ -176,5 +267,32 @@ try {
   }
   .prose a:hover {
     color: #E3A1A1;
+  }
+  
+  /* Dodatkowe style dla Rich Text z Contentful */
+  .prose blockquote {
+    border-left: 4px solid #E3A1A1;
+    padding-left: 1rem;
+    font-style: italic;
+    margin: 1.5rem 0;
+    color: #6b7280;
+  }
+  .prose hr {
+    margin: 2rem 0;
+    border-color: #e5e7eb;
+  }
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+  }
+  .prose th,
+  .prose td {
+    padding: 0.75rem;
+    border: 1px solid #e5e7eb;
+  }
+  .prose th {
+    background-color: #f9fafb;
+    font-weight: 600;
   }
 </style>
