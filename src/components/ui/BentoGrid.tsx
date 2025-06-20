@@ -56,7 +56,7 @@ export const BentoGrid = ({ cards }: { cards: Card[] }) => {
   };
 
   return (
-    <div className="relative w-full min-h-[600px]" ref={sectionRef}>
+    <div className="relative w-full min-h-[400px] lg:min-h-[600px]" ref={sectionRef}>
       <motion.div 
         className="flex flex-col items-center mb-12"
         initial={{ opacity: 0, y: 50 }}

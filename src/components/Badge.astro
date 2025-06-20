@@ -1,0 +1,21 @@
+---
+interface Props {
+  text: string;
+  color?: 'dynamika' | 'czulosc' | 'grafit' | 'default'; // Opcjonalny prop dla koloru
+}
+
+const { text, color = 'default' } = Astro.props;
+
+let bgColorClass = 'bg-gray-100 text-gray-700'; // Domyślny kolor
+if (color === 'dynamika') {
+  bgColorClass = 'bg-[#00b3d4] text-white';
+} else if (color === 'czulosc') {
+  bgColorClass = 'bg-[#e3a1a1] text-white';
+} else if (color === 'grafit') {
+  bgColorClass = 'bg-[#4A4A4A] text-white';
+}
+---
+
+<span class={`px-3 py-1 rounded-full text-sm font-medium ${bgColorClass}`}>
+  {text}
+</span>

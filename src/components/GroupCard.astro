@@ -1,0 +1,40 @@
+---
+import Badge from './Badge.astro';
+
+interface Props {
+  imageUrl: string;
+  groupName: string;
+  ageRange: string;
+  description: string;
+  tags: string[];
+  // Opcjonalny prop do przekazania koloru do Badge, jeśli chcemy dynamicznie zmieniać kolor tagów per karta
+  // Na razie zakładamy, że wszystkie tagi na karcie będą miały domyślny kolor z Badge.astro
+  // tagColor?: 'dynamika' | 'czulosc' | 'grafit' | 'default'; 
+}
+
+const { imageUrl, groupName, ageRange, description, tags } = Astro.props;
+
+// Podział groupName na pierwszy człon (bold) i resztę (extralight)
+const nameParts = groupName.split(' ');
+const firstWordName = nameParts[0];
+const restOfName = nameParts.slice(1).join(' ');
+---
+
+<div class="flex flex-col bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden transition-transform duration-300 ease-in-out hover:scale-[1.01]">
+  <div class="aspect-[4/3] overflow-hidden">
+    <img src={imageUrl} alt={`Zdjęcie grupy ${groupName}`} class="w-full h-full object-cover" />
+  </div>
+  <div class="p-6 flex flex-col flex-grow">
+    <h3 class="text-2xl mb-1 font-poppins">
+      <span class="font-bold text-gray-800">{firstWordName}</span>
+      {restOfName && <span class="font-extralight text-gray-700"> {restOfName}</span>}
+    </h3>
+    <p class="text-sm text-gray-500 mb-3 font-roboto">{ageRange}</p>
+    <p class="text-gray-600 text-sm mb-4 flex-grow font-roboto">{description}</p>
+    <div class="mt-auto flex flex-wrap gap-2">
+      {tags.map(tag => (
+        <Badge text={tag} />
+      ))}
+    </div>
+  </div>
+</div>

@@ -8,28 +8,22 @@ import { getBlogPosts } from '../lib/contentAdapter';
 const posts = await getBlogPosts();
 ---
 
-<Layout title="Blog - Małopolska Akademia Gimnastyki">
+<Layout title="Aktualności - Małopolska Akademia Gimnastyki">
   <main>
     <Hero 
-      title="Nasz"
-      subtitle="Blog"
+      title="Aktualności"
       backgroundImage="/images/hero/hero blog.jpg"
     >
       Aktualności, porady i ciekawostki ze świata gimnastyki
     </Hero>
     
-    <section class="py-12 px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
-      <div class="mb-10 text-center">
+    <section class="py-24 px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
+      <div class="mb-20 text-center">
         <h2 class="text-3xl mb-4">
           <span class="font-bold">Najnowsze</span>
           <span class="font-extralight">wpisy</span>
         </h2>
-        <p class="text-gray-600 max-w-2xl mx-auto">Zapraszamy do lektury artykułów z naszego bloga. Znajdziesz tutaj aktualności z życia Akademii, porady dotyczące treningu oraz ciekawostki ze świata gimnastyki.</p>
-        
-        {/* Informacja o źródle treści */}
-        <div class="mt-2 text-xs text-gray-400 italic">
-          źródło treści: Contentful CMS
-        </div>
+        <p class="text-gray-600 max-w-2xl mx-auto">Zapraszamy do śledzenia na bieżąco aktualności z życia Akademii. Znajdziesz tutaj także porady dotyczące treningu oraz ciekawostki ze świata gimnastyki.</p>
       </div>
       
       {posts.length === 0 ? (

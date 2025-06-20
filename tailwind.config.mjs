@@ -16,6 +16,9 @@ export default {
       dropShadow: {
         'mag': '0 4px 6px rgba(0, 179, 212, 0.25)',
       },
+      animation: {
+        'spin-slow': 'spin 20s linear infinite',
+      },
     },
   },
   plugins: [],

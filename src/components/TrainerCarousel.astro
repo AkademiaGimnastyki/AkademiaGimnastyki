@@ -1,0 +1,361 @@
+---
+// Definiowanie interfejsu trenera
+export interface Trener {
+  name: string;
+  photo: string;
+  description: string;
+}
+
+// Przyjmujemy dane trenerów jako props lub używamy domyślnych
+interface Props {
+  trenerzy?: Trener[];
+}
+
+const { trenerzy = [
+
+  {
+    name: 'Marcin Wojciechowski',
+    photo: '/images/trainers/trener_oferta.jpg',
+    description: 'Absolwent AFW, trener grup zaawansowanych. Dba o technikę i motywację zawodników.',
+  },
+  {
+    name: 'Paulina Wojciechowska',
+    photo: '/images/trainers/trainer2.jpg',
+    description: 'Paulina – była gimnastyczka, trenerka dzieci i młodzieży. Specjalizuje się w pracy z najmłodszymi.',
+  },
+  {
+    name: 'Anna Kowalska',
+    photo: '/images/trainers/trainer3.jpg',
+    description: 'Anna – trenerka grup zaawansowanych. Dba o technikę i motywację zawodników.',
+  },
+] } = Astro.props;
+---
+
+<section id="kadra" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+  {/* Ukryte dane trenerów do użycia w skrypcie */}
+  <div style="display: none;">
+    {trenerzy.map((trener, index) => (
+      <div 
+        data-trainer 
+        data-name={trener.name} 
+        data-photo={trener.photo} 
+        data-description={trener.description}
+        data-index={index}
+      />
+    ))}
+  </div>
+  <div class="relative min-h-[480px] flex items-center justify-center overflow-visible" data-aos="fade-up">
+    <!-- Gradientowe tło -->
+    <div class="absolute w-full h-full pointer-events-none select-none">
+      <div
+        class="rounded-[650px] w-[1200px] h-[530px] absolute left-1/2 top-0 -translate-x-1/2 -translate-y-[15%]"
+        style="background: linear-gradient(180deg, rgba(156,239,255,0.5) 0%, rgba(156,239,255,1) 50%, rgba(179,121,218,0.8) 75%, rgba(179,121,218,0) 99%); filter: blur(75px); mix-blend-mode: multiply;"
+      ></div>
+      <div class="bg-[#a0b9f9] rounded-[50%] w-[320px] h-[450px] absolute left-[30px] top-[25px]" style="filter: blur(150px)"></div>
+      <div class="bg-[#f2afda] rounded-[50%] w-[280px] h-[380px] absolute left-[220px] top-[50px]" style="filter: blur(150px)"></div>
+    </div>
+    <!-- Karuzela -->
+    <div id="carousel-root" class="relative z-10 flex flex-col lg:flex-row items-center justify-between h-full px-4 lg:px-8 w-full max-w-6xl mx-auto">
+      <!-- Lewa strona - zdjęcie -->
+      <div class="relative w-full lg:w-[40%] flex justify-center lg:justify-start select-none z-10">
+        <div class="relative flex items-center justify-center">
+          <!-- Cienkie zewnętrzne białe koło wokół zdjęcia -->
+          <div class="absolute w-[360px] h-[360px] lg:w-[400px] lg:h-[400px] rounded-full border border-white border-opacity-50"></div>
+          
+          <div class="relative">
+            <!-- Gradient border -->
+            <div class="bg-gradient-to-b from-[#7ad5e7] to-[#e3a1a1] p-[5px] rounded-full inline-block transition-all duration-500">
+              <div class="bg-white rounded-full p-[0px]">
+                <img
+                  id="trainer-photo"
+                  class="w-[240px] h-[240px] md:w-[260px] md:h-[260px] lg:w-[325px] lg:h-[325px] object-cover rounded-full transition-all duration-500"
+                  src="/images/trainers/trener_oferta.jpg"
+                  alt="Trener Marcin Wojciechowski"
+                  draggable="false"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Prawa strona - treść -->
+      <div class="w-full lg:w-[85%] mt-12 lg:mt-0 lg:-ml-40 relative z-20">
+        <div class="flex justify-center lg:justify-start text-center lg:text-left mb-8 lg:mb-12 lg:pl-32 xl:pl-40">
+          <h2 class="text-3xl text-brand-text-main md:text-4xl lg:text-5xl font-poppins mb-6 lg:mb-8 leading-tight">
+            <span class="font-extralight">Nasza </span>
+            <span class="font-bold">Kadra</span>
+          </h2>
+        </div>
+        <div id="trainer-desc-box" class="bg-gray-500  bg-opacity-5 backdrop-blur-[75px] rounded-[139px] p-8 lg:p-10 shadow-lg mx-auto lg:mx-0 max-w-3xl lg:min-h-[230px] flex flex-col justify-center transition-all duration-500" style="box-shadow: 12px 12px 25px 0px rgba(154, 156, 164, 0.12);">
+          <h3 id="trainer-name" class="text-white text-2xl font-poppins mb-4">
+            <span class="font-bold">Marcin </span>
+            <span class="font-extralight">Wojciechowski</span>
+          </h3>
+          <p id="trainer-description" class="text-white text-lg font-roboto leading-relaxed transition-opacity duration-300">
+         Opis trenera zajęć, najważniejsze cechy, doświadczenia.  
+          </p>
+        </div>
+        <!-- Wskaźniki -->
+        <div id="trainer-indicators" class="flex justify-center space-x-3 mt-6 lg:mt-8 relative z-20">
+          <!-- Przyciski wskaźników będą tutaj generowane dynamicznie przez skrypt -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+
+  // Definicja typów dla trenerów
+  interface Trainer {
+    name: string;
+    photo: string;
+    description: string;
+  }
+
+  // Inicjalizacja zmiennych karuzeli
+  let autoplayInterval: number | null = null;
+  let isInitialized = false;
+  let active = 0;
+
+  // Funkcja inicjalizacji karuzeli z płynnymi animacjami
+  const initCarousel = () => {
+    if (isInitialized) return;
+
+    // Dane trenerów
+    let trainersFromProps: Trainer[] = Array.from(document.querySelectorAll('[data-trainer]')).map(el => {
+      if (el && el.getAttribute('data-name') && el.getAttribute('data-photo') && el.getAttribute('data-description')) {
+        return {
+          name: el.getAttribute('data-name') || '',
+          photo: el.getAttribute('data-photo') || '',
+          description: el.getAttribute('data-description') || ''
+        };
+      }
+      return null;
+    }).filter(Boolean) as Trainer[];
+
+    const defaultTrainers: Trainer[] = [
+      {
+        name: 'Marcin Wojciechowski',
+        photo: '/images/trainers/trener_oferta.jpg',
+        description: 'Absolwent AFW, trener grup zaawansowanych. Dba o technikę i motywację zawodników.',
+      },
+      {
+        name: 'Paulina Nowak',
+        photo: '/images/trainers/trainer2.jpg',
+        description: 'Paulina – była gimnastyczka, trenerka dzieci i młodzieży. Specjalizuje się w pracy z najmłodszymi.',
+      },
+      {
+        name: 'Anna Kowalska',
+        photo: '/images/trainers/trainer3.jpg',
+        description: 'Anna – trenerka grup zaawansowanych. Dba o technikę i motywację zawodników.',
+      },
+    ];
+
+    const trainers: Trainer[] = trainersFromProps.length > 0 ? trainersFromProps : defaultTrainers;
+
+    // Elementy DOM
+    const photoEl = document.getElementById('trainer-photo') as HTMLImageElement | null;
+    const nameEl = document.getElementById('trainer-name');
+    const descriptionEl = document.getElementById('trainer-description');
+    const carouselRoot = document.getElementById('carousel-root');
+    const indicatorsContainer = document.getElementById('trainer-indicators'); // Get the container
+
+    if (!photoEl || !nameEl || !descriptionEl || !carouselRoot || !indicatorsContainer) return;
+
+    // Clear any existing indicators (e.g., from previous HMR)
+    indicatorsContainer.innerHTML = '';
+
+    // Dynamically create indicators
+    trainers.forEach((_, i) => {
+      const button = document.createElement('button');
+      button.classList.add('rounded-full', 'w-3', 'h-3', 'transition-all', 'duration-300');
+      button.setAttribute('aria-label', `Pokaż trenera ${i + 1}`);
+      button.setAttribute('data-idx', i.toString());
+      if (i === 0) {
+        button.classList.add('bg-[#7ad5e7]'); // First indicator active by default
+      } else {
+        button.classList.add('bg-white');
+      }
+      indicatorsContainer.appendChild(button);
+    });
+
+    const indicators = indicatorsContainer.querySelectorAll('button[data-idx]'); // Now select the dynamically created indicators
+
+    if (indicators.length === 0 && trainers.length > 0) {
+      console.error('Failed to create or find indicators.');
+      return; // Prevent further execution if indicators are missing
+    }
+
+    // Funkcja aktualizująca zawartość informacji o trenerze
+    const updateTrainerInfo = (idx: number) => {
+      // Zabezpieczenie przed indeksem spoza zakresu
+      const normalizedIdx = ((idx % trainers.length) + trainers.length) % trainers.length;
+      const trainer = trainers[normalizedIdx];
+      if (!trainer) return;
+      
+      // Aktualizacja zdjęcia z płynną animacją
+      const photoTransition = () => {
+        photoEl.style.opacity = '0';
+        photoEl.style.transform = 'scale(0.95)';
+        
+        setTimeout(() => {
+          // Aktualizacja źródła po zniknięciu
+          photoEl.src = trainer.photo;
+          photoEl.alt = `Trener ${trainer.name}`;
+          
+          // Pokaż z animacją
+          setTimeout(() => {
+            photoEl.style.opacity = '1';
+            photoEl.style.transform = 'scale(1)';
+          }, 50);
+        }, 300);
+      };
+      
+      // Aktualizacja informacji tekstowych z płynną animacją
+      const infoTransition = () => {
+        if (!nameEl || !descriptionEl) return;
+        
+        nameEl.style.opacity = '0';
+        descriptionEl.style.opacity = '0';
+        nameEl.style.transform = 'translateY(10px)';
+        descriptionEl.style.transform = 'translateY(10px)';
+        
+        setTimeout(() => {
+          // Aktualizacja imienia i nazwiska
+          const nameParts = trainer.name.split(' ');
+          const firstName = nameParts[0];
+          const lastName = nameParts.slice(1).join(' ');
+          nameEl.innerHTML = `<span class="font-bold">${firstName} </span><span class="font-extralight">${lastName}</span>`;
+          
+          // Aktualizacja opisu
+          descriptionEl.textContent = trainer.description;
+          
+          // Pokaż z animacją
+          setTimeout(() => {
+            nameEl.style.opacity = '1';
+            descriptionEl.style.opacity = '1';
+            nameEl.style.transform = 'translateY(0)';
+            descriptionEl.style.transform = 'translateY(0)';
+          }, 50);
+        }, 300);
+      };
+      
+      // Uruchom animacje
+      photoTransition();
+      infoTransition();
+      
+      // Aktualizacja wskaźników
+      indicators.forEach((indicator, i: number) => {
+        indicator.classList.toggle('bg-[#7ad5e7]', i === normalizedIdx);
+        indicator.classList.toggle('bg-white', i !== normalizedIdx);
+      });
+      
+      active = normalizedIdx; // Zapisanie znormalizowanego indeksu
+    };
+
+    // Dodanie płynnego przewijania automatycznego z requestAnimationFrame
+    let lastScrollTime = Date.now();
+    const scroll = () => {
+      const now = Date.now();
+      if (now - lastScrollTime >= 6000) { // Co 6 sekund
+        const nextActive = (active + 1) % trainers.length;
+        updateTrainerInfo(nextActive);
+        lastScrollTime = now;
+      }
+      autoplayInterval = requestAnimationFrame(scroll);
+    };
+    
+    // Obsługa wskaźników
+    indicators.forEach((btn, i: number) => {
+      btn.addEventListener('click', () => {
+        const newActive = i % trainers.length; // Upewnij się, że indeks jest w zakresie tablicy
+        if (newActive !== active) {
+          updateTrainerInfo(newActive);
+          active = newActive;
+          lastScrollTime = Date.now(); // Reset czasu autoscroll
+        }
+      });
+    });
+    
+    // Dodanie stylów tranzycji do obrazu i pól tekstowych
+    photoEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    nameEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    descriptionEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    
+    // Uruchomienie animacji
+    autoplayInterval = requestAnimationFrame(scroll);
+    
+    // Obsługa touch/swipe
+    let startX = 0;
+    let isDragging = false;
+    
+    const handlePointerDown = (e: MouseEvent | TouchEvent) => {
+      isDragging = true;
+      if ('touches' in e && e.touches[0]) {
+        startX = e.touches[0].clientX;
+      } else {
+        startX = (e as MouseEvent).clientX;
+      }
+    };
+    
+    const handlePointerMove = (e: MouseEvent | TouchEvent) => {
+      if (!isDragging) return;
+      
+      let currentX: number;
+      if ('touches' in e && e.touches[0]) {
+        currentX = e.touches[0].clientX;
+      } else {
+        currentX = (e as MouseEvent).clientX;
+      }
+      const diff = currentX - startX;
+      
+      if (Math.abs(diff) > 60) {
+        if (diff < 0) {
+          // Przesunięcie w lewo
+          const newActive = (active + 1) % trainers.length;
+          updateTrainerInfo(newActive);
+        } else {
+          // Przesunięcie w prawo
+          const newActive = (active - 1 + trainers.length) % trainers.length;
+          updateTrainerInfo(newActive);
+        }
+        
+        isDragging = false;
+        lastScrollTime = Date.now(); // Reset czasu autoscroll
+      }
+    };
+    
+    const handlePointerUp = () => {
+      isDragging = false;
+    };
+    
+    // Dodanie event listenerów
+    carouselRoot.addEventListener('pointerdown', handlePointerDown);
+    carouselRoot.addEventListener('pointermove', handlePointerMove);
+    carouselRoot.addEventListener('pointerup', handlePointerUp);
+    carouselRoot.addEventListener('touchstart', handlePointerDown);
+    carouselRoot.addEventListener('touchmove', handlePointerMove);
+    carouselRoot.addEventListener('touchend', handlePointerUp);
+    
+    // Inicjalizacja z pierwszym trenerem
+    updateTrainerInfo(0);
+    isInitialized = true;
+  };
+
+  // Inicjalizacja przy pierwszym załadowaniu
+  if (document.readyState === 'complete') {
+    initCarousel();
+  } else {
+    document.addEventListener('DOMContentLoaded', initCarousel, { once: true });
+  }
+ 
+  // Cleanup przy przejściu
+  document.addEventListener('astro:before-swap', () => {
+    if (autoplayInterval) {
+      cancelAnimationFrame(autoplayInterval);
+    }
+    isInitialized = false;
+  }, { once: true });
+  
+</script>

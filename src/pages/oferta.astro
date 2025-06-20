@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import TrainerCarousel from '../components/TrainerCarousel.astro';
 ---
 
 <Layout title="Oferta - Małopolska Akademia Gimnastyki">
@@ -12,5 +13,511 @@ import Hero from '../components/Hero.astro';
     >
       Odkryj różnorodne programy treningowe dostosowane do wieku i umiejętności
     </Hero>
+
+ 
+    
+
+    <!-- Sekcja: Wprowadzenie do oferty (logo + nagłówek) -->
+    <section id="intro-zajecia" class="py-32 lg:py-42 px-24 sm:px-6 lg:px-8 bg-white text-slate-800">
+      <div class="max-w-5xl mx-auto flex flex-col lg:flex-row items-center lg:justify-center gap-12 lg:gap-24 text-center lg:text-left" data-aos="fade-up">
+        <!-- Logo Akademii z subtelną poświatą -->
+        <div class="relative flex-shrink-0">
+          <div class="absolute inset-0 rounded-full blur-3xl bg-gradient-to-br from-[#00b3d4]/40 via-[#e3a1a1]/40 to-violet-400/40 scale-110"></div>
+          <img src="/images/logo/logo_akademia.svg" alt="Logo Małopolskiej Akademii Gimnastyki" class="relative w-52 lg:w-64 drop-shadow-xl" loading="lazy" />
+        </div>
+
+        <!-- Tekst -->
+        <div class="flex-1 max-w-xl lg:max-w-none">
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-poppins mb-6 lg:mb-12 leading-tight">
+            <span class="font-bold">Nasze </span>
+            <span class="font-extralight">Zajęcia</span>
+          </h2>
+          <p class="text-slate-600 mb-8 max-w-prose">
+            Odkryj starannie przygotowany program treningowy, który rozwija zwinność, siłę i pewność siebie. Nasze zajęcia prowadzone są w kameralnych grupach, dzięki czemu każdy gimnastyk otrzymuje indywidualne wskazówki i wsparcie profesjonalnych trenerów.
+          </p>
+
+          <!-- Metryczki -->
+          <div class="flex items-center gap-8 text-sm text-slate-500 font-medium">
+            <div class="flex flex-col items-center">
+              <span class="text-lg font-bold text-slate-900">60&nbsp;minut</span>
+              <span>Czas trwania zajęć</span>
+            </div>
+            <div class="h-6 w-px bg-slate-300" aria-hidden="true"></div>
+            <div class="flex flex-col items-center">
+              <span class="text-lg font-bold text-slate-900">25&nbsp;osób</span>
+              <span>Średnia wielkość grupy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sekcja: Nasz Sprzęt -->
+    <section id="sprzet" class="py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white text-slate-800">
+      <div class="max-w-5xl mx-auto flex flex-col-reverse lg:flex-row items-center lg:items-start gap-12 lg:gap-24" data-aos="fade-up">
+        <!-- Tekst -->
+        <div class="flex-1 max-w-xl lg:max-w-none text-center lg:text-left">
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-poppins mb-6 lg:mb-12 leading-tight">
+            <span class="font-extralight">Nasz </span>
+            <span class="font-bold">Sprzęt</span>
+          </h2>
+          <p class="text-slate-600 mb-6 max-w-prose mx-auto lg:mx-0">
+            Korzystamy wyłącznie z certyfikowanego, profesjonalnego sprzętu gimnastycznego, który zapewnia maksymalne bezpieczeństwo i komfort treningu – od elastycznych mat po solidne poręcze.
+          </p>
+          <ul class="flex flex-wrap justify-center lg:justify-start gap-4 text-slate-500 font-medium mt-12">
+            <li data-equipment="airtrack" class="equipment-item px-4 py-2 border rounded-full cursor-pointer hover:bg-slate-100 bg-[#00b3d4] text-white border-[#00b3d4]">airtrack</li>
+            <li data-equipment="batut" class="equipment-item px-4 py-2 border border-slate-300 rounded-full cursor-pointer hover:bg-slate-100">batut</li>
+            <li data-equipment="drazek" class="equipment-item px-4 py-2 border border-slate-300 rounded-full cursor-pointer hover:bg-slate-100">drążek</li>
+            <li data-equipment="kola" class="equipment-item px-4 py-2 border border-slate-300 rounded-full cursor-pointer hover:bg-slate-100">koła</li>
+          </ul>
+        </div>
+        <!-- Obraz -->
+        <div class="flex-shrink-0">
+          <img id="equipment-img" src="/images/arts/airtrack.png" alt="Airtrack" class="w-72 lg:w-96 transition-transform duration-700 hover:scale-125" loading="lazy" />
+
+        <script is:inline>
+          const equipmentMap = {
+            airtrack: '/images/arts/airtrack.png',
+            batut: '/images/arts/batut.png',
+            drazek: '/images/arts/drazek.png',
+            kola: '/images/arts/kola.png',
+            mata: '/images/arts/mata.png',
+          };
+          const equipmentItems = document.querySelectorAll('.equipment-item');
+          const equipmentImg = document.getElementById('equipment-img');
+          
+          // Funkcja do aktywacji elementu sprzętu
+          function activateEquipment(item) {
+            const key = item.dataset.equipment;
+            if (equipmentMap[key]) {
+              equipmentImg.src = equipmentMap[key];
+            }
+            equipmentItems.forEach(i => i.classList.remove('bg-[#00b3d4]','text-white','border-[#00b3d4]'));
+            item.classList.add('bg-[#00b3d4]','text-white','border-[#00b3d4]');
+          }
+          
+          // Dodanie obsługi kliknięć
+          equipmentItems.forEach(item => {
+            item.addEventListener('click', () => {
+              activateEquipment(item);
+            });
+          });
+        </script>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sekcja: Przykładowe Ćwiczenia -->
+    <section id="cwiczenia" class="relative overflow-hidden pt-8 pb-20 lg:pt-2 lg:pb-16 px-4 sm:px-6 lg:px-8 bg-white text-slate-800">
+      <!-- Rozmyte gradientowe plamy w tle -->
+      <div class="absolute -left-40 -top-40 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-white via-[#e3a1a1]/40 to-[#00b3d4]/40 blur-3xl -z-10"></div>
+
+
+
+      <div class="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-24 relative">
+        <!-- Zdjęcie w okręgu z obramowaniem i białymi pierścieniami -->
+        <div class="relative flex-shrink-0">
+          <!-- gradientowe plamy pod zdjęciem -->
+          <div class="absolute -z-10 -left-28 -top-24">
+            <div class="bg-[#a0b9f9] rounded-[50%] w-[277.96px] h-[393.18px] absolute left-0 top-0" style="filter: blur(150px);"></div>
+            <div class="bg-[#f2afda] rounded-[50%] w-[224.72px] h-[317.9px] absolute left-[191.19px] top-[24.9px]" style="filter: blur(150px);"></div>
+          </div>
+          <!-- pusty element utrzymujący rozmiar koła oraz białe pierścienie -->
+          <div class="absolute inset-0 rounded-full border border-white/50"></div>
+          <div class="absolute inset-3 rounded-full border border-white/40"></div>
+          <div class="w-72 h-72 lg:w-80 lg:h-80"></div>
+          <img id="exercise-img" src="/images/gallery/foto1.jpg" alt="Przykładowe ćwiczenie" class="absolute inset-4 rounded-full object-cover w-[calc(100%-2rem)] h-[calc(100%-2rem)]" loading="lazy" />
+          <!-- Dekoracyjny element art13 -->
+
+        </div>
+
+        <!-- Tekst -->
+        <div class="flex-1 text-center lg:text-left">
+          <h2 class="flex items-center justify-center lg:justify-start text-3xl md:text-4xl lg:text-5xl font-poppins mb-6 lg:mb-8 leading-tight">
+            <div class="flex flex-col mr-6">
+              <span class="font-bold leading-tight">Przykładowe</span>
+              <span class="font-extralight leading-tight">Ćwiczenia</span>
+            </div>
+            <img src="/icons/workout.svg" alt="Ikona ćwiczeń" class="hidden lg:inline-block w-24 h-24 ml-8" />
+          </h2>
+          <p class="text-slate-600 mb-6 max-w-prose mx-auto lg:mx-0">
+            Zajęcia gimnastyczne w Małopolskiej Akademii Gimnastyki łączą technikę, zabawę i wyzwania dopasowane do poziomu uczestników. Najmłodsi rozwijają koordynację i
+             współpracę podczas skoków przez przeszkody i ćwiczeń z piłkami. Starsze dzieci wzmacniają mięśnie, poprawiają gibkość i uczą się podstawowych elementów gimnastycznych. 
+             Młodzież doskonali siłę, precyzję i charakter, trenując wejścia na drążek, akrobacje na ścieżce air track i rzuty przyborami. Każdy trening rozwija ciało i umysł, budując pewność 
+             siebie i radość z ruchu. Od pierwszych przewrotów do mistrzowskich układów — każdy ruch oznacza postęp.
+          </p>
+
+          <ul class="flex flex-wrap justify-center lg:justify-start gap-6 text-slate-700 font-light">
+            <li data-exercise="1" class="exercise-item px-4 py-2 border rounded-full cursor-pointer hover:bg-slate-100 bg-[#00b3d4] text-white border-[#00b3d4]">Ćwiczenie 1</li>
+            <li data-exercise="2" class="exercise-item px-4 py-2 border border-slate-300 rounded-full cursor-pointer hover:bg-slate-100">Ćwiczenie 2</li>
+            <li data-exercise="3" class="exercise-item px-4 py-2 border border-slate-300 rounded-full cursor-pointer hover:bg-slate-100">Ćwiczenie 3</li>
+          </ul>
+        </div>
+
+
+      </div>
+
+      <script is:inline>
+        const exerciseMap = {
+          1: '/images/gallery/foto1.jpg',
+          2: '/images/gallery/foto2.jpg',
+          3: '/images/gallery/foto3.jpg',
+        };
+        const exerciseItems = document.querySelectorAll('.exercise-item');
+        const exerciseImg = document.getElementById('exercise-img');
+        exerciseItems.forEach(item => {
+          item.addEventListener('click', () => {
+            const key = item.dataset.exercise;
+            if (exerciseMap[key]) {
+              exerciseImg.src = exerciseMap[key];
+            }
+            exerciseItems.forEach(i => i.classList.remove('bg-[#00b3d4]','text-white','border-[#00b3d4]'));
+            item.classList.add('bg-[#00b3d4]','text-white','border-[#00b3d4]');
+          });
+        });
+      </script>
+
+    </section>
+
+    <!-- Sekcja: Nasze Grupy -->
+    <section id="grupy" class="py-16 lg:py-32 px-4 sm:px-6 lg:px-8 bg-white text-slate-800" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center lg:items-start gap-12 lg:gap-24">
+        <!-- Lewa kolumna: nagłówek i opis -->
+        <div class="flex-1 max-w-xl lg:max-w-none text-center lg:text-left">
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-poppins mb-6 lg:mb-8 leading-tight">
+            <span class="font-extralight">Nasze </span>
+            <span class="font-bold">Grupy</span>
+          </h2>
+          <p class="text-slate-600 mb-8 lg:mb-12 max-w-prose mx-auto lg:mx-0">
+            W Małopolskiej Akademii Gimnastyki wierzymy, że sukces zaczyna się od treningu dopasowanego do wieku i możliwości.
+            Dlatego prowadzimy zajęcia w trzech starannie dobranych grupach wiekowych. Każda z nich ma własny program, cele
+            oraz tempo pracy, aby uczestnicy czuli się zmotywowani i bezpiecznie rozwijali swoje umiejętności.
+          </p>
+          <a href="/grafik" class="inline-block rounded-[75px] border border-brand-text-main px-12 py-3 font-roboto font-medium text-xl text-brand-text-main hover:bg-brand-text-main hover:text-white transition-colors duration-300">Sprawdź Grafik</a>
+        </div>
+
+        <!-- Prawa kolumna: listy grup -->
+        <ul class="flex flex-col gap-6 w-full max-w-xs mx-auto lg:mx-0 list-none">
+          <li class="text-center text-white text-lg font-poppins font-semibold py-4 rounded-full bg-purple-300 transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer">
+            Grupa 3–7 lat
+          </li>
+          <li class="text-center text-white text-lg font-poppins font-semibold py-4 rounded-full bg-purple-400 transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer">
+            Grupa 7–9 lat
+          </li>
+          <li class="text-center text-white text-lg font-poppins font-semibold py-4 rounded-full bg-purple-500 transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer">
+            Grupa 11+ lat
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Sekcja: Nasze Lokalizacje -->
+    <section id="lokalizacje" class="pt-8 pb-20 lg:pt-16 lg:pb-32 px-4 sm:px-6 lg:px-8 bg-white text-slate-800" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto text-center mb-12 lg:mb-20">
+        <h2 class="inline-flex items-center justify-center text-3xl md:text-4xl lg:text-5xl font-poppins leading-tight mb-6">
+          <span class="font-extralight mr-2">Nasze</span>
+          <span class="font-bold">Lokalizacje</span>
+          <img src="/icons/geopin.svg" alt="pin" class="w-16 h-16 ml-4" />
+        </h2>
+        <p class="text-slate-600 max-w-prose mx-auto">
+          Poznaj miejsca, w których trenujemy – wygodne sale dostosowane do potrzeb gimnastyki artystycznej i akrobatycznej. Prowadzimy zajęcia w Mszanie Dolnej oraz Nowym Targu. 
+        </p>
+      </div>
+
+      <!-- Grafika z okręgami i opisami miast -->
+      <div class="relative flex flex-col md:flex-row items-center justify-between gap-8 max-w-5xl mx-auto">
+        <!-- Nowy Targ (lewa strona) -->
+        <div class="order-2 md:order-1 w-full md:w-1/4 text-center md:text-right">
+          <div class="-mt-12 md:mt-0">
+            <h3 class="font-poppins text-xl lg:text-2xl text-slate-800 mb-1">Nowy Targ</h3>
+            <p class="text-slate-600 font-medium text-lg">Plac Evry 6</p>
+          </div>
+        </div>
+        
+        <!-- Środkowa część z grafiką -->
+        <div class="order-1 md:order-2 w-full md:w-2/4 relative flex items-center justify-center mb-12 md:mb-0">
+          <!-- Grafika okręgów -->
+          <div class="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
+            <img src="/icons/localizations.svg" alt="Okręgi lokalizacji" class="w-full h-full object-contain animate-spin-slow" />
+            
+            <!-- Dekoracyjny blob w środku -->
+            <img src="/images/arts/art13.png" alt="Dekoracja" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 object-contain transition-transform duration-300 hover:scale-125 z-10" />
+            
+            <!-- Usunięto nadmiarowe punkty na okręgach -->
+          </div>
+        </div>
+        
+        <!-- Mszana Dolna (prawa strona) -->
+        <div class="order-3 w-full md:w-1/4 text-center md:text-left">
+          <div class="-mt-12 md:mt-0">
+            <h3 class="font-poppins text-xl lg:text-2xl text-slate-800 mb-1">Mszana Dolna</h3>
+            <p class="text-slate-600 font-medium text-lg">ul. Spadochroniarzy 25</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sekcja: Kadra (Karuzela trenerów) -->
+    <TrainerCarousel />
+
+    <!-- Sekcja: Cennik Zajęć -->
+    <section class="relative py-24 flex justify-center overflow-x-auto">
+      <div class="relative flex flex-col items-stretch space-y-6 px-4 lg:space-y-0 lg:px-0 lg:block w-full lg:w-[1051.6px] lg:h-[900px]">
+        <!-- Rozmyte elipsy w tle -->
+        <div class="hidden lg:block -z-10 bg-[#a0b9f9] rounded-[50%] w-[531.06px] h-[751.18px] absolute left-[257px] top-[206px] blur-[150px]"></div>
+        <div class="hidden lg:block -z-10 bg-[#f2afda] rounded-[50%] w-[429.34px] h-[607.36px] absolute left-[622.27px] top-[253.57px] blur-[150px]"></div>
+
+        <!-- Niebieska karta z ceną -->
+        <div class="rounded-3xl w-full lg:w-[370px] h-auto lg:h-[347px] lg:absolute lg:left-0 lg:top-[438px] mb-6 lg:mb-0 flex order-3 lg:order-none z-10 flex-col items-center justify-center py-6 lg:py-0 px-4 text-white transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-1.5" style="
+            background: linear-gradient(
+                180deg,
+                rgba(0, 179, 212, 0.95) 0%,
+                rgba(0, 179, 212, 1) 100%
+              );
+            box-shadow: 0px 7.5px 30px 0px rgba(0, 0, 0, 0.18),
+              5.25px 5.25px 30px 0px rgba(0, 179, 212, 0.25);
+          ">
+          <div class="font-poppins text-5xl leading-none">
+            120 <span class="text-3xl align-middle">zł</span>
+          </div>
+          <div class="font-poppins font-thin text-3xl mt-2">miesiąc</div>
+        </div>
+
+        <!-- Biała karta z listą korzyści -->
+        <div class="rounded-3xl w-full lg:w-[649px] h-auto lg:h-[347px] lg:absolute lg:left-[391px] lg:top-[438px] px-6 md:px-14 py-8 md:py-10 order-2 lg:order-none z-10 transition-all duration-500 ease-out hover:scale-[1.01] hover:-translate-y-1" style="
+            background: linear-gradient(
+                180deg,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 0.03) 100%
+              ),
+              linear-gradient(to left, #ffffff, #ffffff);
+            box-shadow: 0px 7.5px 30px 0px rgba(0, 0, 0, 0.18),
+              5.25px 5.25px 30px 0px rgba(70, 143, 239, 0.135);
+          ">
+          <ul class="space-y-6 text-[#575757] text-xl font-poppins">
+            <li class="flex items-center"><svg class="w-6 h-6 text-[#00b2d3] mr-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>4 zajęcia w miesiącu</li>
+            <li class="flex items-center"><svg class="w-6 h-6 text-[#00b2d3] mr-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>intensywny rozwój umiejętności</li>
+            <li class="flex items-center"><svg class="w-6 h-6 text-[#00b2d3] mr-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>profesjonalna opieka trenerska</li>
+            <li class="flex items-center"><svg class="w-6 h-6 text-[#00b2d3] mr-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>dostęp do sprzętu i sali gimnastycznej</li>
+          </ul>
+          <div class="border-t border-[#bcbcbc] mt-8 pt-4 text-xs text-[#575757] font-poppins">
+            każdego uczestnika obowiązuje regulamin zajęć. Zapis na zajęcia jest jednoznaczny z jego zapoznaniem i akceptacją. Płatność do 10 dnia każdego miesiąca
+          </div>
+        </div>
+
+        <!-- Biała karta nagłówka -->
+        <div class="rounded-3xl w-full lg:w-[1040px] h-auto lg:h-[189px] lg:absolute lg:left-0 lg:top-[222px] flex order-1 lg:order-none z-10 flex-col items-center justify-center py-6 lg:py-0 px-4 text-black transition-all duration-500 ease-out hover:scale-[1.01] hover:-translate-y-1" style="
+            background: linear-gradient(
+                180deg,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 0.03) 100%
+              ),
+              linear-gradient(to left, #ffffff, #ffffff);
+            box-shadow: 0px 7.5px 30px 0px rgba(0, 0, 0, 0.18),
+              5.25px 5.25px 30px 0px rgba(70, 143, 239, 0.135);
+          ">
+          <h2 class="font-poppins text-4xl"><span class="font-normal">Cennik </span><span class="font-semibold">Zajęć</span></h2>
+          <p class="font-poppins font-thin text-2xl mt-2">Małopolska Akademia Gimnastyki</p>
+        </div>
+
+        <!-- Dolna biała karta z przyciskami -->
+        <div class="rounded-3xl w-full lg:w-[1040px] h-auto lg:h-[84px] lg:absolute lg:left-0 lg:top-[812px] flex flex-col sm:flex-row order-4 lg:order-none z-10 mt-6 lg:mt-0 items-center justify-center gap-10 py-6 lg:py-0 px-4 transition-all duration-500 ease-out hover:scale-[1.01] hover:-translate-y-1" style="
+            background: linear-gradient(
+                180deg,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 0.03) 100%
+              ),
+              linear-gradient(to left, #ffffff, #ffffff);
+            box-shadow: 0px 7.5px 30px 0px rgba(0, 0, 0, 0.18),
+              5.25px 5.25px 30px 0px rgba(70, 143, 239, 0.135);
+          ">
+          <a href="/kontakt#formularz" class="text-[#7c7c7c] font-poppins text-base px-8 py-2 border border-[#bcbcbc] rounded-full hover:bg-gray-100 transition-colors">Zapisz się</a>
+          <a href="/regulamin-klubu" class="text-[#7c7c7c] font-poppins text-base px-8 py-2 border border-[#bcbcbc] rounded-full hover:bg-gray-100 transition-colors">Regulamin Zajęć</a>
+        </div>
+
+        <!-- Dekoracyjna grafika z efektem paralaksy poziomej -->
+        <img src="/images/arts/art14.png" alt="decor" class="hidden lg:block z-20 w-[396px] h-[396px] absolute left-[820px] top-0 transition-transform duration-300 ease-out parallax-element" data-parallax-direction="horizontal" data-parallax-speed="0.05" />
+      </div>
+    </section>
+
+    <!-- Sekcja: Opis obozów -->
+    <section id="obozy" class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12" data-aos="fade-up">
+          <h2 class="text-3xl md:text-4xl font-poppins mb-4">
+            <span class="font-bold">Obozy </span>
+            <span class="font-extralight">Sportowe</span>
+          </h2>
+          <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+            Organizujemy letnie i zimowe obozy sportowe, które łączą intensywny trening gimnastyczny z wypoczynkiem i dobrą zabawą.
+          </p>
+        </div>
+        
+        <div class="space-y-16">
+          <!-- Obóz letni -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden" data-aos="fade-up">
+            <div class="lg:flex">
+              <div class="lg:w-1/2">
+                <div class="relative h-64 lg:h-full">
+                  <img 
+                    src="/images/placeholders/venti-views-I1EWTM5mFEM-unsplash.jpg" 
+                    alt="Obóz letni nad morzem" 
+                    class="w-full h-full object-cover"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent flex items-center justify-center">
+                    <div class="text-white font-poppins font-bold text-3xl lg:hidden px-4 text-center">
+                      Obozy Letnie
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6 md:p-8 lg:w-1/2">
+                <h3 class="text-2xl font-poppins font-bold mb-4 text-gray-800 hidden lg:block">Obozy Letnie nad morzem</h3>
+                <p class="text-gray-600 mb-6">
+                  Nasze letnie obozy sportowe to idealne połączenie intensywnego treningu gimnastycznego z wypoczynkiem nad polskim morzem. Podczas obozu dzieci trenują dwa razy dziennie pod okiem doświadczonych trenerów, doskonaląc swoje umiejętności gimnastyczne. Poza treningami organizujemy wycieczki, gry zespołowe, zajęcia integracyjne oraz czas na plażowanie i kąpiele morskie (pod nadzorem ratowników).
+                </p>
+                <div class="mb-6">
+                  <h4 class="font-medium text-gray-800 mb-2">Co oferujemy:</h4>
+                  <ul class="space-y-1">
+                    <li class="flex items-center">
+                      <svg class="h-4 w-4 text-[#00b3d4] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-gray-600">10 dni intensywnych treningów (2 treningi dziennie)</span>
+                    </li>
+                    <li class="flex items-center">
+                      <svg class="h-4 w-4 text-[#00b3d4] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-gray-600">Zakwaterowanie w ośrodku blisko plaży</span>
+                    </li>
+                    <li class="flex items-center">
+                      <svg class="h-4 w-4 text-[#00b3d4] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-gray-600">Pełne wyżywienie (4 posiłki dziennie)</span>
+                    </li>
+                    <li class="flex items-center">
+                      <svg class="h-4 w-4 text-[#00b3d4] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-gray-600">Opieka wykwalifikowanej kadry</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Obóz zimowy -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden" data-aos="fade-up">
+            <div class="lg:flex flex-row-reverse">
+              <div class="lg:w-1/2">
+                <div class="relative h-64 lg:h-full">
+                  <img 
+                    src="/images/placeholders/kike-vega-F2qh3yjz6Jk-unsplash (1).jpg" 
+                    alt="Obóz zimowy w górach" 
+                    class="w-full h-full object-cover"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-l from-black/40 to-transparent flex items-center justify-center">
+                    <div class="text-white font-poppins font-bold text-3xl lg:hidden px-4 text-center">
+                      Obozy Zimowe
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6 md:p-8 lg:w-1/2">
+                <h3 class="text-2xl font-poppins font-bold mb-4 text-gray-800 hidden lg:block">Obozy Zimowe w górach</h3>
+                <p class="text-gray-600 mb-6">
+                  Zimowe obozy sportowe łączą treningi gimnastyczne z zimowymi aktywnościami w górach. Uczestnicy trenują codziennie, doskonaląc swoje umiejętności w profesjonalnej sali gimnastycznej. Popołudniami organizujemy zajęcia na śniegu, w tym naukę lub doskonalenie jazdy na nartach lub snowboardzie. Wieczorami odbywają się zajęcia integracyjne, gry i zabawy, które budują poczucie wspólnoty i uczą pracy zespołowej.
+                </p>
+                <div class="mb-6">
+                  <h4 class="font-medium text-gray-800 mb-2">Co oferujemy:</h4>
+                  <ul class="space-y-1">
+                    <li class="flex items-center">
+                      <svg class="h-4 w-4 text-[#e3a1a1] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-gray-600">7 dni aktywnego wypoczynku z treningami</span>
+                    </li>
+                    <li class="flex items-center">
+                      <svg class="h-4 w-4 text-[#e3a1a1] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-gray-600">Zakwaterowanie w górskim pensjonacie</span>
+                    </li>
+                    <li class="flex items-center">
+                      <svg class="h-4 w-4 text-[#e3a1a1] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-gray-600">Pełne wyżywienie (3 posiłki + podwieczorek)</span>
+                    </li>
+                    <li class="flex items-center">
+                      <svg class="h-4 w-4 text-[#e3a1a1] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-gray-600">Nauka lub doskonalenie jazdy na nartach/snowboardzie</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Zachęta do udziału w obozach -->
+        <div class="mt-12 text-center" data-aos="fade-up">
+          <p class="text-gray-600 max-w-3xl mx-auto mb-8">
+            Obozy to doskonała okazja, aby intensywnie rozwijać swoje umiejętności gimnastyczne, poznać nowych przyjaciół i aktywnie spędzić czas. Nasi trenerzy dbają o bezpieczeństwo oraz przyjazną atmosferę, sprzyjającą zarówno nauce, jak i wspaniałej zabawie. Liczba miejsc na obozach jest ograniczona, dlatego zachęcamy do wczesnej rezerwacji.  
+          </p>
+          <a href="/kontakt" class="inline-flex items-center justify-center rounded-md bg-[#00b3d4] px-6 py-3 font-medium text-white shadow-sm hover:bg-[#009cb8] transition-colors duration-300">
+            Zapytaj o najbliższe obozy
+          </a>
+        </div>
+      </div>
+    </section>
   </main>
+
+<script>
+  // Skrypt do obsługi efektu paralaksy
+  document.addEventListener('DOMContentLoaded', function() {
+    const parallaxElements = document.querySelectorAll('.parallax-element');
+    
+    if (parallaxElements.length > 0) {
+      // Zapisz początkową pozycję elementu
+      const initialPositions = new Map();
+      
+      parallaxElements.forEach(element => {
+        const htmlElement = element as HTMLElement;
+        const rect = htmlElement.getBoundingClientRect();
+        initialPositions.set(element, {
+          left: rect.left,
+          top: rect.top
+        });
+      });
+      
+      window.addEventListener('scroll', function() {
+        const scrollPosition = window.pageYOffset;
+        
+        parallaxElements.forEach(element => {
+          const speed = parseFloat(element.getAttribute('data-parallax-speed') || '0.15');
+          const direction = element.getAttribute('data-parallax-direction') || 'vertical';
+          const htmlElement = element as HTMLElement;
+          
+          // Oblicz przesunięcie w zależności od kierunku
+          if (direction === 'horizontal') {
+            // Efekt poziomy (lewo-prawo) - ujemna wartość dla ruchu w lewo przy przewijaniu w dół
+            const offsetX = -scrollPosition * speed;
+            htmlElement.style.transform = `translateX(${offsetX}px)`;
+          } else {
+            // Efekt pionowy (góra-dół)
+            const offsetY = scrollPosition * speed;
+            htmlElement.style.transform = `translateY(${offsetY}px)`;
+          }
+        });
+      }, { passive: true }); // passive: true dla lepszej wydajności
+    }
+  });
+</script>
+
 </Layout>

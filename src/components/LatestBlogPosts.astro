@@ -1,0 +1,62 @@
+---
+import { getBlogPosts } from '../lib/contentAdapter';
+
+// Pobierz tylko 3 najnowsze wpisy
+const allPosts = await getBlogPosts();
+const latestPosts = allPosts.slice(0, 3);
+
+// Formatowanie daty w stylu "8 maja 2025"
+const dateFormatter = new Intl.DateTimeFormat('pl-PL', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<section class="w-full py-16 bg-white">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {latestPosts.length === 0 ? (
+        <div class="col-span-3 text-center py-4">
+          <p class="text-gray-500">Wkrótce pojawią się nowe wpisy!</p>
+        </div>
+      ) : (
+        latestPosts.map((post) => (
+          <div class="flex flex-col bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div class="relative h-48 overflow-hidden">
+              <img 
+                src={post.image || '/images/hero/bruce-mars-HHXdPG_eTIQ-unsplash.jpg'} 
+                alt={post.title} 
+                class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+              />
+              <div class="absolute top-4 left-4 rounded bg-white px-2 py-1 text-xs font-medium text-gray-700">
+                {post.date instanceof Date 
+                  ? dateFormatter.format(post.date) 
+                  : dateFormatter.format(new Date(post.date))}
+              </div>
+            </div>
+            
+            <div class="flex flex-1 flex-col p-6">
+              <h3 class="mb-3">
+                <span class="font-bold text-xl text-[#4A4A4A]">{post.title?.split(' ')[0] || ''}</span>
+                <span class="font-extralight text-xl text-[#4A4A4A]">{post.title?.split(' ').slice(1).join(' ') || ''}</span>
+              </h3>
+              
+              <p class="mb-4 text-gray-600 line-clamp-3 font-roboto">{post.description || 'Kliknij, aby przeczytać więcej'}</p>
+              
+              <a 
+                href={`/blog/${post.slug}/`} 
+                class="mt-auto inline-flex items-center font-medium text-[#00B3D4] hover:text-[#E3A1A1] transition-colors duration-300"
+              >
+                Czytaj więcej
+                <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+  </div>
+</section>
