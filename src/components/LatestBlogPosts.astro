@@ -13,7 +13,7 @@ const dateFormatter = new Intl.DateTimeFormat('pl-PL', {
 });
 ---
 
-<section class="w-full py-16 bg-white">
+<section class="w-full pt-6 py-16 bg-white">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {latestPosts.length === 0 ? (
@@ -22,7 +22,7 @@ const dateFormatter = new Intl.DateTimeFormat('pl-PL', {
         </div>
       ) : (
         latestPosts.map((post) => (
-          <div class="flex flex-col bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+          <div class="flex flex-col bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
             <div class="relative h-48 overflow-hidden">
               <img 
                 src={post.image || '/images/hero/bruce-mars-HHXdPG_eTIQ-unsplash.jpg'} 

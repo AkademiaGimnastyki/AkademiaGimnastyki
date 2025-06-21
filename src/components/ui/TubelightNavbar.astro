@@ -22,7 +22,7 @@ const activeItem = items.find(item => item.url === currentPath) ?? items[0];
   ]}
   style="z-index: 100;"
 >
-  <nav class="flex items-center gap-1 sm:gap-3 bg-[#9E75DC]/50 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg overflow-x-auto max-w-full no-scrollbar pointer-events-auto">
+  <nav class="flex items-center gap-1 sm:gap-3 bg-[#9E75DC]/60 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg overflow-x-auto max-w-full no-scrollbar pointer-events-auto">
     {
       items.map((item) => {
         const isActive = activeItem?.name && item.name === activeItem.name;

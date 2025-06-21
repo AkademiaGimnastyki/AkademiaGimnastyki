@@ -4,17 +4,206 @@ import DownloadPdf from '../components/ui/DownloadPdf.astro';
 ---
 
 <Layout title="Regulamin - Małopolska Akademia Gimnastyki">
-  <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-6">Regulamin Małopolska Akademia Gimnastyki</h1>
+  <!-- HERO -->
+  <section class="relative overflow-hidden w-full bg-white py-20 md:pt-28 md:pb-2">
+    <div class="container mx-auto text-center">
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-poppins mb-2 leading-tight">
+        <span class="font-bold">Regulamin</span>
+      </h1>
+      <h2 class="text-2xl md:text-3xl lg:text-4xl font-poppins mb-6 lg:mb-12 leading-tight">
+        <span class="font-extralight">Małopolska Akademia Gimnastyki</span>
+      </h2>
+    </div>
+  </section>
+
+  <!-- Logo klubu wycentrowane -->
+  <div class="flex justify-center items-center py-8">
+    <div class="relative flex-shrink-0">
+      <div class="absolute inset-0 rounded-full blur-3xl bg-gradient-to-br from-[#00b3d4]/40 via-[#e3a1a1]/40 to-violet-400/40 scale-110"></div>
+      <img src="/images/logo/logo_akademia.svg" alt="Logo Małopolskiej Akademii Gimnastyki" class="relative w-40 md:w-52 drop-shadow-xl" loading="lazy" />
+    </div>
+  </div>
+
+  <p class="text-center mb-8">
+    Niniejszy regulamin przedstawia prawa i obowiązki osób uczestniczących w
+    zajęciach organizowanych przez <br />Klub Sportowy Małopolska Akademia Gimnastyki oraz
+    zasady organizacyjno-szkoleniowe.
+  </p>
     
-    <div class="mb-8">
-      <p class="mb-4">Zapoznaj się z regulaminem naszego klubu. Kliknij przycisk poniżej, aby pobrać dokument w formacie PDF.</p>
-      
+  <!-- TREŚĆ -->
+  <section class="container mx-auto px-4 -mt-10 md:-mt-16 pb-16">
+    <article class="max-w-4xl mx-auto bg-white rounded-2xl px-6 md:px-10 py-12 prose prose-gray md:prose-lg prose-headings:text-[#00b3d4] prose-a:text-[#e3a1a1] prose-li:mb-2">
+
+    <article class="prose prose-gray max-w-none prose-headings:text-center">
+      <div class="group mt-10 p-12 mb-8 rounded-3xl transition-all duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1.5" style="
+            background: linear-gradient(
+                180deg,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 0.03) 100%
+              ),
+              linear-gradient(to left, #ffffff, #ffffff);
+            box-shadow: 0px 7.5px 30px 0px rgba(0, 0, 0, 0.18),
+              5.25px 5.25px 30px 0px rgba(70, 143, 239, 0.135);
+          ">
+        <div class="flex flex-col items-start gap-4">
+          <h2 class="text-2xl font-bold text-brand-text-main group-hover:text-[#00b3d4] transition-colors duration-500 mt-0">Dane Klubu</h2>
+          <p class="text-brand-text-main leading-relaxed mb-0">
+            Klub Sportowy Małopolska Akademia Gimnastyki<br />
+            NIP 7372249018<br />
+            KRS 0001133284<br />
+            Numer konta 2222 2223 3442 32443 5353<br />
+            Poręba Wielka 162, 34-735 Niedźwiedź
+          </p>
+        </div>
+      </div>
+     
+
+      <h2 class="flex items-center justify-center mt-12 mb-6"><span class="flex items-center justify-center w-8 h-8 mr-3 rounded-full bg-[#e3a1a1]/20 text-[#e3a1a1] font-bold">1</span> <span class="font-bold">Uczestnictwo w zajęciach</span></h2>
+      <ul class="space-y-3 list-disc pl-5">
+        <li>
+          Zajęcia prowadzą wykwalifikowani trenerzy gimnastyki zgodnie z
+          autorskim programem szkolenia.
+        </li>
+        <li>
+          Decyzja o uczestnictwie jest równoznaczna z akceptacją regulaminu; w
+          przypadku osób niepełnoletnich odpowiedzialność ponoszą opiekunowie
+          prawni.
+        </li>
+        <li>
+          W zajęciach mogą brać udział wyłącznie osoby zdrowe, które wypełniły
+          formularz zgłoszeniowy, zostały przyjęte do grup oraz opłaciły zajęcia
+          zgodnie z cennikiem.
+        </li>
+        <li>
+          Na zajęcia przychodzimy punktualnie; grupy mają ograniczoną liczbę
+          miejsc.
+        </li>
+        <li>
+          Wejście na salę możliwe jest tylko za zgodą trenera, w wyznaczonym
+          czasie i przy jego obecności.
+        </li>
+        <li>
+          MAG nie zapewnia opieki nad osobami niepełnoletnimi przed ani po
+          zajęciach.
+        </li>
+      </ul>
+
+      <h2 class="flex items-center justify-center mt-16 mb-6"><span class="flex items-center justify-center w-8 h-8 mr-3 rounded-full bg-[#e3a1a1]/20 text-[#e3a1a1] font-bold">2</span> <span class="font-bold">Bezpieczeństwo</span></h2>
+      <ul class="space-y-3 list-disc pl-5">
+        <li>
+          MAG nie ubezpiecza uczestników od NNW; uczestnik/opiekun potwierdza
+          posiadanie takiego ubezpieczenia lub świadomą rezygnację.
+        </li>
+        <li>
+          Klub nie odpowiada za kontuzje i wypadki niezawinione przez
+          prowadzących.
+        </li>
+        <li>
+          Każdy uczestnik oświadcza brak przeciwskazań zdrowotnych do udziału w
+          zajęciach.
+        </li>
+        <li>
+          Klub nie odpowiada za mienie pozostawione w szatni; drobne wartościowe
+          przedmioty można zostawić w wyznaczonym miejscu na sali.
+        </li>
+        <li>
+          Przebywanie na sali bez zgody trenera jest zabronione; należy stosować
+          się do jego poleceń.
+        </li>
+        <li>Na salę nie wolno wnosić posiłków ani ciepłych napojów.</li>
+        <li>
+          Uczestnicy zobowiązani są do przestrzegania regulaminów obiektów,
+          zasad BHP i Ppoż., dbałości o czystość i mienie.
+        </li>
+        <li>
+          Rodzice i osoby oczekujące przebywają wyłącznie w miejscach
+          wyznaczonych; wstęp na salę i widownię mają tylko w czasie ogłoszonych
+          dni otwartych.
+        </li>
+        <li>
+          Na terenie zajęć obowiązuje zakaz palenia, spożywania alkoholu,
+          narkotyków oraz wprowadzania zwierząt.
+        </li>
+      </ul>
+
+      <h2 class="flex items-center justify-center mt-16 mb-6"><span class="flex items-center justify-center w-8 h-8 mr-3 rounded-full bg-[#e3a1a1]/20 text-[#e3a1a1] font-bold">3</span> <span class="font-bold">Sprawy organizacyjne dotyczące zajęć</span></h2>
+      <ul class="space-y-3 list-disc pl-5">
+        <li>Opłaty dokonujemy z wyprzedzeniem na konto klubu. Aktualny numer konta klubu znajduje się w sekcji "kontakt"</li>
+        <li>
+          Obowiązkowy strój: t-shirt, spodenki, białe skarpetki lub pantofle
+          gimnastyczne.
+        </li>
+        <li>Trener ma prawo nie wpuścić osób spóźnionych.</li>
+        <li>
+          Prowadzący mogą wykluczyć z zajęć osoby zakłócające ich przebieg – bez
+          zwrotu opłaty.
+        </li>
+        <li>
+          Przy zbyt małej liczbie uczestników klub może rozwiązać grupę lub
+          zaproponować inną.
+        </li>
+        <li>
+          Klub może odwołać zajęcia z przyczyn losowych – zostaną one
+          zrealizowane w innym terminie.
+        </li>
+        <li>
+          Nieobecności nie podlegają zwrotowi ani odrabianiu, poza chorobą
+          potwierdzoną zaświadczeniem i zgłoszoną w systemie z wyprzedzeniem.
+        </li>
+        <li>Klub zastrzega sobie prawo do zmiany harmonogramu.</li>
+        <li>
+          Bez zgody klubu zabronione jest filmowanie i fotografowanie zajęć.
+        </li>
+      </ul>
+
+      <h2 class="flex items-center justify-center mt-16 mb-6"><span class="flex items-center justify-center w-8 h-8 mr-3 rounded-full bg-[#e3a1a1]/20 text-[#e3a1a1] font-bold">4</span> <span class="font-bold">Płatności</span></h2>
+      <ul class="space-y-3 list-disc pl-5">
+        <li>
+          Obowiązuje aktualny cennik SKS MAG dostępny na stronie "oferta"; opłaty regulujemy do 10-tego dnia
+          miesiąca.
+        </li>
+        <li>Płatności dokonujemy przelewem na wskazany numer konta lub gotówką.</li>
+        <li>
+          W tytule przelewu wpisujemy „opłata statutowa”, imię i nazwisko
+          uczestnika, dzień zajęć oraz numer grupy.
+        </li>
+        <li>Klub zastrzega sobie prawo do zmiany cennika.</li>
+      </ul>
+
+      <h2 class="flex items-center justify-center mt-16 mb-6"><span class="flex items-center justify-center w-8 h-8 mr-3 rounded-full bg-[#e3a1a1]/20 text-[#e3a1a1] font-bold">5</span> <span class="font-bold">Sprawy ogólne</span></h2>
+      <ul class="space-y-3 list-disc pl-5">
+        <li>
+          Nieprzestrzeganie regulaminu może skutkować skreśleniem z listy
+          uczestników bez zwrotu opłat.
+        </li>
+        <li>Klub zastrzega sobie prawo do zmiany regulaminu.</li>
+        <li>
+          Reklamacje i uwagi przyjmujemy pod adresem mailowym:
+          malopolskaaksdemiagimnastyki@gimail.com – odpowiedź w ciągu 7 dni.
+        </li>
+        <li>
+          Faktury wystawiamy na żądanie w ciągu 7 dni od płatności lub wykonania
+          usługi.
+        </li>
+        <li>Brak terminowej płatności rozwiązuje umowę.</li>
+        <li>
+          Rezygnacja z zajęć możliwa w przypadku kontuzji lub długotrwałej
+          choroby (zaświadczenie lekarskie) lub do tygodnia przed rozpoczęciem
+          cyklu z pełnym zwrotem.
+        </li>
+        <li>
+          W innych przypadkach rezygnacja rozpatrywana jest indywidualnie; zwrot
+          następuje tą samą metodą płatności.
+        </li>
+      </ul>
+    </article>
+    <!-- PRZYCISK POBIERANIA PDF -->
+    <div class="mt-14 flex justify-center">
       <DownloadPdf
         pdfPath="/pdf/Regulamin_Malopolska_Akademia_Gimnastyki.pdf"
         fileName="Regulamin_Malopolska_Akademia_Gimnastyki.pdf"
         buttonText="Pobierz regulamin klubu"
       />
     </div>
-  </div>
+  </section>
 </Layout>

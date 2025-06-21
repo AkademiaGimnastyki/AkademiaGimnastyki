@@ -7,14 +7,16 @@ const groups = [
 ---
 
 <form 
-  action="https://formsubmit.co/akademia.malopolska@gmail.com"
+  name="signup"
   method="POST"
+  action="/dziekujemy"
+  data-netlify="true"
+  data-netlify-honeypot="bot-field"
   class="max-w-2xl mx-auto space-y-6 p-6 bg-brand-bg rounded-lg shadow-lg"
 >
-  <!-- Ukryte pola Formsubmit -->
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_template" value="table">
-  <input type="text" name="_honey" class="hidden">
+  <!-- Ukryte pola Netlify -->
+  <input type="hidden" name="form-name" value="signup">
+  <input type="text" name="bot-field" class="hidden">
 
   <!-- Imię i Nazwisko -->
   <div>
@@ -76,7 +78,7 @@ const groups = [
   <!-- Przycisk CTA -->
   <button
     type="submit"
-    class="w-full bg-brand-primary text-white font-medium py-4 rounded-lg hover:bg-brand-accent hover:text-brand-text-main transition-colors duration-300"
+    class="rounded-full border border-brand-text-main px-12 py-3 font-roboto font-medium text-xl text-brand-text-main hover:bg-brand-text-main hover:text-white transition-colors duration-300"
   >
     Zapisz się na zajęcia
   </button>

@@ -2,32 +2,11 @@
 const { pdfPath, fileName, buttonText } = Astro.props;
 ---
 
-<button 
-  class="bg-brand-primary hover:bg-brand-accent text-white px-6 py-3 rounded-lg transition-colors"
-  id="downloadButton"
-  data-pdf-path={pdfPath}
-  data-file-name={fileName}
+<a
+  href={pdfPath}
+  download={fileName}
+  class="inline-block rounded-[75px] border border-brand-text-main px-12 py-3 font-roboto font-medium text-xl text-brand-text-main hover:bg-brand-text-main hover:text-white transition-colors duration-300"
 >
   {buttonText}
-</button>
+</a>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const button = document.getElementById('downloadButton');
-    if (button) {
-      button.addEventListener('click', function() {
-        const pdfPath = this.dataset.pdfPath;
-        const fileName = this.dataset.fileName;
-        const timestamp = Date.now();
-        const url = `${pdfPath}?v=${timestamp}`;
-        
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = fileName || '';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      });
-    }
-  });
-</script>
