@@ -8,9 +8,9 @@ interface ImageData {
   };
 }
 
-// Importujemy wszystkie zdjęcia z folderu placeholders
-const placeholderImages = await import.meta.glob<ImageData>('/public/images/placeholders/*.jpg', { eager: true });
-const images = Object.values(placeholderImages).map((image) => ({
+// Importujemy wszystkie zdjęcia z folderu gallery
+const galleryImages = await import.meta.glob<ImageData>('/public/images/gallery/*.jpg', { eager: true });
+const images = Object.values(galleryImages).map((image) => ({
   src: image.default.src,
   alt: 'Zdjęcie z galerii Akademii Gimnastyki'
 }));
@@ -28,6 +28,7 @@ const preloadImages = images.slice(0, 5);
     {images.map((image: { src: string; alt: string }, index: number) => (
       <div 
         class="relative group cursor-pointer overflow-hidden rounded-lg"
+        data-index={index}
         data-aos="zoom-in"
         data-aos-delay={index * 100}
       >
@@ -62,11 +63,11 @@ const preloadImages = images.slice(0, 5);
   const lightboxRoot = document.getElementById('lightbox-root');
   const galleryItems = document.querySelectorAll('.group');
 
-  function showLightbox(imageUrl: string) {
+  function showLightbox(imageUrl: string, index: number) {
     if (!lightboxRoot) return;
     
     const event = new CustomEvent('showLightbox', {
-      detail: { imageUrl }
+      detail: { imageUrl, index }
     });
     lightboxRoot.dispatchEvent(event);
   }
@@ -76,7 +77,9 @@ const preloadImages = images.slice(0, 5);
       const target = e.currentTarget as HTMLElement;
       const img = target.querySelector('img');
       if (img) {
-        showLightbox(img.src);
+        const indexAttr = target.getAttribute('data-index');
+        const imageIndex = indexAttr ? parseInt(indexAttr, 10) : 0;
+        showLightbox(img.src, imageIndex);
       }
     });
   });

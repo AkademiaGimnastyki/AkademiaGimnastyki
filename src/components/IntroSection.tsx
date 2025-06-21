@@ -115,13 +115,13 @@ export default function IntroSection() {
             pełną wyzwań i uśmiechu
           </p>
 
-          <motion.button
+          <motion.a href="/kontakt" role="button"
             className="rounded-[75px] border border-brand-text-main px-12 py-3 font-roboto font-medium text-xl hover:bg-brand-text-main hover:text-white transition-colors duration-300"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Dołącz do nas!
-          </motion.button>
+          </motion.a>
         </motion.div>
 
         {/* Left image with parallax */}

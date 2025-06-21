@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function GalleryLightbox() {
   const [isOpen, setIsOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [images, setImages] = useState<string[]>([]);
   const [imageUrl, setImageUrl] = useState('');
 
   useEffect(() => {
@@ -13,6 +15,7 @@ export default function GalleryLightbox() {
 
     const handleShowLightbox = (e: CustomEvent) => {
       setImageUrl(e.detail.imageUrl);
+      setCurrentIndex(e.detail.index ?? 0);
       setIsOpen(true);
     };
 
@@ -21,7 +24,15 @@ export default function GalleryLightbox() {
     return () => {
       lightboxRoot.removeEventListener('showLightbox', handleShowLightbox as EventListener);
     };
-  }, []);
+  }, []); // Add dependency array
+
+  useEffect(() => {
+    // Zbieramy listę wszystkich obrazów galerii (kolejność zgodna z gridem)
+    const nodes = document.querySelectorAll<HTMLImageElement>('.group img');
+    const srcList = Array.from(nodes).map((n) => n.src);
+    setImages(srcList);
+  }, []); // Add dependency array
+
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -45,6 +56,20 @@ export default function GalleryLightbox() {
       }
     };
   }, [isOpen]);
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  useEffect(() => {
+    if (images.length) {
+      setImageUrl(images[currentIndex] ?? '');
+    }
+  }, [currentIndex, images]);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -91,6 +116,28 @@ export default function GalleryLightbox() {
             </button>
             
             <motion.div className="relative">
+              {/* Nawigacja wstecz */}
+              {images.length > 1 && (
+                <button
+                  onClick={handlePrev}
+                  className="absolute left-0 top-1/2 -translate-y-1/2 text-white hover:text-[#00b3d4] p-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+              )}
+              {/* Nawigacja naprzód */}
+              {images.length > 1 && (
+                <button
+                  onClick={handleNext}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 text-white hover:text-[#00b3d4] p-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              )}
               <motion.img
                 src={imageUrl}
                 alt="Powiększone zdjęcie"
