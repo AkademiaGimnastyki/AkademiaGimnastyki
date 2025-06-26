@@ -11,8 +11,13 @@ interface Props {
 }
 
 const { items, className = "" } = Astro.props;
-const currentPath = Astro.url.pathname;
-const activeItem = items.find(item => item.url === currentPath) ?? items[0];
+// Usuń końcowy ukośnik z pathname (oprócz samego "/") aby ścieżka była spójna między buildem statycznym (Netlify dodaje "/") a dev-serverem.
+const rawPath = Astro.url.pathname;
+const currentPath = rawPath !== "/" ? rawPath.replace(/\/$/, "") : "/";
+const activeItem = items.find(item => {
+  const itemPath = item.url !== "/" ? item.url.replace(/\/$/, "") : "/";
+  return itemPath === currentPath;
+}) ?? items[0];
 ---
 
 <div
