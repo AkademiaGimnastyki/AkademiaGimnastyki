@@ -2,10 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import SignupForm from '../components/SignupForm.astro';
+
 ---
 
 <Layout title="Kontakt - Małopolska Akademia Gimnastyki">
-  <main>
+  <main class="relative overflow-visible">
+
     <Hero 
       title="Skontaktuj się"
       subtitle="Zapisy na zajęcia"
@@ -13,6 +15,38 @@ import SignupForm from '../components/SignupForm.astro';
     >
       Małopolska Akademia Gimnastyki - kontakt i zapisy na zajęcia
     </Hero>
+
+    <!-- Sekcja kroków zapisu -->
+    <section class="py-16 overflow-visible">
+      <div class="max-w-6xl mx-auto bg-white rounded-3xl px-6 sm:px-10 md:px-16 py-12 shadow-xl text-center">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-poppins font-bold mb-12">
+          <span class="font-extralight">Pierwszy raz? </span><span class="font-bold">Zapisz się. To proste!</span>
+        </h2>
+
+        <div class="grid gap-12 sm:grid-cols-3">
+          <!-- Krok 1 -->
+          <div class="flex flex-col items-center">
+            <span class="flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gray-900 text-white text-3xl sm:text-4xl font-bold mb-6 transition-colors duration-300 hover:bg-[#00B3D4]">1</span>
+            <h3 class="text-lg sm:text-xl font-semibold mb-2">Skontaktuj się z&nbsp;nami</h3>
+            <p class="text-sm text-gray-700 max-w-xs">Poprzez podany formularz lub numer kontaktowy. Podaj dane i&nbsp;grupę, jaka Cię interesuje</p>
+          </div>
+          <!-- Krok 2 -->
+          <div class="flex flex-col items-center">
+            <span class="flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gray-900 text-white text-3xl sm:text-4xl font-bold mb-6 transition-colors duration-300 hover:bg-[#E3A1A1]">2</span>
+            <h3 class="text-lg sm:text-xl font-semibold mb-2">Poczekaj na potwierdzenie</h3>
+            <p class="text-sm text-gray-700 max-w-xs">Skontaktujemy się z&nbsp;Tobą do dwóch dni roboczych – mailowo albo telefonicznie – napisz nam w&nbsp;wiadomości jaką formę preferujesz!</p>
+          </div>
+          <!-- Krok 3 -->
+          <div class="flex flex-col items-center">
+            <span class="flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gray-900 text-white text-3xl sm:text-4xl font-bold mb-6 transition-colors duration-300 hover:bg-[#00B3D4]">3</span>
+            <h3 class="text-lg sm:text-xl font-semibold mb-2">Dokonaj wpłaty</h3>
+            <p class="text-sm text-gray-700 max-w-xs">Opłać miesięczne członkostwo w&nbsp;MAG dokonując przelewu na podany numer konta. W&nbsp;tytule wpisz koniecznie imię i&nbsp;nazwisko dziecka.</p>
+          </div>
+        </div>
+
+        <p class="mt-12 text-xs text-gray-500 max-w-3xl mx-auto">Jeśli korzystałeś już wcześniej z&nbsp;naszych usług i&nbsp;byłeś członkiem MAG możesz od razu przejść do punktu&nbsp;3. Pamiętaj, że aby utrzymać status członkostwa i&nbsp;możliwość uczestniczenia w&nbsp;zajęciach konieczna jest wpłata do 10 dnia każdego miesiąca.</p>
+      </div>
+    </section>
 
 
     <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center lg:items-start gap-12 lg:gap-24">
@@ -33,9 +67,9 @@ import SignupForm from '../components/SignupForm.astro';
 
 
         <p class="mb-8 text-gray-700">Wpłat prosimy dokonywać przelewem bankowym. W&nbsp;tytule przelewu podaj imię i&nbsp;nazwisko uczestnika. Istnieje możliwość płatności gotówką podczas zajęć</p>
-        <div class="bg-white backdrop-blur rounded-2xl shadow-xl px-8 py-8 md:px-12">
-          <p class="text-sm font-semibold text-gray-500 mb-1">Numer konta</p>
-          <p class="font-mono text-base sm:text-lg md:text-2xl font-bold tracking-normal md:tracking-wide lg:tracking-wider text-gray-900 select-all whitespace-nowrap">12&nbsp;3456&nbsp;7890&nbsp;1234&nbsp;5678&nbsp;9012&nbsp;3456</p>
+        <div class="bg-gray-900 backdrop-blur rounded-2xl shadow-xl px-8 py-8 md:px-12">
+          <p class="text-sm font-semibold text-white mb-1">Numer konta</p>
+          <p class="font-mono text-base sm:text-lg md:text-2xl font-bold tracking-normal md:tracking-wide lg:tracking-wider text-white select-all whitespace-nowrap">12&nbsp;3456&nbsp;7890&nbsp;1234&nbsp;5678&nbsp</p>
           <p class="text-sm text-gray-500 mt-2">Bank PKO BP&nbsp;SA</p>
         </div>
       </div>
@@ -43,7 +77,7 @@ import SignupForm from '../components/SignupForm.astro';
 
     <!-- Sekcja danych kontaktowych -->
     <section class="py-12 bg-gradient-to-b from-white via-gray-50 to-white">
-      <div class="max-w-6xl mx-auto grid gap-8 sm:grid-cols-2 lg:grid-cols-4 px-6">
+      <div class="max-w-6xl mx-auto grid gap-8 sm:grid-cols-2 lg:grid-cols-2 px-14">
         <!-- Mszana Dolna -->
         <div class="group bg-white/80 backdrop-blur-lg rounded-2xl p-8 shadow-lg hover:shadow-2xl transition">
           <span class="flex items-center justify-center w-12 h-12 mb-4 rounded-full bg-gray-900/10 text-gray-900 group-hover:bg-gray-900 group-hover:text-white transition">
@@ -93,18 +127,20 @@ import SignupForm from '../components/SignupForm.astro';
         </div>
 
         <!-- Social media -->
-        <div class="flex gap-6 py-12 sm:col-span-2 lg:col-span-4 justify-center">
+        <div class="flex gap-6 py-12 sm:col-span-2 lg:col-span-2 justify-center">
           <!-- Facebook -->
-          <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook" class="group bg-white/80 backdrop-blur-lg rounded-2xl p-6 shadow-lg hover:shadow-2xl transition aspect-square flex items-center justify-center text-gray-900 hover:bg-gray-900 hover:text-white">
+          <a href="https://www.facebook.com/p/Akademia-Gimnastyki-Mszana-Dolna-100072345243817/" target="_blank" rel="noopener" aria-label="Facebook" class="relative overflow-hidden group bg-white/80 backdrop-blur-lg rounded-2xl p-6 shadow-lg hover:shadow-2xl transition aspect-square flex items-center justify-center text-gray-900 hover:bg-gray-900 hover:text-white">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.522-4.477-10-10-10S2 6.478 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987H7.898v-2.89h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562v1.875h2.773l-.443 2.89h-2.33v6.987C18.343 21.128 22 16.991 22 12z"/></svg>
           </a>
           <!-- Instagram -->
-          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" class="group bg-white/80 backdrop-blur-lg rounded-2xl p-6 shadow-lg hover:shadow-2xl transition aspect-square flex items-center justify-center text-gray-900 hover:bg-gray-900 hover:text-white">
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" class="relative overflow-hidden group bg-white/80 backdrop-blur-lg rounded-2xl p-6 shadow-lg hover:shadow-2xl transition aspect-square flex items-center justify-center text-gray-900 hover:bg-gray-900 hover:text-white">
+
             <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2a3 3 0 013 3v10a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10zm-5 3c-2.757 0-5 2.243-5 5s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5zm0 2c1.654 0 3 1.346 3 3s-1.346 3-3 3-3-1.346-3-3 1.346-3 3-3zm4.5-.75a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z"/></svg>
           </a>
           <!-- Google Maps -->
-          <a href="https://maps.google.com/?q=Ma%C5%82opolska+Akademia+Gimnastyki" target="_blank" rel="noopener" aria-label="Google Maps" class="group bg-white/80 backdrop-blur-lg rounded-2xl p-6 shadow-lg hover:shadow-2xl transition aspect-square flex items-center justify-center text-gray-900 hover:bg-gray-900 hover:text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 128 128" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M30.418 49.137c-9.242-7.272-16.109-12.661-21.237-16.601C20.161 13.095 40.993 0 64.895 0c16.572 0 31.696 6.316 43.053 16.659C94.563 29.32 94.997 30.044 89.724 35.317c-6.577-5.447-13.733-9.329-24.829-9.329C49.163 25.988 36.009 35.52 30.418 49.137zM27.491 64c0-1.97.145-3.882.435-5.765C20.48 52.382 12.107 45.892 5.299 40.677 2.459 47.891.895 55.772.895 64c0 9.271 1.97 18.079 5.505 26.017 6.577-5.592 14.399-12.284 21.787-18.6A36.12 36.12 0 0127.491 64zM64.895 102.012c-15.124 0-27.871-8.837-33.811-21.613-8.924 7.62-15.529 13.269-20.484 17.47C21.9 115.976 41.978 128 64.895 128c15.326 0 27.321-3.882 36.476-10.169-6.055-5.244-13.791-11.879-21.15-18.108a35.7 35.7 0 01-15.326 2.297zM126.345 51.339c-12.516 0-61.45 0-61.45 0v25.322s24.569-.029 34.593-.029c-2.665 7.996-5.997 14.255-11.183 18.513 8.894 7.533 15.326 13.009 19.962 17.065 16.559-10.138 20.673-35.546 18.078-54.871z"/></svg>
+          <a href="https://maps.google.com/?q=Ma%C5%82opolska+Akademia+Gimnastyki" target="_blank" rel="noopener" aria-label="Google Maps" class="relative overflow-hidden group bg-white/80 backdrop-blur-lg rounded-2xl p-6 shadow-lg hover:shadow-2xl transition aspect-square flex items-center justify-center text-gray-900 hover:bg-gray-900 hover:text-white">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 w-8 h-8" viewBox="0 0 128 128" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M30.418 49.137c-9.242-7.272-16.109-12.661-21.237-16.601C20.161 13.095 40.993 0 64.895 0c16.572 0 31.696 6.316 43.053 16.659C94.563 29.32 94.997 30.044 89.724 35.317c-6.577-5.447-13.733-9.329-24.829-9.329C49.163 25.988 36.009 35.52 30.418 49.137zM27.491 64c0-1.97.145-3.882.435-5.765C20.48 52.382 12.107 45.892 5.299 40.677 2.459 47.891.895 55.772.895 64c0 9.271 1.97 18.079 5.505 26.017 6.577-5.592 14.399-12.284 21.787-18.6A36.12 36.12 0 0127.491 64zM64.895 102.012c-15.124 0-27.871-8.837-33.811-21.613-8.924 7.62-15.529 13.269-20.484 17.47C21.9 115.976 41.978 128 64.895 128c15.326 0 27.321-3.882 36.476-10.169-6.055-5.244-13.791-11.879-21.15-18.108a35.7 35.7 0 01-15.326 2.297zM126.345 51.339c-12.516 0-61.45 0-61.45 0v25.322s24.569-.029 34.593-.029c-2.665 7.996-5.997 14.255-11.183 18.513 8.894 7.533 15.326 13.009 19.962 17.065 16.559-10.138 20.673-35.546 18.078-54.871z"/></svg>
           </a>
         </div>
       </div>

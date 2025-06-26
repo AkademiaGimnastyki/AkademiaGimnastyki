@@ -1,0 +1,17 @@
+---
+// Komponent Astro opakowujący animowane tło Aurora (React)
+import Aurora from "../../../kontakt/Aurora/Aurora.jsx";
+
+// Domyślne wartości zgodne z kolorystyką marki
+const {
+  className = "",
+  colorStops = ["#E3A1A1", "#00B3D4", "#E3A1A1"],
+  amplitude = 0.5,
+  blend = 0.2,
+  ...rest
+} = Astro.props;
+---
+<!-- Kontener ustawiony absolutnie, aby przykrywać całą sekcję / stronę -->
+<div class={`absolute inset-0 -z-10 overflow-visible ${className}`}>
+  <Aurora client:load colorStops={colorStops} amplitude={amplitude} blend={blend} {...rest} />
+</div>

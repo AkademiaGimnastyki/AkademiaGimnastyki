@@ -29,6 +29,7 @@
     "embla-carousel": "^8.6.0",
     "framer-motion": "^10.16.16",
     "lucide-astro": "^0.473.0",
+    "ogl": "^1.0.11",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "swiper": "^11.0.5",

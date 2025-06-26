@@ -1,4 +1,6 @@
 ---
+import AuroraBackground from "./ui/AuroraBackground.astro";
+
 const logoPath = '/images/logo/logo_akademia.svg';
 ---
 
@@ -10,15 +12,16 @@ const logoPath = '/images/logo/logo_akademia.svg';
 
   <div class="max-w-7xl mx-auto px-4 relative">
     <!-- Logo section -->
-    <div class="absolute left-0 top-0 bg-black rounded-[37px] w-[320px] h-[360px] flex flex-col items-center justify-center hover:scale-105 hover:shadow-2xl transition-all duration-300">
+    <div class="absolute left-0 top-0 overflow-hidden bg-black rounded-[37px] w-[320px] h-[360px] flex flex-col items-center justify-center hover:scale-105 hover:shadow-2xl transition-all duration-300">
+      <AuroraBackground className="absolute inset-0 z-0 opacity-80 pointer-events-none" amplitude={0.6} blend={0.6} />
       <img 
         src={logoPath}
         alt="Logo Akademii Gimnastyki"
-        class="w-[140px] h-auto mb-4"
+        class="relative z-10 w-[140px] h-auto mb-4"
         loading="eager"
         decoding="async"
-      />
-      <div class="text-center text-white">
+      />  
+      <div class="relative z-10 text-center text-white">
         <h2 class="text-xl">
           <span class="font-bold">Małopolska</span><br />
           <span class="font-extralight">Akademia<br />Gimnastyki</span>
