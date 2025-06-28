@@ -57,146 +57,131 @@ export default function IntroSection() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="relative h-[773px] w-full overflow-hidden bg-white"
+      className="relative w-full overflow-hidden bg-white h-auto lg:h-[773px] pt-20 lg:pt-0 mb-16 lg:mb-24"
       data-aos="fade-up"
       data-aos-duration="1000"
     >
       {/* Background blur effect */}
       <div
-        className="absolute left-1/2 top-28 -translate-x-1/2 w-[650px] h-[549px] rounded-full bg-white"
+        className="absolute left-1/2 top-28 -translate-x-1/2 w-[650px] h-[549px] rounded-full bg-brand-white"
         style={{ filter: 'blur(150px)' }}
       />
 
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full">
-        <motion.h2 
-          className="text-center mb-8"
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          <span className="block font-poppins text-[64px] font-bold">
-            <span className="text-[#00b3d4]">Gimnastyka</span>
-            <span className="text-[#e3a1a1] ml-4">jest</span>
-          </span>
-          <span className="relative flex w-full justify-center overflow-hidden text-center h-[90px]">
-            {titles.map((title, index) => (
-              <motion.span
-                key={index}
-                className="absolute font-poppins text-[64px] font-extralight"
-                initial={{ opacity: 0, y: "100%" }}
-                animate={
-                  titleNumber === index
-                    ? { y: 0, opacity: 1 }
-                    : { y: titleNumber > index ? "-100%" : "100%", opacity: 0 }
-                }
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 50,
-                  damping: 12
-                }}
-              >
-                {title}
-              </motion.span>
-            ))}
-          </span>
-        </motion.h2>
+      {/* Main content wrapper with flex ordering for mobile */}
+      <div className="relative z-10 flex flex-col items-center justify-center h-full pb-16 lg:pb-0">
 
-        <motion.div 
-          className="max-w-[766px] text-center px-4"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          <p className="font-roboto text-xl leading-[160%] mb-12">
-            Gimnastyka to klucz do świata, gdzie ruch staje się pasją, a wyzwania – źródłem dumy. 
-            Trenujemy nie tylko ciało — budujemy pewność siebie i zdrowe nawyki na całe życie. 
-            Nasi certyfikowani trenerzy, absolwenci AWF Kraków, zamienią każdy trening w przygodę 
-            pełną wyzwań i uśmiechu
-          </p>
-
-          <motion.a href="/kontakt" role="button"
-            className="rounded-[75px] border border-brand-text-main px-12 py-3 font-roboto font-medium text-xl hover:bg-brand-text-main hover:text-white transition-colors duration-300"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+        {/* Images container - appears above text on mobile */}
+        <div className="w-full flex justify-center items-start gap-x-2 sm:gap-x-4 lg:block order-1 lg:order-none mb-8 lg:mb-0">
+          {/* Left image */}
+          <motion.div 
+            className="relative lg:absolute lg:left-[350px] lg:top-32 z-0"
+            style={{ x: leftImageX }}
+            initial={{ opacity: 0 }}
+            animate={{ 
+              opacity: 1,
+              y: [0, -10, 0],
+              rotate: [-1, 1, -1]
+            }}
+            transition={{ 
+              duration: 1,
+              delay: 0.2,
+              y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+              rotate: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+            }}
           >
-            Dołącz do nas!
-          </motion.a>
-        </motion.div>
+            <img
+              src={images[0].src}
+              alt={images[0].alt}
+              width={458}
+              height={458}
+              className="object-contain will-change-transform w-[140px] h-auto sm:w-[180px] lg:w-[458px]"
+              loading="eager"
+              decoding="async"
+            />
+          </motion.div>
 
-        {/* Left image with parallax */}
-        <motion.div 
-          className="absolute left-[350px] top-32 z-0"
-          style={{ x: leftImageX }}
-          initial={{ opacity: 0, x: 0 }}
-          animate={{ 
-            opacity: 1,
-            x: 0,
-            y: [0, -10, 0],
-            rotate: [-1, 1, -1]
-          }}
-          transition={{ 
-            duration: 1,
-            delay: 0.2,
-            y: {
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut"
-            },
-            rotate: {
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }
-          }}
-        >
-          <img
-            src={images[0].src}
-            alt={images[0].alt}
-            width={458}
-            height={458}
-            className="object-cover will-change-transform"
-            loading="eager"
-            decoding="async"
-          />
-        </motion.div>
+          {/* Right image */}
+          <motion.div 
+            className="relative lg:absolute lg:right-[350px] lg:top-32 z-0"
+            style={{ x: rightImageX }}
+            initial={{ opacity: 0 }}
+            animate={{ 
+              opacity: 1,
+              y: [0, -10, 0],
+              rotate: [1, -1, 1]
+            }}
+            transition={{ 
+              duration: 1,
+              delay: 0.2,
+              y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+              rotate: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+            }}
+          >
+            <img
+              src={images[1].src}
+              alt={images[1].alt}
+              width={458}
+              height={458}
+              className="object-contain will-change-transform w-[140px] h-auto sm:w-[180px] lg:w-[458px]"
+              loading="eager"
+              decoding="async"
+            />
+          </motion.div>
+        </div>
 
-        {/* Right image with parallax */}
-        <motion.div 
-          className="absolute right-[350px] top-32 z-0"
-          style={{ x: rightImageX }}
-          initial={{ opacity: 0, x: 0 }}
-          animate={{ 
-            opacity: 1,
-            x: 0,
-            y: [0, -10, 0],
-            rotate: [1, -1, 1]
-          }}
-          transition={{ 
-            duration: 1,
-            delay: 0.2,
-            y: {
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut"
-            },
-            rotate: {
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }
-          }}
-        >
-          <img
-            src={images[1].src}
-            alt={images[1].alt}
-            width={458}
-            height={458}
-            className="object-cover will-change-transform"
-            loading="eager"
-            decoding="async"
-          />
-        </motion.div>
+        {/* Text content container */}
+        <div className="order-2 lg:order-none flex flex-col items-center text-center">
+          <motion.h2 
+            className="text-center mb-4 lg:mb-8"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <span className="block font-heading text-4xl sm:text-5xl lg:text-[64px] font-bold leading-tight">
+              <span className="text-brand-accent-dynamic">Gimnastyka</span>
+              <span className="text-brand-accent-sensitive ml-2 lg:ml-4">jest</span>
+            </span>
+            <span className="relative flex w-full justify-center overflow-hidden text-center h-[50px] sm:h-[60px] lg:h-[90px]">
+              {titles.map((title, index) => (
+                <motion.span
+                  key={index}
+                  className="absolute font-heading text-4xl sm:text-5xl lg:text-[64px] font-extralight"
+                  initial={{ opacity: 0, y: "100%" }}
+                  animate={
+                    titleNumber === index
+                      ? { y: 0, opacity: 1 }
+                      : { y: titleNumber > index ? "-100%" : "100%", opacity: 0 }
+                  }
+                  transition={{ type: "spring", stiffness: 50, damping: 12 }}
+                >
+                  {title}
+                </motion.span>
+              ))}
+            </span>
+          </motion.h2>
+
+          <motion.div 
+            className="max-w-[766px] text-center px-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <p className="font-body text-base sm:text-lg lg:text-xl leading-relaxed lg:leading-[160%] mb-8 lg:mb-12">
+              Gimnastyka to klucz do świata, gdzie ruch staje się pasją, a wyzwania – źródłem dumy. 
+              Trenujemy nie tylko ciało — budujemy pewność siebie i zdrowe nawyki na całe życie. 
+              Nasi certyfikowani trenerzy, absolwenci AWF Kraków, zamienią każdy trening w przygodę 
+              pełną wyzwań i uśmiechu
+            </p>
+
+            <motion.a href="/kontakt" role="button"
+              className="rounded-[75px] border border-brand-text-main px-8 py-3 sm:px-10 lg:px-12 font-body font-medium text-base sm:text-lg lg:text-xl hover:bg-brand-text-main hover:text-white transition-colors duration-300"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Dołącz do nas!
+            </motion.a>
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   );

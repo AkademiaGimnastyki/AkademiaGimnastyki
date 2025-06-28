@@ -19,7 +19,7 @@ import PhotoGallery from '@/components/PhotoGallery.astro';
     
 
     <!-- Sekcja: Wprowadzenie do oferty (logo + nagłówek) -->
-    <section id="intro-zajecia" class="py-16 sm:py-32 lg:py-42 px-4 sm:px-6 lg:px-8 bg-white text-slate-800">
+    <section id="intro-zajecia" class="pt-12 pb-2 sm:pt-4 sm:pb-0 lg:py-36 px-4 sm:px-6 lg:px-8 bg-white text-slate-800">
       <div class="max-w-5xl mx-auto flex flex-col lg:flex-row items-center lg:justify-center gap-12 lg:gap-24 text-center lg:text-left" data-aos="fade-up">
         <!-- Logo Akademii z subtelną poświatą -->
         <div class="relative flex-shrink-0">
@@ -28,25 +28,27 @@ import PhotoGallery from '@/components/PhotoGallery.astro';
         </div>
 
         <!-- Tekst -->
-        <div class="flex-1 max-w-xl lg:max-w-none">
+        <div class="flex-1 max-w-xl lg:max-w-none text-center lg:text-left">
           <h2 class="text-3xl md:text-4xl lg:text-5xl font-poppins mb-6 lg:mb-12 leading-tight">
             <span class="font-bold">Nasze </span>
             <span class="font-extralight">Zajęcia</span>
           </h2>
-          <p class="text-slate-600 mb-8 max-w-prose">
+          <p class="text-slate-600 mb-8 max-w-prose mx-auto lg:mx-0">
             Odkryj starannie przygotowany program treningowy, który rozwija zwinność, siłę i pewność siebie. Nasze zajęcia prowadzone są w kameralnych grupach, dzięki czemu każdy gimnastyk otrzymuje indywidualne wskazówki i wsparcie profesjonalnych trenerów.
           </p>
 
-          <!-- Metryczki -->
-          <div class="flex items-center gap-8 text-sm text-slate-500 font-medium">
-            <div class="flex flex-col items-center">
-              <span class="text-lg font-bold text-slate-900">60&nbsp;minut</span>
-              <span>Czas trwania zajęć</span>
-            </div>
-            <div class="h-6 w-px bg-slate-300" aria-hidden="true"></div>
-            <div class="flex flex-col items-center">
-              <span class="text-lg font-bold text-slate-900">25&nbsp;osób</span>
-              <span>Średnia wielkość grupy</span>
+          <!-- Metryczki z dedykowanym wrapperem centrującym -->
+          <div class="mt-4 flex justify-center lg:justify-start">
+            <div class="flex items-center gap-8 text-sm text-slate-500 font-medium">
+              <div class="flex flex-col items-center">
+                <span class="text-lg font-bold text-slate-900">60&nbsp;minut</span>
+                <span>Czas trwania zajęć</span>
+              </div>
+              <div class="h-6 w-px bg-slate-300" aria-hidden="true"></div>
+              <div class="flex flex-col items-center">
+                <span class="text-lg font-bold text-slate-900">25&nbsp;osób</span>
+                <span>Średnia wielkość grupy</span>
+              </div>
             </div>
           </div>
         </div>
@@ -54,7 +56,7 @@ import PhotoGallery from '@/components/PhotoGallery.astro';
     </section>
 
     <!-- Sekcja: Nasz Sprzęt -->
-    <section id="sprzet" class="py-12 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white text-slate-800">
+    <section id="sprzet" class="py-6 sm:pt-2 sm:pb-2 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white text-slate-800">
       <div class="max-w-5xl mx-auto flex flex-col-reverse lg:flex-row items-center lg:items-start gap-12 lg:gap-24" data-aos="fade-up">
         <!-- Tekst -->
         <div class="flex-1 max-w-xl lg:max-w-none text-center lg:text-left">
