@@ -1,22 +1,38 @@
 ---
 // Importujemy tylko to, co jest używane
 import GalleryLightbox from './GalleryLightbox';
+import { getImage } from 'astro:assets';
 
 interface ImageData {
-  default: {
-    src: string;
-  };
+  default: any;
 }
 
-// Importujemy wszystkie zdjęcia z folderu gallery
-const galleryImages = await import.meta.glob<ImageData>('/public/images/gallery/*.jpg', { eager: true });
-const images = Object.values(galleryImages).map((image) => ({
-  src: image.default.src,
-  alt: 'Zdjęcie z galerii Akademii Gimnastyki'
-}));
+// Importujemy wszystkie zdjęcia z folderu gallery w src
+const galleryImages = import.meta.glob<ImageData>('/src/images/gallery/*.{jpg,png,jpeg}', { eager: true });
+
+// Optymalizujemy obrazy
+const optimizedImages = await Promise.all(
+  Object.values(galleryImages).map(async (image) => {
+    const optimized = await getImage({
+      src: image.default,
+      widths: [400, 800],
+      formats: ['avif', 'webp'],
+      aspectRatio: '4:3',
+      fit: 'cover',
+    });
+    
+    return {
+      src: optimized.src,
+      srcset: optimized.attributes.srcset,
+      width: optimized.attributes.width,
+      height: optimized.attributes.height,
+      alt: 'Zdjęcie z galerii Akademii Gimnastyki'
+    };
+  })
+);
 
 // Preloadujemy pierwsze 5 zdjęć
-const preloadImages = images.slice(0, 5);
+const preloadImages = optimizedImages.slice(0, 5);
 ---
 
 <section 
@@ -25,7 +41,7 @@ const preloadImages = images.slice(0, 5);
   data-aos-duration="1000"
 >
   <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-    {images.map((image: { src: string; alt: string }, index: number) => (
+    {optimizedImages.map((image, index: number) => (
       <div 
         class="relative group cursor-pointer overflow-hidden rounded-lg"
         data-index={index}
@@ -39,9 +55,10 @@ const preloadImages = images.slice(0, 5);
         <div class="relative aspect-[4/3] overflow-hidden rounded-lg transition-transform duration-300 group-hover:scale-105 group-hover:shadow-lg">
           <img
             src={image.src}
+            srcset={image.srcset}
+            width={image.width}
+            height={image.height}
             alt={image.alt}
-            width="400"
-            height="300"
             loading={index < 5 ? "eager" : "lazy"}
             decoding="async"
             class="w-full h-full object-cover transition-transform duration-300"
@@ -53,7 +70,7 @@ const preloadImages = images.slice(0, 5);
 </section>
 
 <!-- Preload pierwszych 5 zdjęć -->
-{preloadImages.map((image: { src: string; alt: string }) => (
+{preloadImages.map((image) => (
   <link rel="preload" as="image" href={image.src} />
 ))}
 

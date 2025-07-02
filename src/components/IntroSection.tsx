@@ -3,11 +3,23 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { motion, useScroll, useTransform } from "framer-motion";
 
-// Standardowe importy obrazów
-import art2Image from '../../public/images/arts/art2.png';
-import art5Image from '../../public/images/arts/art5.png';
+interface ImageProps {
+  src: string;
+  attributes: {
+    src: string;
+    srcset: string;
+    width: number;
+    height: number;
+  };
+  alt: string;
+}
 
-export default function IntroSection() {
+interface IntroSectionProps {
+  image1: ImageProps;
+  image2: ImageProps;
+}
+
+export default function IntroSection({ image1, image2 }: IntroSectionProps) {
   const [titleNumber, setTitleNumber] = useState(0);
   const componentRef = useRef(null);
   
@@ -20,11 +32,6 @@ export default function IntroSection() {
     () => ["Pasją", "Przygodą", "Rozwojem", "Zabawą", "Wyzwaniem"],
     []
   );
-
-  const images = useMemo(() => [
-    { src: art2Image.src, alt: "Gimnastyka dla dzieci" },
-    { src: art5Image.src, alt: "Zajęcia grupowe" }
-  ] as const, []);
 
   // Efekt paralaksy względem pozycji komponentu
   const leftImageX = useTransform(
@@ -90,10 +97,8 @@ export default function IntroSection() {
             }}
           >
             <img
-              src={images[0].src}
-              alt={images[0].alt}
-              width={458}
-              height={458}
+              {...image1.attributes}
+              alt={image1.alt}
               className="object-contain will-change-transform w-[140px] h-auto sm:w-[180px] lg:w-[458px]"
               loading="eager"
               decoding="async"
@@ -118,10 +123,8 @@ export default function IntroSection() {
             }}
           >
             <img
-              src={images[1].src}
-              alt={images[1].alt}
-              width={458}
-              height={458}
+              {...image2.attributes}
+              alt={image2.alt}
               className="object-contain will-change-transform w-[140px] h-auto sm:w-[180px] lg:w-[458px]"
               loading="eager"
               decoding="async"
@@ -138,7 +141,7 @@ export default function IntroSection() {
             transition={{ duration: 0.8 }}
           >
             <span className="block font-heading text-4xl sm:text-5xl lg:text-[64px] font-bold leading-tight">
-              <span className="text-brand-accent-dynamic">Gimnastyka</span>
+              <span className="text-brand-primary-dynamic">Gimnastyka</span>
               <span className="text-brand-accent-sensitive ml-2 lg:ml-4">jest</span>
             </span>
             <span className="relative flex w-full justify-center overflow-hidden text-center h-[50px] sm:h-[60px] lg:h-[90px]">

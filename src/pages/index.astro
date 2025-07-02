@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
-import IntroSection from '../components/IntroSection';
+import IntroSection from '../components/IntroSection.tsx';
 import LatestBlogPosts from '../components/LatestBlogPosts.astro';
 import Features from '../components/Features.astro';
 import PhotoGallery from '../components/PhotoGallery.astro';
@@ -11,9 +11,18 @@ import VideoCTA from '../components/VideoCTA.astro';
 import Testimonials from '../components/Testimonials.astro';
 import FAQ from '../components/FAQ.astro';
 import SponsorsCarousel from '../components/SponsorsCarousel.astro';
+import { getImage } from "astro:assets";
+import art2Image from "../images/arts/art2.png";
+import art5Image from "../images/arts/art5.png";
+
+const optimizedArt2 = await getImage({src: art2Image, widths: [280, 560], formats: ["avif", "webp"]});
+const optimizedArt5 = await getImage({src: art5Image, widths: [280, 560], formats: ["avif", "webp"]});
+
+const pageTitle = "Małopolska Akademia Gimnastyki | Zajęcia dla Dzieci i Młodzieży";
+const pageDescription = "Odkryj pasję do gimnastyki w Małopolskiej Akademii Gimnastyki. Oferujemy profesjonalne zajęcia sportowe dla dzieci i młodzieży w Krakowie. Dołącz do nas i rozwijaj talent w przyjaznej atmosferze!";
 ---
 
-<Layout title="Małopolska Akademia Gimnastyki">
+<Layout title={pageTitle} description={pageDescription}>
   <main>
     <Hero 
       title="Klub Sportowy"
@@ -22,7 +31,29 @@ import SponsorsCarousel from '../components/SponsorsCarousel.astro';
     >
       Profesjonalne zajęcia gimnastyczne dla dzieci i młodzieży
     </Hero>
-    <IntroSection client:load />
+    <IntroSection 
+      client:load 
+      image1={{
+        src: optimizedArt2.src,
+        attributes: {
+          src: optimizedArt2.src,
+          srcset: optimizedArt2.attributes.srcset,
+          width: optimizedArt2.attributes.width,
+          height: optimizedArt2.attributes.height
+        },
+        alt: "Dziewczynka wykonująca figurę gimnastyczną"
+      }}
+      image2={{
+        src: optimizedArt5.src,
+        attributes: {
+          src: optimizedArt5.src,
+          srcset: optimizedArt5.attributes.srcset,
+          width: optimizedArt5.attributes.width,
+          height: optimizedArt5.attributes.height
+        },
+        alt: "Chłopiec wykonujący figurę gimnastyczną"
+      }}
+    />
     <LatestBlogPosts />
     <Features />
     <PhotoGallery />

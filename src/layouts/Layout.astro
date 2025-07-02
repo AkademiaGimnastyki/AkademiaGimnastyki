@@ -33,6 +33,19 @@ const {
     <title>{title}</title>
     <ViewTransitions />
 
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SportsClub",
+      "name": "Małopolska Akademia Gimnastyki",
+      "url": Astro.site,
+      "logo": new URL("/images/logo/logo_akademia.svg", Astro.site),
+      "description": description,
+      "sameAs": [
+        "https://www.facebook.com/p/Akademia-Gimnastyki-Mszana-Dolna-100072345243817/",
+        "https://instagram.com" // TODO: Uzupełnić o poprawny link do Instagrama
+      ]
+    })} />
+
     <!-- Preload krytycznych zasobów -->
     <link rel="preload" href="/images/logo/logo_akademia.svg" as="image" fetchpriority="high" />
     <link rel="preload" href="/images/trainers/trainer1.jpg" as="image" fetchpriority="high" />

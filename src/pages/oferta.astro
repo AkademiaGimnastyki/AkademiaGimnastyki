@@ -3,9 +3,18 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import TrainerCarousel from '../components/TrainerCarousel.astro';
 import PhotoGallery from '@/components/PhotoGallery.astro';
+import { Image } from 'astro:assets';
+
+// Importy obrazów z galerii
+import foto1Image from '../images/gallery/foto1.jpg';
+import foto2Image from '../images/gallery/foto2.jpg';
+import foto3Image from '../images/gallery/foto3.jpg';
+
+const pageTitle = "Oferta Zajęć Gimnastycznych | Małopolska Akademia Gimnastyki";
+const pageDescription = "Poznaj naszą ofertę zajęć gimnastycznych dla dzieci i młodzieży w Mszanie Dolnej i Nowym Targu. Oferujemy treningi na każdym poziomie zaawansowania, od początkujących po grupy zawodnicze. Sprawdź nasz grafik i zapisz się już dziś!";
 ---
 
-<Layout title="Oferta - Małopolska Akademia Gimnastyki">
+<Layout title={pageTitle} description={pageDescription}>
   <main>
     <Hero 
       title="Nasza Oferta"
@@ -129,7 +138,12 @@ import PhotoGallery from '@/components/PhotoGallery.astro';
           <div class="absolute inset-0 rounded-full border border-white/50"></div>
           <div class="absolute inset-3 rounded-full border border-white/40"></div>
           <div class="w-72 h-72 lg:w-80 lg:h-80"></div>
-          <img id="exercise-img" src="/images/gallery/foto1.jpg" alt="Przykładowe ćwiczenie" class="absolute inset-4 rounded-full object-cover w-[calc(100%-2rem)] h-[calc(100%-2rem)]" loading="lazy" />
+          <Image 
+            id="exercise-img" 
+            src={foto1Image} 
+            alt="Przykładowe ćwiczenie" 
+            class="absolute inset-4 rounded-full object-cover w-[calc(100%-2rem)] h-[calc(100%-2rem)]" 
+          />
           <!-- Dekoracyjny element art13 -->
 
         </div>
@@ -160,11 +174,11 @@ import PhotoGallery from '@/components/PhotoGallery.astro';
 
       </div>
 
-      <script is:inline>
+      <script is:inline define:vars={{ foto1Src: foto1Image.src, foto2Src: foto2Image.src, foto3Src: foto3Image.src }}>
         const exerciseMap = {
-          1: '/images/gallery/foto1.jpg',
-          2: '/images/gallery/foto2.jpg',
-          3: '/images/gallery/foto3.jpg',
+          1: foto1Src,
+          2: foto2Src,
+          3: foto3Src,
         };
         const exerciseItems = document.querySelectorAll('.exercise-item');
         const exerciseImg = document.getElementById('exercise-img');
@@ -246,7 +260,6 @@ import PhotoGallery from '@/components/PhotoGallery.astro';
             <!-- Dekoracyjny blob w środku -->
             <img src="/images/arts/art13.png" alt="Dekoracja" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 object-contain transition-transform duration-300 hover:scale-125 z-10" />
             
-            <!-- Usunięto nadmiarowe punkty na okręgach -->
           </div>
         </div>
         
@@ -343,6 +356,8 @@ import PhotoGallery from '@/components/PhotoGallery.astro';
       </div>
     </section>
 
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.16/build/spline-viewer.js"></script>
+    <spline-viewer url="https://prod.spline.design/3vpWfgiMmK9yG6kZ/scene.splinecode"></spline-viewer>
 
  <!-- Sekcja: Obozy-->
  <section id="grupy" class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-transparent text-slate-800" data-aos="fade-up">

@@ -1,6 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getBlogPostBySlug } from '../../lib/contentAdapter';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types';
 
 // Generowanie statycznych ścieżek dla wszystkich artykułów
 export async function getStaticPaths() {
@@ -65,53 +67,41 @@ function renderRichTextContent(content: any) {
     
     // Jeśli to obiekt Rich Text z Contentful
     if (contentObj && contentObj.nodeType === 'document') {
-      // Proste renderowanie paragrafów i nagłówków
-      let html = '';
-      
-      if (Array.isArray(contentObj.content)) {
-        contentObj.content.forEach((node: any) => {
-          if (node.nodeType === 'paragraph' && Array.isArray(node.content)) {
-            const text = node.content
-              .map((textNode: any) => textNode.value || '')
-              .join('');
-            html += `<p>${text}</p>`;
-          } else if (node.nodeType === 'heading-1' && Array.isArray(node.content)) {
-            const text = node.content
-              .map((textNode: any) => textNode.value || '')
-              .join('');
-            html += `<h1>${text}</h1>`;
-          } else if (node.nodeType === 'heading-2' && Array.isArray(node.content)) {
-            const text = node.content
-              .map((textNode: any) => textNode.value || '')
-              .join('');
-            html += `<h2>${text}</h2>`;
-          } else if (node.nodeType === 'heading-3' && Array.isArray(node.content)) {
-            const text = node.content
-              .map((textNode: any) => textNode.value || '')
-              .join('');
-            html += `<h3>${text}</h3>`;
-          } else if (node.nodeType === 'unordered-list' && Array.isArray(node.content)) {
-            html += '<ul>';
-            node.content.forEach((listItem: any) => {
-              if (listItem.nodeType === 'list-item' && Array.isArray(listItem.content)) {
-                html += '<li>';
-                listItem.content.forEach((paragraph: any) => {
-                  if (paragraph.nodeType === 'paragraph' && Array.isArray(paragraph.content)) {
-                    const text = paragraph.content
-                      .map((textNode: any) => textNode.value || '')
-                      .join('');
-                    html += text;
-                  }
-                });
-                html += '</li>';
-              }
-            });
-            html += '</ul>';
+      // Opcje renderowania dla Contentful Rich Text
+      const options = {
+        renderMark: {
+          [MARKS.BOLD]: (text: string) => `<strong>${text}</strong>`,
+          [MARKS.ITALIC]: (text: string) => `<em>${text}</em>`,
+          [MARKS.UNDERLINE]: (text: string) => `<u>${text}</u>`,
+          [MARKS.CODE]: (text: string) => `<code>${text}</code>`,
+        },
+        renderNode: {
+          [BLOCKS.PARAGRAPH]: (node: any, next: any) => `<p>${next(node.content)}</p>`,
+          [BLOCKS.HEADING_1]: (node: any, next: any) => `<h1>${next(node.content)}</h1>`,
+          [BLOCKS.HEADING_2]: (node: any, next: any) => `<h2>${next(node.content)}</h2>`,
+          [BLOCKS.HEADING_3]: (node: any, next: any) => `<h3>${next(node.content)}</h3>`,
+          [BLOCKS.UL_LIST]: (node: any, next: any) => `<ul>${next(node.content)}</ul>`,
+          [BLOCKS.OL_LIST]: (node: any, next: any) => `<ol>${next(node.content)}</ol>`,
+          [BLOCKS.LIST_ITEM]: (node: any, next: any) => `<li>${next(node.content)}</li>`,
+          [BLOCKS.QUOTE]: (node: any, next: any) => `<blockquote>${next(node.content)}</blockquote>`,
+          [BLOCKS.HR]: () => `<hr />`,
+          [INLINES.HYPERLINK]: (node: any, next: any) => {
+            return `<a href="${node.data.uri}" target="_blank" rel="noopener noreferrer">${next(node.content)}</a>`;
+          },
+          [BLOCKS.EMBEDDED_ASSET]: (node: any) => {
+            // Obsługa obrazów osadzonych
+            if (node.data?.target?.fields?.file?.url) {
+              const url = node.data.target.fields.file.url;
+              const alt = node.data.target.fields.title || '';
+              return `<img src="https:${url}" alt="${alt}" class="my-8 rounded-lg mx-auto shadow-lg" />`;
+            }
+            return '';
           }
-        });
-      }
+        }
+      };
       
-      return html;
+      // Użyj oficjalnego renderera Contentful
+      return documentToHtmlString(contentObj, options);
     }
     
     // Fallback dla zwykłego tekstu

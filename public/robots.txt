@@ -1,0 +1,6 @@
+# Zezwól wszystkim robotom na dostęp do całej strony
+User-agent: *
+Allow: /
+
+# Wskaż lokalizację mapy strony (sitemap)
+Sitemap: https://www.akademiagimnastyki.pl/sitemap-index.xml
