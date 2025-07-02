@@ -80,10 +80,10 @@ function transformContentfulEntry(entry: Entry<any>): UnifiedBlogPost {
   
   // Sprawdź dostępne pola dla treści
   if (fields.content) {
-    // Jeśli jest to obj Rich Text, konwertujemy go do HTML
+    // Jeśli jest to obj Rich Text, przekazujemy oryginalny obiekt
     if (typeof fields.content === 'object' && fields.content.nodeType === 'document') {
-      // Najprostsze podejście - konwersja do tekstu
-      content = JSON.stringify(fields.content);
+      // Przekazujemy bezpośrednio obiekt Rich Text do renderera
+      content = fields.content;
     } else {
       content = fields.content;
     }
