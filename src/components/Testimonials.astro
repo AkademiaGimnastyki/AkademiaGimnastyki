@@ -213,7 +213,7 @@ const testimonials = [
   import { Navigation, EffectFade } from 'swiper/modules';
 
   // Inicjalizacja Swiper
-  const swiper = new Swiper('.testimonials-carousel', {
+  new Swiper('.testimonials-carousel', {
     modules: [Navigation, EffectFade],
     speed: 800,
     effect: 'fade',
@@ -233,13 +233,13 @@ const testimonials = [
   let currentX = 0;
   let ticking = false;
 
-  function lerp(start, end, factor) {
+  function lerp(start: number, end: number, factor: number): number {
     return start + (end - start) * factor;
   }
 
   function updateParallax() {
     if (art6Element) {
-      const scrolled = window.scrollY;
+      // const scrolled = window.scrollY; // usunięte, nieużywane
       const windowHeight = window.innerHeight;
       const elementRect = art6Element.getBoundingClientRect();
       const elementCenter = elementRect.top + elementRect.height / 2;
@@ -253,7 +253,7 @@ const testimonials = [
       // Płynne przejście do docelowej pozycji
       currentX = lerp(currentX, targetX, 0.05); // Zmniejszona wartość dla większego opóźnienia
       
-      art6Element.style.transform = `translateX(${-currentX}px)`;
+      (art6Element as HTMLElement).style.transform = `translateX(${-currentX}px)`;
 
       // Kontynuuj animację, jeśli nie osiągnęliśmy celu
       if (Math.abs(targetX - currentX) > 0.1) {

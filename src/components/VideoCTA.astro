@@ -23,7 +23,7 @@ const { videoUrl } = Astro.props;
 
   <div class="relative z-20 container mx-auto px-4 h-full flex items-center">
     <div class="max-w-2xl">
-      <div class="inline-flex items-center justify-center h-[2.6875rem] px-6 py-2 text-brand-primary text-base leading-[160%] tracking-[0.04em] font-normal text-white bg-brand-primary/20 backdrop-blur-md border border-brand-primary rounded-[5.75rem] font-roboto mb-8">
+      <div class="inline-flex items-center justify-center h-[2.6875rem] px-6 py-2 text-brand-primary text-base leading-[160%] tracking-[0.04em] font-normal bg-brand-primary/20 backdrop-blur-md border border-brand-primary rounded-[5.75rem] font-roboto mb-8">
         Dołącz do nas
       </div>
 
@@ -90,11 +90,14 @@ const { videoUrl } = Astro.props;
     
     if (!section || !videoParallax) return;
 
+    // Po tym punkcie section oraz videoParallax na pewno istnieją
+    const sectionEl = section as HTMLElement;
+
     let ticking = false;
     const parallaxSpeed = 0.15;
 
     function updateParallax() {
-      const rect = section.getBoundingClientRect();
+      const rect = sectionEl.getBoundingClientRect();
       const scrolled = -rect.top;
       const translate = scrolled * parallaxSpeed;
       

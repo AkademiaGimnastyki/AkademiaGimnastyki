@@ -69,6 +69,7 @@ function renderRichTextContent(content: any) {
     if (contentObj && contentObj.nodeType === 'document') {
       // Opcje renderowania dla Contentful Rich Text
       const options = {
+
         renderMark: {
           [MARKS.BOLD]: (text: string) => `<strong>${text}</strong>`,
           [MARKS.ITALIC]: (text: string) => `<em>${text}</em>`,
@@ -148,7 +149,7 @@ const renderedContent = renderRichTextContent(post.content);
       </div>
 
       <!-- 4. TREŚĆ -->
-      <div class="prose prose-lg max-w-none mb-12">
+      <div class="prose max-w-none mb-12 content-contentful">
         {renderedContent ? (
           <div set:html={renderedContent} />
         ) : (
@@ -194,13 +195,11 @@ const renderedContent = renderRichTextContent(post.content);
       <!-- PRZYCISK POWROTU -->
       <div class="mt-12 flex justify-center">
         <a 
-          href="/blog" 
-          class="inline-flex items-center px-6 py-3 rounded-md bg-[#00B3D4] text-white hover:bg-[#E3A1A1] transition-colors duration-300"
+          href="javascript:history.back()" 
+          class="rounded-[75px] border border-brand-text-main px-8 py-3 sm:px-10 lg:px-12 font-body font-medium text-base sm:text-lg lg:text-xl hover:bg-brand-text-main hover:text-white transition-colors duration-300"
+          role="button"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          Powrót do bloga
+          Powrót
         </a>
       </div>
     </article>
@@ -209,52 +208,102 @@ const renderedContent = renderRichTextContent(post.content);
 
 <style>
   /* Stylizacja zawartości Markdown i Rich Text */
-  .prose h1 {
-    font-size: 1.875rem;
-    line-height: 2.25rem;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
+  .prose {
+    font-size: 1.125rem;
+    line-height: 1.75;
   }
+
+  .prose h1 {
+    font-size: 2rem;
+    line-height: 2.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    font-weight: 700;
+    color: #000;
+  }
+
   .prose h2 {
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+    margin-top: 2.25rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #000;
+  }
+
+  .prose h3 {
     font-size: 1.5rem;
     line-height: 2rem;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     margin-bottom: 0.75rem;
-  }
-  .prose h3 {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    margin-top: 1.25rem;
-    margin-bottom: 0.5rem;
     font-weight: 600;
+    color: #000;
   }
+
+  /* Paragrafy z większymi odstępami */
   .prose p {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    white-space: pre-line;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
     color: #4b5563;
+    line-height: 1.8;
   }
+
+  /* Poprawione listy wypunktowane */
   .prose ul {
+    list-style-position: outside;
+    margin-left: 0.5rem;
     list-style-type: disc;
-    padding-left: 1.5rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-  .prose li {
-    margin-bottom: 0.5rem;
-  }
-  .prose img {
-    border-radius: 0.5rem;
+    padding-left: 2.5rem;
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
+  }
+
+  /* Poprawa wcięć dla list numerowanych */
+  .prose ol {
+    list-style-position: outside;
+    margin-left: 0.5rem;
+    list-style-type: decimal;
+    padding-left: 2.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Zachowanie białych znaków również w paragrafach wewnątrz list */
+  .prose li p {
+    white-space: pre-line;
+  }
+
+  /* Większe odstępy między elementami listy */
+  .prose li {
+    margin-bottom: 0.75rem;
+    padding-left: 0.5rem;
+  }
+
+  /* Ustawienia dla zagnieżdżonych list */
+  .prose li > ul,
+  .prose li > ol {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose img {
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
+
   .prose a {
     color: #00B3D4;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 2px;
     transition-property: color;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
   }
+
   .prose a:hover {
     color: #E3A1A1;
   }
@@ -262,27 +311,104 @@ const renderedContent = renderRichTextContent(post.content);
   /* Dodatkowe style dla Rich Text z Contentful */
   .prose blockquote {
     border-left: 4px solid #E3A1A1;
-    padding-left: 1rem;
+    padding: 0.75rem 0 0.75rem 1.5rem;
     font-style: italic;
-    margin: 1.5rem 0;
-    color: #6b7280;
-  }
-  .prose hr {
     margin: 2rem 0;
-    border-color: #e5e7eb;
+    color: #6b7280;
+    background-color: #f9fafb;
+    border-radius: 0 0.25rem 0.25rem 0;
   }
+
+  .prose hr {
+    margin: 2.5rem 0;
+    border-color: #e5e7eb;
+    border-width: 1px;
+  }
+
   .prose table {
     width: 100%;
     border-collapse: collapse;
-    margin: 1.5rem 0;
+    margin: 2rem 0;
   }
+
   .prose th,
   .prose td {
-    padding: 0.75rem;
+    padding: 0.75rem 1rem;
     border: 1px solid #e5e7eb;
   }
+
   .prose th {
     background-color: #f9fafb;
     font-weight: 600;
   }
+
+  /* Specjalne style dla nagłówków sekcji */
+  .prose h2 + p,
+  .prose h3 + p {
+    margin-top: 1rem;
+  }
+
+  /* Poprawienie odstępów dla całego kontenera */
+  .prose > div > * + * {
+    margin-top: 1.5rem;
+  }
+
+  /* Style dla tekstu z pogrubieniem */
+  .prose strong {
+    font-weight: 700;
+    color: #000;
+  }
+
+  /* Style dla tekstu z kursywą */
+  .prose em {
+    font-style: italic;
+  }
+
+  /* Style dla kodu */
+  .prose code {
+    background-color: #f3f4f6;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-family: ui-monospace, monospace;
+    font-size: 0.9em;
+  }
+
+  /* Poprawka wyświetlania list i markerów */
+  .prose ul,
+  .prose ol {
+    list-style-position: outside;
+    padding-left: 1.5rem;
+    margin-left: 0;
+  }
+
+  .prose ul {
+    list-style-type: disc;
+  }
+
+  .prose ol {
+    list-style-type: decimal;
+  }
+
+  /* Kolor markerów list */
+  .prose li::marker {
+    color: #4b5563;
+    font-weight: 500;
+  }
+
+  /* Zachowanie białych znaków i odstępów w elementach listy */
+  .prose li {
+    margin-bottom: 0.75rem;
+  }
+
+  .prose li p {
+    white-space: pre-line;
+  }
+
+  /* Linki w tekście – nawet wewnątrz <strong>/<em> */
+  .prose a,
+  .prose a strong,
+  .prose a em {
+    color: #00B3D4;
+  }
+
 </style>
