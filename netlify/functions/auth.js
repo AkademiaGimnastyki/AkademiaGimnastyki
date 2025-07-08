@@ -158,7 +158,7 @@ exports.handler = async (event) => {
     
     // Przekieruj użytkownika do panelu administracyjnego CMS
     // Zawsze używaj process.env.URL - to jest gwarantowany poprawny adres publiczny strony
-    const siteUrl = process.env.URL || 'https://akademia-gimnastyki-2025.windsurf.build';
+    const siteUrl = process.env.URL || 'https://akademia-gimnastyki.pl';
     const token = tokenData.access_token;
     
     console.log('Szczegóły przekierowania:', {

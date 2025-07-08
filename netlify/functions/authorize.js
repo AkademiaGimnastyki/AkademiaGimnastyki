@@ -32,7 +32,7 @@ exports.handler = async (event) => {
   }
   
   // Pobieramy URL serwera z zmiennych środowiskowych
-  const siteUrl = process.env.URL || 'https://akademia-gimnastyki-2025.windsurf.build';
+  const siteUrl = process.env.URL || 'https://akademia-gimnastyki.pl';
   console.log(`Używam adresu strony: ${siteUrl}`);
   
   // Generujemy unikalny stan dla zabezpieczenia procesu OAuth (ochrona przed CSRF)

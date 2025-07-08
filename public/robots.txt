@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Wskaż lokalizację mapy strony (sitemap)
-Sitemap: https://www.akademiagimnastyki.pl/sitemap-index.xml
+Sitemap: https://akademia-gimnastyki.pl/sitemap-index.xml

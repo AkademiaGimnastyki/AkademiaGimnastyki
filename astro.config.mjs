@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   // WAŻNE: Zastąp ten adres URL docelową domeną Twojej strony przed wdrożeniem!
-  site: 'https://www.akademiagimnastyki.pl',
+  site: 'https://akademia-gimnastyki.pl',
   output: 'static',
   server: {
     port: 4321,
