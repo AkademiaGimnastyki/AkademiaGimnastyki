@@ -13,5 +13,5 @@ const {
 ---
 <!-- Kontener ustawiony absolutnie, aby przykrywać całą sekcję / stronę -->
 <div class={`absolute inset-0 -z-10 overflow-visible ${className}`}>
-  <Aurora client:load colorStops={colorStops} amplitude={amplitude} blend={blend} {...rest} />
+  <Aurora client:media="(min-width: 640px)" colorStops={colorStops} amplitude={amplitude} blend={blend} {...rest} />
 </div>

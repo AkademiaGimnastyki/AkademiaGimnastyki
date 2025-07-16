@@ -80,7 +80,7 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
         <div className="w-full flex justify-center items-start gap-x-1 xs:gap-x-2 sm:gap-x-4 lg:block order-1 lg:order-none mb-6 sm:mb-8 lg:mb-0">
           {/* Left image */}
           <motion.div 
-            className="relative lg:absolute lg:left-[350px] xl:left-[300px] 2xl:left-[350px] 3xl:left-[450px] lg:top-8 xl:top-28 2xl:top-32 z-0"
+            className="relative lg:absolute lg:-left-[20px] xl:-left-[25px] 2xl:-left-[35px] 3xl:-left-[22px] lg:top-8 xl:top-28 2xl:top-32 z-0"
             style={{ x: leftImageX }}
             initial={{ opacity: 0 }}
             animate={{ 
@@ -101,7 +101,7 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
               width={image1.attributes.width}
               height={image1.attributes.height}
               alt={image1.alt}
-              className="object-contain will-change-transform w-[100px] xs:w-[120px] sm:w-[180px] lg:w-[350px] xl:w-[400px] 2xl:w-[458px]"
+              className="object-contain will-change-transform w-[100px] xs:w-[120px] sm:w-[180px] lg:w-[300px] xl:w-[400px] 2xl:w-[458px]"
               loading="eager"
               decoding="async"
             />
@@ -109,7 +109,7 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
 
           {/* Right image */}
           <motion.div 
-            className="relative lg:absolute lg:right-[350px] xl:right-[300px] 2xl:right-[350px] 3xl:right-[450px] lg:top-8 xl:top-28 2xl:top-32 z-0"
+            className="relative lg:absolute lg:-right-[20px] xl:-right-[25px] 2xl:-right-[35px] 3xl:-right-[22px] lg:top-8 xl:top-28 2xl:top-32 z-0"
             style={{ x: rightImageX }}
             initial={{ opacity: 0 }}
             animate={{ 
@@ -130,7 +130,7 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
               width={image2.attributes.width}
               height={image2.attributes.height}
               alt={image2.alt}
-              className="object-contain will-change-transform w-[100px] xs:w-[120px] sm:w-[180px] lg:w-[350px] xl:w-[400px] 2xl:w-[458px]"
+              className="object-contain will-change-transform w-[100px] xs:w-[120px] sm:w-[180px] lg:w-[300px] xl:w-[400px] 2xl:w-[458px]"
               loading="eager"
               decoding="async"
             />
