@@ -7,7 +7,7 @@ interface ImageProps {
   src: string;
   attributes: {
     src: string;
-    srcset: string;
+    srcSet: string; // Zmiana z srcset na srcSet dla zgodności z React
     width: number;
     height: number;
   };
@@ -23,6 +23,7 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
   const [titleNumber, setTitleNumber] = useState(0);
   const componentRef = useRef(null);
   
+  // Używamy useScroll z odpowiednim offsetem
   const { scrollYProgress } = useScroll({
     target: componentRef,
     offset: ["start end", "end start"]
@@ -37,14 +38,14 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
   const leftImageX = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    [250, 0, -250],
+    [150, 0, -150],
     { clamp: true }
   );
 
   const rightImageX = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    [-250, 0, 250],
+    [-150, 0, 150],
     { clamp: true }
   );
 
@@ -64,9 +65,7 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="relative w-full overflow-hidden bg-white h-auto lg:h-[773px] pt-20 lg:pt-0 mb-16 lg:mb-24"
-      data-aos="fade-up"
-      data-aos-duration="1000"
+      className="relative w-full overflow-hidden bg-white h-auto lg:h-[773px] pt-20 lg:pt-0 mb-16 lg:mb-24 will-change-scroll"
     >
       {/* Background blur effect */}
       <div
@@ -78,10 +77,10 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
       <div className="relative z-10 flex flex-col items-center justify-center h-full pb-16 lg:pb-0">
 
         {/* Images container - appears above text on mobile */}
-        <div className="w-full flex justify-center items-start gap-x-2 sm:gap-x-4 lg:block order-1 lg:order-none mb-8 lg:mb-0">
+        <div className="w-full flex justify-center items-start gap-x-1 xs:gap-x-2 sm:gap-x-4 lg:block order-1 lg:order-none mb-6 sm:mb-8 lg:mb-0">
           {/* Left image */}
           <motion.div 
-            className="relative lg:absolute lg:left-[350px] lg:top-32 z-0"
+            className="relative lg:absolute lg:left-[350px] xl:left-[300px] 2xl:left-[350px] 3xl:left-[450px] lg:top-8 xl:top-28 2xl:top-32 z-0"
             style={{ x: leftImageX }}
             initial={{ opacity: 0 }}
             animate={{ 
@@ -97,9 +96,12 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
             }}
           >
             <img
-              {...image1.attributes}
+              src={image1.attributes.src}
+              srcSet={image1.attributes.srcSet}
+              width={image1.attributes.width}
+              height={image1.attributes.height}
               alt={image1.alt}
-              className="object-contain will-change-transform w-[140px] h-auto sm:w-[180px] lg:w-[458px]"
+              className="object-contain will-change-transform w-[100px] xs:w-[120px] sm:w-[180px] lg:w-[350px] xl:w-[400px] 2xl:w-[458px]"
               loading="eager"
               decoding="async"
             />
@@ -107,7 +109,7 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
 
           {/* Right image */}
           <motion.div 
-            className="relative lg:absolute lg:right-[350px] lg:top-32 z-0"
+            className="relative lg:absolute lg:right-[350px] xl:right-[300px] 2xl:right-[350px] 3xl:right-[450px] lg:top-8 xl:top-28 2xl:top-32 z-0"
             style={{ x: rightImageX }}
             initial={{ opacity: 0 }}
             animate={{ 
@@ -123,9 +125,12 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
             }}
           >
             <img
-              {...image2.attributes}
+              src={image2.attributes.src}
+              srcSet={image2.attributes.srcSet}
+              width={image2.attributes.width}
+              height={image2.attributes.height}
               alt={image2.alt}
-              className="object-contain will-change-transform w-[140px] h-auto sm:w-[180px] lg:w-[458px]"
+              className="object-contain will-change-transform w-[100px] xs:w-[120px] sm:w-[180px] lg:w-[350px] xl:w-[400px] 2xl:w-[458px]"
               loading="eager"
               decoding="async"
             />
@@ -140,15 +145,15 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <span className="block font-heading text-4xl sm:text-5xl lg:text-[64px] font-bold leading-tight">
+            <span className="block font-heading text-3xl xs:text-4xl sm:text-5xl lg:text-[64px] font-bold leading-tight">
               <span className="text-brand-primary-dynamic">Gimnastyka</span>
               <span className="text-brand-accent-sensitive ml-2 lg:ml-4">jest</span>
             </span>
-            <span className="relative flex w-full justify-center overflow-hidden text-center h-[50px] sm:h-[60px] lg:h-[90px]">
+            <span className="relative flex w-full justify-center overflow-hidden text-center h-[40px] xs:h-[50px] sm:h-[60px] lg:h-[90px]">
               {titles.map((title, index) => (
                 <motion.span
                   key={index}
-                  className="absolute font-heading text-4xl sm:text-5xl lg:text-[64px] font-extralight"
+                  className="absolute font-heading text-3xl xs:text-4xl sm:text-5xl lg:text-[64px] font-extralight"
                   initial={{ opacity: 0, y: "100%" }}
                   animate={
                     titleNumber === index
