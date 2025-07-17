@@ -19,7 +19,7 @@ const optimizedArt2 = await getImage({src: art2Image, widths: [280, 560], format
 const optimizedArt5 = await getImage({src: art5Image, widths: [280, 560], formats: ["avif", "webp"]});
 
 const pageTitle = "Małopolska Akademia Gimnastyki | Zajęcia dla Dzieci i Młodzieży";
-const pageDescription = "Odkryj pasję do gimnastyki w Małopolskiej Akademii Gimnastyki. Oferujemy profesjonalne zajęcia sportowe dla dzieci i młodzieży w Krakowie. Dołącz do nas i rozwijaj talent w przyjaznej atmosferze!";
+const pageDescription = "Odkryj pasję do sportu w Małopolskiej Akademii Gimnastyki. Oferujemy profesjonalne zajęcia dla dzieci i młodzieży w Mszanie Dolnej i Nowym Targu. Dołącz do nas i rozwijaj talent w przyjaznej atmosferze!";
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
@@ -37,7 +37,7 @@ const pageDescription = "Odkryj pasję do gimnastyki w Małopolskiej Akademii Gi
         src: optimizedArt2.src,
         attributes: {
           src: optimizedArt2.src,
-          srcset: optimizedArt2.attributes.srcset,
+          srcSet: optimizedArt2.attributes.srcSet,
           width: optimizedArt2.attributes.width,
           height: optimizedArt2.attributes.height
         },
@@ -47,7 +47,7 @@ const pageDescription = "Odkryj pasję do gimnastyki w Małopolskiej Akademii Gi
         src: optimizedArt5.src,
         attributes: {
           src: optimizedArt5.src,
-          srcset: optimizedArt5.attributes.srcset,
+          srcSet: optimizedArt5.attributes.srcSet,
           width: optimizedArt5.attributes.width,
           height: optimizedArt5.attributes.height
         },

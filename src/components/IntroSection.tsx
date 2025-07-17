@@ -65,7 +65,7 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="relative w-full overflow-hidden bg-white h-auto lg:h-[773px] pt-20 lg:pt-0 mb-16 lg:mb-24 will-change-scroll"
+      className="relative w-full overflow-hidden bg-white h-auto lg:h-[773px] pt-20 lg:pt-0 mb-12 will-change-scroll"
     >
       {/* Background blur effect */}
       <div
@@ -74,7 +74,7 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
       />
 
       {/* Main content wrapper with flex ordering for mobile */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full pb-16 lg:pb-0">
+      <div className="relative z-10 flex flex-col items-center justify-center h-full pb-6 lg:pb-0">
 
         {/* Images container - appears above text on mobile */}
         <div className="w-full flex justify-center items-start gap-x-12 xs:gap-x-4 sm:gap-x-6 lg:block order-1 lg:order-none mb-6 sm:mb-8 lg:mb-0">

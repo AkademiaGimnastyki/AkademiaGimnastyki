@@ -48,7 +48,7 @@ const { trenerzy = [
     <!-- Gradientowe tło -->
     <div class="absolute w-full h-full pointer-events-none select-none">
       <div
-        class="rounded-[650px] w-[1200px] h-[530px] absolute left-1/2 top-0 -translate-x-1/2 -translate-y-[15%]"
+        class="rounded-[650px] w-[1200px] md:h-[530px] h-[650px] absolute left-1/2 top-0 -translate-x-1/2 md:-translate-y-[15%] -translate-y-[5%]"
         style="background: linear-gradient(180deg, rgba(156,239,255,0.5) 0%, rgba(156,239,255,1) 50%, rgba(179,121,218,0.8) 75%, rgba(179,121,218,0) 99%); filter: blur(75px); mix-blend-mode: multiply;"
       ></div>
       <div class="bg-[#a0b9f9] rounded-[50%] w-[320px] h-[450px] absolute left-[30px] top-[25px]" style="filter: blur(150px)"></div>
@@ -81,17 +81,17 @@ const { trenerzy = [
       <!-- Prawa strona - treść -->
       <div class="w-full lg:w-[85%] mt-12 lg:mt-0 lg:-ml-40 relative z-20">
         <div class="flex justify-center lg:justify-start text-center lg:text-left mb-8 lg:mb-12 lg:pl-32 xl:pl-40">
-          <h2 class="text-3xl text-brand-text-main md:text-4xl lg:text-5xl font-poppins mb-6 lg:mb-8 leading-tight">
+          <h2 class="mt-8 lg:mt-0 text-3xl text-white md:text-brand-text-main md:text-4xl lg:text-5xl font-poppins mb-6 lg:mb-8 leading-tight">
             <span class="font-extralight">Nasza </span>
             <span class="font-bold">Kadra</span>
           </h2>
         </div>
         <div id="trainer-desc-box" class="bg-gray-500  bg-opacity-5 backdrop-blur-[75px] rounded-[139px] p-8 lg:p-10 shadow-lg mx-auto lg:mx-0 max-w-3xl lg:min-h-[230px] flex flex-col justify-center transition-all duration-500" style="box-shadow: 12px 12px 25px 0px rgba(154, 156, 164, 0.12);">
-          <h3 id="trainer-name" class="text-white text-2xl font-poppins mb-4">
+          <h3 id="trainer-name" class="text-white text-2xl text-center md:text-left font-poppins mb-4">
             <span class="font-bold">Marcin </span>
             <span class="font-extralight">Wojciechowski</span>
           </h3>
-          <p id="trainer-description" class="text-white text-lg font-roboto leading-relaxed transition-opacity duration-300">
+          <p id="trainer-description" class="text-white text-base md:text-lg text-center md:text-left font-roboto leading-relaxed transition-opacity duration-300">
          Opis trenera zajęć, najważniejsze cechy, doświadczenia.  
           </p>
         </div>

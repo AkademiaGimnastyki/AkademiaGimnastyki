@@ -80,7 +80,7 @@ export const BentoGrid = ({ cards }: { cards: Card[] }) => {
           />
         </motion.div>
         <motion.h2 
-          className="text-[48px] font-bold mt-8 text-black"
+          className="text-[36px] md:text-[48px] font-bold mt-8 text-black"
           initial={{ opacity: 0, y: 20 }}
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}

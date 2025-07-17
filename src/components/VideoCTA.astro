@@ -8,8 +8,8 @@ const { videoUrl } = Astro.props;
 
 <!-- Responsywna sekcja video - na mobile tylko video, na desktop z tekstem -->
 <section class="relative w-full overflow-hidden
-  h-[50vh] sm:h-[60vh] md:h-[70vh] lg:aspect-video
-  min-h-[300px] max-h-[800px]">
+  h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-screen
+  min-h-[300px] lg:min-h-screen">
   
   <!-- Gradient overlay - tylko na desktop -->
   <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/40 z-10 hidden lg:block"></div>
