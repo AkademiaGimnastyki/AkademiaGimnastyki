@@ -356,8 +356,18 @@ const pageDescription = "Poznaj naszą ofertę zajęć gimnastycznych dla dzieci
       </div>
     </section>
 
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.16/build/spline-viewer.js"></script>
-    <spline-viewer url="https://prod.spline.design/3vpWfgiMmK9yG6kZ/scene.splinecode"></spline-viewer>
+    <!-- Spline 3D animacja: ładowana tylko dla ekranów ≥768px -->
+    <div class="hidden md:block">
+      <spline-viewer url="https://prod.spline.design/3vpWfgiMmK9yG6kZ/scene.splinecode" class="w-full h-[600px]"></spline-viewer>
+    </div>
+    <script is:inline>
+      if (window.matchMedia('(min-width: 768px)').matches) {
+        const s = document.createElement('script');
+        s.type = 'module';
+        s.src = 'https://unpkg.com/@splinetool/viewer@1.10.16/build/spline-viewer.js';
+        document.head.appendChild(s);
+      }
+    </script>
 
  <!-- Sekcja: Obozy-->
  <section id="grupy" class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-transparent text-slate-800" data-aos="fade-up">

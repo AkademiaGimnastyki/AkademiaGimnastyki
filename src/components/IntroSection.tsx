@@ -77,7 +77,7 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
       <div className="relative z-10 flex flex-col items-center justify-center h-full pb-16 lg:pb-0">
 
         {/* Images container - appears above text on mobile */}
-        <div className="w-full flex justify-center items-start gap-x-1 xs:gap-x-2 sm:gap-x-4 lg:block order-1 lg:order-none mb-6 sm:mb-8 lg:mb-0">
+        <div className="w-full flex justify-center items-start gap-x-12 xs:gap-x-4 sm:gap-x-6 lg:block order-1 lg:order-none mb-6 sm:mb-8 lg:mb-0">
           {/* Left image */}
           <motion.div 
             className="relative lg:absolute lg:-left-[20px] xl:-left-[25px] 2xl:-left-[35px] 3xl:-left-[22px] lg:top-8 xl:top-28 2xl:top-32 z-0"
@@ -101,7 +101,7 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
               width={image1.attributes.width}
               height={image1.attributes.height}
               alt={image1.alt}
-              className="object-contain will-change-transform w-[100px] xs:w-[120px] sm:w-[180px] lg:w-[300px] xl:w-[400px] 2xl:w-[458px]"
+              className="object-contain will-change-transform w-[90px] xs:w-[120px] sm:w-[180px] lg:w-[300px] xl:w-[400px] 2xl:w-[458px]"
               loading="eager"
               decoding="async"
             />
@@ -130,7 +130,7 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
               width={image2.attributes.width}
               height={image2.attributes.height}
               alt={image2.alt}
-              className="object-contain will-change-transform w-[100px] xs:w-[120px] sm:w-[180px] lg:w-[300px] xl:w-[400px] 2xl:w-[458px]"
+              className="object-contain will-change-transform w-[90px] xs:w-[120px] sm:w-[180px] lg:w-[300px] xl:w-[400px] 2xl:w-[458px]"
               loading="eager"
               decoding="async"
             />

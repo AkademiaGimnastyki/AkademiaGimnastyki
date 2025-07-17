@@ -12,7 +12,7 @@ const logoPath = '/images/logo/logo_akademia.svg';
 
   <div class="max-w-7xl mx-auto px-4 relative">
     <!-- Logo section -->
-    <div class="absolute left-0 top-0 overflow-hidden bg-black rounded-[37px] w-[320px] h-[360px] flex flex-col items-center justify-center hover:scale-105 hover:shadow-2xl transition-all duration-300">
+    <div class="absolute inset-x-0 bottom-0 mx-auto md:left-0 md:top-0 md:bottom-auto md:mx-0 overflow-hidden bg-black rounded-[37px] w-[320px] h-[360px] flex flex-col items-center justify-center hover:scale-105 hover:shadow-2xl transition-all duration-300">
       <AuroraBackground className="absolute inset-0 z-0 opacity-80 pointer-events-none" amplitude={0.6} blend={0.6} />
       <img 
         src={logoPath}
@@ -32,9 +32,9 @@ const logoPath = '/images/logo/logo_akademia.svg';
     </div>
 
     <!-- Navigation columns -->
-    <div class="grid grid-cols-3 gap-x-32 ml-[360px]">
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-y-12 sm:gap-y-8 gap-x-8 xl:gap-x-12 ml-0 md:ml-[360px] pb-96 md:pb-0 pl-6 sm:pl-8 xl:pl-0">
       <!-- Na skróty -->
-      <div>
+      <div class="order-2 sm:order-1 xl:order-none hidden sm:block">
         <h3 class="text-xl mb-6">
           <span class="font-bold">Na</span>
           <span class="font-extralight">skróty</span>
@@ -50,7 +50,7 @@ const logoPath = '/images/logo/logo_akademia.svg';
       </div>
 
            <!-- Nasze lokalizacje -->
-           <div>
+           <div class="order-1 sm:order-2 xl:order-none">
             <h3 class="text-xl mb-6">
               <span class="font-bold">Nasze</span>
               <span class="font-extralight">lokalizacje</span>
@@ -80,7 +80,7 @@ const logoPath = '/images/logo/logo_akademia.svg';
           </div>
     
       <!-- Kontakt -->
-      <div>
+      <div class="order-3 sm:order-3 xl:order-none">
         <h3 class="text-xl mb-6">
           <span class="font-bold">Kontakt</span>
         </h3>

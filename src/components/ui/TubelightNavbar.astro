@@ -1,6 +1,7 @@
 ---
 interface NavItem {
   name: string;
+  shortName?: string;
   url: string;
   icon: string;
 }
@@ -22,12 +23,12 @@ const activeItem = items.find(item => {
 
 <div
   class:list={[
-    "fixed bottom-0 sm:top-0 left-1/2 -translate-x-1/2 mb-6 sm:pt-6 w-[95%] sm:w-auto max-w-full pointer-events-none",
+    "fixed bottom-0 sm:top-0 left-1/2 -translate-x-1/2 mb-4 sm:mb-6 sm:pt-6 w-[98%] sm:w-auto max-w-full pointer-events-none",
     className
   ]}
   style="z-index: 100;"
 >
-  <nav class="flex items-center gap-1 sm:gap-3 bg-[#9E75DC]/60 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg overflow-x-auto max-w-full no-scrollbar pointer-events-auto">
+  <nav class="flex items-center justify-between sm:justify-center sm:gap-3 bg-[#9E75DC]/60 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg overflow-x-auto max-w-full no-scrollbar pointer-events-auto scroll-smooth">
     {
       items.map((item) => {
         const isActive = activeItem?.name && item.name === activeItem.name;
@@ -36,14 +37,20 @@ const activeItem = items.find(item => {
             href={item.url}
             data-nav-item
             class:list={[
-              "relative cursor-pointer text-xs sm:text-sm font-semibold px-3 sm:px-6 py-2 rounded-full transition-all duration-300",
-              "text-white hover:text-white/80 min-w-[60px] sm:min-w-[100px] text-center shrink-0",
+              "relative cursor-pointer text-[10px] xs:text-xs sm:text-sm font-semibold px-1 xs:px-2 sm:px-6 py-2 rounded-full transition-all duration-300",
+              "text-white hover:text-white/80 flex-1 sm:flex-none sm:min-w-[100px] text-center",
               "flex items-center justify-center pointer-events-auto",
               isActive && "bg-white/10 text-white nav-active"
             ]}
           >
+            {/* Tekst na desktop */}
             <span class="hidden md:inline whitespace-nowrap pointer-events-auto">{item.name}</span>
-            <span class="md:hidden w-6 h-6 flex items-center justify-center pointer-events-auto" set:html={item.icon} />
+            {/* Tekst na tablet/większe mobile */}
+            <span class="hidden sm:inline md:hidden whitespace-nowrap pointer-events-auto">{item.shortName || item.name}</span>
+            {/* Tekst na małe mobile */}
+            <span class="hidden xs:inline sm:hidden whitespace-nowrap pointer-events-auto text-[10px]">{item.shortName || item.name}</span>
+            {/* Ikony tylko na bardzo małych ekranach */}
+            <span class="xs:hidden w-5 h-5 flex items-center justify-center pointer-events-auto" set:html={item.icon} />
             {isActive && (
               <div class="absolute inset-0 w-full bg-primary/5 rounded-full -z-10 pointer-events-none">
                 <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-t-full pointer-events-none">
@@ -74,6 +81,43 @@ const activeItem = items.find(item => {
     width: 100%;
     height: 100%;
     pointer-events: auto;
+  }
+  
+  /* Optymalizacja dla bardzo małych ekranów */
+  @media (max-width: 374px) {
+    nav {
+      padding-left: 0.125rem;
+      padding-right: 0.125rem;
+      gap: 0;
+    }
+    
+    [data-nav-item] {
+      font-size: 8px;
+      padding-left: 0.25rem;
+      padding-right: 0.25rem;
+      flex: 1;
+      max-width: none;
+    }
+  }
+  
+  /* Optymalizacja dla ekranów 375px - 639px */
+  @media (min-width: 375px) and (max-width: 639px) {
+    nav {
+      padding-left: 0.25rem;
+      padding-right: 0.25rem;
+    }
+    
+    [data-nav-item] {
+      flex: 1;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+  }
+  
+  /* Poprawa scrollowania na touch devices */
+  nav {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
   }
 </style>
 
