@@ -63,62 +63,69 @@ const testimonials = [
 ];
 ---
 
-<div class="mt-24 h-[879px] relative w-full max-w-[1920px] mx-auto overflow-visible" data-aos="fade-up" data-aos-duration="1000">
+<div class="mt-24 lg:h-[879px] md:h-[700px] sm:h-[600px] h-[500px] relative w-full max-w-[1920px] mx-auto overflow-visible" data-aos="fade-up" data-aos-duration="1000">
   <div class="rounded-[100px] w-full h-full absolute left-0 top-0 bg-gradient-to-b from-[rgba(155,77,206,1)] to-[rgba(255,255,255,1)]">
     <!-- Blur effects -->
-    <div class="bg-[#a0b9f9] rounded-[50%] w-[732px] h-[596px] absolute left-[411px] top-12" style="filter: blur(150px)"></div>
-    <div class="bg-[#f2afda] rounded-[50%] w-[650px] h-[529.72px] absolute left-[928px] top-[59.82px]" style="filter: blur(150px)"></div>
+    <div class="bg-[#a0b9f9] rounded-[50%] lg:w-[732px] lg:h-[596px] md:w-[400px] md:h-[350px] sm:w-[300px] sm:h-[250px] w-[200px] h-[180px] absolute lg:left-[411px] md:left-[200px] sm:left-[100px] left-[50px] lg:top-12 md:top-8 sm:top-6 top-4" style="filter: blur(150px)"></div>
+    <div class="bg-[#f2afda] rounded-[50%] lg:w-[650px] lg:h-[529.72px] md:w-[350px] md:h-[300px] sm:w-[250px] sm:h-[200px] w-[150px] h-[130px] absolute lg:left-[928px] md:left-[500px] sm:left-[250px] left-[150px] lg:top-[59.82px] md:top-[40px] sm:top-[30px] top-[20px]" style="filter: blur(150px)"></div>
 
     <!-- Header -->
-    <div class="absolute left-1/2 -translate-x-1/2 top-[111px] text-center w-full">
-      <h2 class="text-[50px] leading-[160%] text-white" data-aos="fade-up" data-aos-delay="200">
+    <div class="absolute left-1/2 -translate-x-1/2 lg:top-[111px] md:top-[80px] sm:top-[60px] top-[40px] text-center w-full px-4">
+      <h2 class="lg:text-[50px] md:text-[40px] sm:text-[32px] text-[28px] leading-[160%] text-white" data-aos="fade-up" data-aos-delay="200">
         <span class="font-bold">Co mówią</span>
         <span class="font-extralight"> o nas klienci?</span>
       </h2>
-      <p class="text-xl leading-[160%] text-white mt-4" data-aos="fade-up" data-aos-delay="300">Opinie o Małopolskiej Akademii Gimnastyki</p>
+      <p class="lg:text-xl md:text-lg sm:text-base text-sm leading-[160%] text-white mt-4" data-aos="fade-up" data-aos-delay="300">Opinie o Małopolskiej Akademii Gimnastyki</p>
     </div>
 
     <!-- Testimonials -->
-    <div class="swiper testimonials-carousel absolute top-[297px] w-full">
+    <div class="swiper testimonials-carousel absolute lg:top-[297px] md:top-[220px] sm:top-[180px] top-[140px] w-full">
       <div class="swiper-wrapper">
         {testimonials.map((group) => (
           <div class="swiper-slide">
-            <div class="flex justify-center gap-[48px] py-8">
+            <!-- Desktop: 3 opinie obok siebie -->
+            <div class="hidden lg:flex justify-center gap-[48px] py-8">
               {group.map((testimonial) => (
-                <div class="w-[456px] h-[445px] relative" data-aos="zoom-in" data-aos-delay="400">
-                  <div class="bg-white/25 rounded-[89px] w-full h-full absolute shadow-[0_12px_25px_0px_rgba(0,0,0,0.05)] backdrop-blur-[25px]">
-                    <div class="px-16 pt-16 pb-12 flex flex-col h-full">
-                      <p class="text-xl leading-[160%] text-white/80 mb-3">{testimonial.author}</p>
-                      <h3 class="text-[40px] leading-[120%] font-bold text-white mb-6">{testimonial.title}</h3>
-                      <div class="flex-1 overflow-y-auto custom-scrollbar pr-4 pb-4">
-                        <p class="text-xl leading-[160%] text-white">{testimonial.content}</p>
-                      </div>
-                    </div>
-                  </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-[60px] p-8 max-w-[380px] w-full border border-white/20 shadow-lg hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                  <h3 class="text-2xl font-bold text-white mb-4 lg:text-left lg:px-0 px-4 text-center">{testimonial.title}</h3>
+                  <p class="text-white/90 leading-relaxed mb-6 text-sm custom-scrollbar overflow-y-auto max-h-[120px] lg:text-left lg:px-0 px-4 text-center">{testimonial.content}</p>
+                  <p class="text-white/70 text-sm font-medium lg:text-left lg:px-0 px-4 text-center">{testimonial.author}</p>
+                </div>
+              ))}
+            </div>
+            <!-- Mobile/Tablet: pojedyncze opinie -->
+            <div class="lg:hidden flex flex-col gap-4 md:px-12 sm:px-16 px-20 py-4">
+              {group.map((testimonial, index) => (
+                <div class={`testimonial-mobile ${index === 0 ? 'block' : 'hidden'} bg-white/10 backdrop-blur-sm rounded-[40px] md:p-6 sm:p-5 p-4 mx-auto md:max-w-[400px] sm:max-w-[350px] max-w-[300px] w-full border border-white/20 md:shadow-xl sm:shadow-lg shadow-md`}>
+                  <h3 class="md:text-xl text-lg font-bold text-white mb-3 lg:text-left lg:px-0 px-4 text-center">{testimonial.title}</h3>
+                  <p class="text-white/90 leading-relaxed mb-4 md:text-sm text-xs custom-scrollbar overflow-y-auto md:max-h-[100px] max-h-[80px] lg:text-left lg:px-0 px-4 text-center">{testimonial.content}</p>
+                  <p class="text-white/70 md:text-sm text-xs font-medium lg:text-left lg:px-0 px-4 text-center">{testimonial.author}</p>
                 </div>
               ))}
             </div>
           </div>
         ))}
       </div>
-      <div class="swiper-button-prev left-[calc(50%-900px)]"></div>
-      <div class="swiper-button-next right-[calc(50%-900px)]"></div>
+      <div class="swiper-button-prev lg:left-[calc(50%-900px)] left-4"></div>
+      <div class="swiper-button-next lg:right-[calc(50%-900px)] right-4"></div>
     </div>
 
     <!-- Decorative images -->
+    <!-- Gimnastyczka - widoczna na wszystkich rozdzielczościach, nad nagłówkiem na małych ekranach -->
     <Image
       src="/images/arts/art3.png"
       alt="Decorative gymnast"
       width={448}
       height={448}
-      class="absolute left-[33px] top-12 z-20 transition-transform duration-300 hover:scale-105"
+      class="absolute lg:left-[33px] md:left-[20px] sm:left-[20px] left-[20px] lg:top-12 md:top-[-10px] sm:top-[-5px] top-[-80px] z-10 transition-transform duration-500 lg:hover:scale-110 lg:pointer-events-auto pointer-events-none lg:w-[320px] lg:h-[320px] xl:w-[300px] xl:h-[300px] 2xl:w-[360px] 2xl:h-[360px] min-[1700px]:w-[448px] min-[1700px]:h-[448px] md:w-[280px] md:h-[280px] sm:w-[160px] sm:h-[160px] w-[140px] h-[140px]"
     />
+    <!-- Kółka gimnastyczne - ukryte na mniejszych rozdzielczościach -->
     <Image
       src="/images/arts/kola.png"
       alt="Decorative rings"
       width={473}
       height={473}
-      class="absolute right-0 top-0 z-30 parallax-art6"
+      class="absolute right-0 top-0 z-10 parallax-art6 pointer-events-none hidden lg:block lg:w-[350px] lg:h-[350px] xl:w-[400px] xl:h-[400px] 2xl:w-[420px] 2xl:h-[420px] min-[1700px]:w-[473px] min-[1700px]:h-[473px]"
     />
   </div>
 </div>
@@ -185,6 +192,12 @@ const testimonials = [
     border-radius: 50%;
     backdrop-filter: blur(4px);
     transition: all 0.3s ease;
+    z-index: 100;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .swiper-button-next {
@@ -195,16 +208,73 @@ const testimonials = [
     left: calc(50% - 900px);
   }
 
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
   .swiper-button-next:hover,
   .swiper-button-prev:hover {
     color: #AAC9E7;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.3);
     transform: translateY(-50%) scale(1.1);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .swiper-button-next:active,
+  .swiper-button-prev:active {
+    transform: translateY(-50%) scale(0.95);
   }
 
   @media (max-width: 1280px) {
-    .swiper-button-prev { left: 24px; }
-    .swiper-button-next { right: 24px; }
+    .swiper-button-prev { 
+      left: 24px;
+      z-index: 101;
+    }
+    .swiper-button-next { 
+      right: 24px;
+      z-index: 101;
+    }
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 1023px) {
+    .swiper-button-next,
+    .swiper-button-prev {
+      width: 32px;
+      height: 32px;
+      z-index: 102;
+    }
+    
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .swiper-button-next,
+    .swiper-button-prev {
+      width: 28px;
+      height: 28px;
+      z-index: 103;
+    }
+    
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+      font-size: 12px;
+    }
+  }
+
+  /* Mobile testimonials cycling */
+  .testimonial-mobile {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 </style>
 
@@ -225,6 +295,22 @@ const testimonials = [
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
     },
+    on: {
+      init: function() {
+        // Upewnij się, że przyciski nawigacji są widoczne i klikalne
+        const nextBtn = document.querySelector('.swiper-button-next') as HTMLElement;
+        const prevBtn = document.querySelector('.swiper-button-prev') as HTMLElement;
+        
+        if (nextBtn) {
+          nextBtn.style.pointerEvents = 'auto';
+          nextBtn.style.zIndex = '100';
+        }
+        if (prevBtn) {
+          prevBtn.style.pointerEvents = 'auto';
+          prevBtn.style.zIndex = '100';
+        }
+      }
+    }
   });
 
   // Obsługa paralaksy dla poręczy gimnastycznych
@@ -288,4 +374,47 @@ const testimonials = [
   } else {
     window.addEventListener('load', updateParallax);
   }
+
+  // Obsługa cyklicznego wyświetlania opinii na urządzeniach mobilnych
+  function initMobileTestimonials() {
+    if (window.innerWidth < 1024) { // lg breakpoint
+      const slides = document.querySelectorAll('.swiper-slide');
+      
+      slides.forEach(slide => {
+        const testimonials = slide.querySelectorAll('.testimonial-mobile');
+        if (testimonials.length > 1) {
+          let currentIndex = 0;
+          
+          // Funkcja do przełączania opinii
+          function cycleTestimonials() {
+            testimonials.forEach((testimonial, index) => {
+              if (index === currentIndex) {
+                testimonial.classList.remove('hidden');
+                testimonial.classList.add('block');
+              } else {
+                testimonial.classList.remove('block');
+                testimonial.classList.add('hidden');
+              }
+            });
+            
+            currentIndex = (currentIndex + 1) % testimonials.length;
+          }
+          
+          // Uruchom cykliczne przełączanie co 4 sekundy
+          setInterval(cycleTestimonials, 4000);
+        }
+      });
+    }
+  }
+
+  // Inicjalizacja po załadowaniu strony
+  document.addEventListener('DOMContentLoaded', initMobileTestimonials);
+  document.addEventListener('astro:page-load', initMobileTestimonials);
+  
+  // Reinicjalizacja po zmianie rozmiaru okna
+  let resizeTimeout: NodeJS.Timeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(initMobileTestimonials, 250);
+  });
 </script>
