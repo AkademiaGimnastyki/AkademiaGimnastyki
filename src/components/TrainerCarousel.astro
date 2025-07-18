@@ -12,21 +12,16 @@ interface Props {
 }
 
 const { trenerzy = [
-
-  {
-    name: 'Marcin Wojciechowski',
-    photo: '/images/trainers/trener_oferta.jpg',
-    description: 'Absolwent AFW, trener grup zaawansowanych. Dba o technikę i motywację zawodników.',
-  },
   {
     name: 'Paulina Wojciechowska',
-    photo: '/images/trainers/trainer2.jpg',
-    description: 'Paulina – była gimnastyczka, trenerka dzieci i młodzieży. Specjalizuje się w pracy z najmłodszymi.',
+    photo: '/images/trainers/trainer1.jpg',
+    description: 'Paulina – doświadczona gimnastyczka, trenerka dzieci i młodzieży. Absolwent AFW. Specjalizuje się w pracy z najmłodszymi.',
   },
   {
-    name: 'Anna Kowalska',
-    photo: '/images/trainers/trainer3.jpg',
-    description: 'Anna – trenerka grup zaawansowanych. Dba o technikę i motywację zawodników.',
+   
+    name: 'Marcin Wojciechowski',
+    photo: '/images/trainers/trainer2.jpg',
+    description: 'Absolwent AFW, trener układów i technik zaawansowanych. Dba o technikę i motywację zawodników.',
   },
 ] } = Astro.props;
 ---
@@ -69,7 +64,7 @@ const { trenerzy = [
                 <img
                   id="trainer-photo"
                   class="w-[240px] h-[240px] md:w-[260px] md:h-[260px] lg:w-[325px] lg:h-[325px] object-cover rounded-full transition-all duration-500"
-                  src="/images/trainers/trener_oferta.jpg"
+                  src="/images/trainers/trainer1.jpg"
                   alt="Trener Marcin Wojciechowski"
                   draggable="false"
                 />
@@ -137,18 +132,13 @@ const { trenerzy = [
     const defaultTrainers: Trainer[] = [
       {
         name: 'Marcin Wojciechowski',
-        photo: '/images/trainers/trener_oferta.jpg',
+        photo: '/images/trainers/trainer1.jpg',
         description: 'Absolwent AFW, trener grup zaawansowanych. Dba o technikę i motywację zawodników.',
       },
       {
-        name: 'Paulina Nowak',
+        name: 'Paulina Wojciechowska',
         photo: '/images/trainers/trainer2.jpg',
         description: 'Paulina – była gimnastyczka, trenerka dzieci i młodzieży. Specjalizuje się w pracy z najmłodszymi.',
-      },
-      {
-        name: 'Anna Kowalska',
-        photo: '/images/trainers/trainer3.jpg',
-        description: 'Anna – trenerka grup zaawansowanych. Dba o technikę i motywację zawodników.',
       },
     ];
 

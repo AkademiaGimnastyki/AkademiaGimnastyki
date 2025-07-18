@@ -6,16 +6,17 @@ import ScheduleInfo from '../components/ScheduleInfo.astro';
 import Calendar_Nowy_Targ from '../components/Calendar_Nowy_Targ.astro';
 
 const mszanaGroups = [
-  { ageRange: "5-7", day: " lat poniedziałek", time: "15:30" },
-  { ageRange: "8-13", day: " lat środa", time: "15:30" },
-  { ageRange: "5-7", day: " lat poniedziałek", time: "15:30" },
-  { ageRange: "5-7", day: " lat poniedziałek", time: "15:30" }
+  { ageRange: "3-5", day: " lat poniedziałek", time: "15:30" },
+  { ageRange: "6-7", day: " lat wtorek", time: "15:30" },
+  { ageRange: "8-10", day: " lat wtorek", time: "16:30" },
+  { ageRange: "11+", day: " lat środa", time: "15:30" }
 ];
 
 const nowyTargGroups = [
-  { ageRange: "5-7", day: " lat wtorek", time: "16:30" },
-  { ageRange: "8-13", day: " lat czwartek", time: "16:30" },
-  { ageRange: "5-7", day: " lat piątek", time: "15:30" }
+  { ageRange: "3-5", day: " lat wtorek", time: "16:30" },
+  { ageRange: "6-7", day: " lat czwartek", time: "16:30" },
+  { ageRange: "8-10", day: " lat piątek", time: "15:30" },
+  { ageRange: "11+", day: " lat piątek", time: "15:30" }
 ];
 ---
 
@@ -60,7 +61,7 @@ const nowyTargGroups = [
           </div>
           <div class="w-full lg:w-1/4">
             <ScheduleInfo
-              location="Nowy Targ, ul. Spadochroniarzy 2"
+              location="Nowy Targ, Plac Evry 4"
               groups={nowyTargGroups}
             />
           </div>

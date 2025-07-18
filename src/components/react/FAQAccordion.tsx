@@ -16,9 +16,9 @@ export default function FAQAccordion() {
         <AccordionContent className="text-base">
           Zajęcia odbywają się w dwóch lokalizacjach:
           <ul className="list-disc pl-6 mt-2 space-y-1">
-            <li>Mszana Dolna: ul. Sportowa 15 (Hala Widowiskowo-Sportowa)</li>
-            <li>Nowy Targ: ul. Olimpijska 8 (Kompleks Aktywności Fizycznej)</li>
-          </ul>
+            <li>Mszana Dolna: ul. Józefa Marka 2</li>
+            <li>Nowy Targ: ul. Plac Evry 4</li>
+          </ul> 
         </AccordionContent>
       </AccordionItem>
 
@@ -27,7 +27,7 @@ export default function FAQAccordion() {
           Czy Akademia ma status klubu sportowego?
         </AccordionTrigger>
         <AccordionContent className="text-base">
-          Tak! Jesteśmy zarejestrowanym klubem sportowym (nr licencji 3734734) i przygotowujemy zawodników do rywalizacji na szczeblu regionalnym i krajowym.
+          Tak! Jesteśmy zarejestrowanym klubem sportowym (KRS 0001133284) i przygotowujemy zawodników do rywalizacji na szczeblu regionalnym i krajowym.
         </AccordionContent>
       </AccordionItem>
 
@@ -36,10 +36,10 @@ export default function FAQAccordion() {
           Jak mogę zapisać dziecko na zajęcia?
         </AccordionTrigger>
         <AccordionContent className="text-base">
-          Obecnie pracujemy nad elektronicznym formularzem zapisów. Prosimy o kontakt:
+          Obecnie pracujemy nad elektronicznym formularzem zapisów. Tymczasowo prosimy o bezpośredni kontakt:
           <ul className="list-none mt-2 space-y-1">
-            <li>📞 Telefon: 123 456 789</li>
-            <li>✉️ E-mail: zapisy@mag.pl</li>
+            <li> Telefon: 535 124 492</li>
+            <li> E-mail: akademia.malopolska@gmail.com</li>
           </ul>
         </AccordionContent>
       </AccordionItem>
@@ -49,7 +49,7 @@ export default function FAQAccordion() {
           Czy zajęcia są bezpieczne dla dzieci?
         </AccordionTrigger>
         <AccordionContent className="text-base">
-          Tak! Certyfikowani trenerzy z uprawnieniami pedagogicznymi dbają o asekurację. Wszystkie przyrządy posiadają atestowane zabezpieczenia, a sale są wyposażone w miękkie maty.
+          Tak! Certyfikowani trenerzy z uprawnieniami pedagogicznymi dbają o asekurację. Wszystkie przyrządy posiadają atestowane zabezpieczenia, a sale są wyposażone w specjalistyczny sprzęt.
         </AccordionContent>
       </AccordionItem>
 
@@ -58,7 +58,7 @@ export default function FAQAccordion() {
           Czy potrzebne jest doświadczenie?
         </AccordionTrigger>
         <AccordionContent className="text-base">
-          Nie wymagamy doświadczenia! Prowadzimy grupy dla dzieci w różnym wieku (3-17 lat) i na każdym poziomie zaawansowania. Po wstępnej konsultacji dopasujemy poziom zajęć do umiejętności Twojego dziecka i doradzimy optymalną ścieżkę rozwoju.
+          Nie wymagamy doświadczenia! Prowadzimy grupy dla dzieci w różnym wieku 3-11+ lat i na każdym poziomie zaawansowania. Po wstępnej konsultacji dopasujemy poziom zajęć do umiejętności Twojego dziecka i doradzimy optymalną ścieżkę rozwoju.
         </AccordionContent>
       </AccordionItem>
 
@@ -67,28 +67,7 @@ export default function FAQAccordion() {
           Jak wyglądają obozy sportowe?
         </AccordionTrigger>
         <AccordionContent className="text-base">
-          Organizujemy letnie i zimowe obozy łączące codzienne treningi z zabawą (np. wycieczki górskie, warsztaty taneczne). Zakwaterowanie w ośrodkach z pełnym zapleczem sportowym.
-        </AccordionContent>
-      </AccordionItem>
-
-      <AccordionItem value="item-7">
-        <AccordionTrigger className="text-base py-2 text-left">
-          Czy oferujecie zajęcia próbne?
-        </AccordionTrigger>
-        <AccordionContent className="text-base">
-          Tak! Pierwsze zajęcia są darmowe – umożliwiamy sprawdzenie atmosfery i dopasowanie do grupy.
-        </AccordionContent>
-      </AccordionItem>
-
-      <AccordionItem value="item-8">
-        <AccordionTrigger className="text-base py-2 text-left">
-          Jakie korzyści daje przynależność do klubu?
-        </AccordionTrigger>
-        <AccordionContent className="text-base">
-          <ul className="list-disc pl-6 mt-2 space-y-1">
-            <li>Możliwość udziału w zawodach ogólnopolskich</li>
-            <li>Ubezpieczenie NNW podczas treningów</li>
-          </ul>
+          Organizujemy letnie i zimowe obozy łączące codzienne treningi z zabawą (np. wycieczki górskie, gry i zabawy zespołowe). Zakwaterowanie w ośrodkach z pełnym zapleczem sportowym.
         </AccordionContent>
       </AccordionItem>
     </Accordion>
