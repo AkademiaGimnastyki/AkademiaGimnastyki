@@ -54,12 +54,12 @@ const trainers = [
         <!-- Content Grid -->
         <div class="absolute inset-0 grid grid-rows-[auto_1fr_auto] p-6 sm:p-8 md:p-10">
           <!-- Top Row - Logo -->
-          <div class="h-0 xs:h-20 md:h-24">
-            <a href="/o-nas" class="hidden xs:inline-block" transition:name="hero-logo">
+          <div class="h-12 xs:h-16 md:h-24">
+            <a href="/o-nas" class="inline-block" transition:name="hero-logo">
               <img
                 src="/images/logo/logo_akademia.svg"
                 alt="Małopolska Akademia Gimnastyki - Logo"
-                class="w-auto h-14 xs:h-16 sm:h-20 md:h-24 transition-all duration-300 ease-in-out hover:scale-110 hover:drop-shadow-mag cursor-pointer hover:-translate-y-1"
+                class="w-auto h-10 xs:h-12 sm:h-16 md:h-20 lg:h-24 transition-all duration-300 ease-in-out hover:scale-110 hover:drop-shadow-mag cursor-pointer hover:-translate-y-1"
                 loading="eager"
                 decoding="sync"
                 width="240"
@@ -70,7 +70,7 @@ const trainers = [
 
           <!-- Middle Row - Main Content -->
           <div class="flex flex-col items-center justify-center text-center" transition:name="hero-content">
-            <h1 class="text-2xl xs:text-3xl md:text-4xl lg:text-6xl text-white mb-4 font-poppins" data-aos="fade-up">
+            <h1 class="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-6xl text-white mb-4 font-poppins" data-aos="fade-up">
               <span class="font-bold">{title}</span><br />
               <span class="font-extralight">{subtitle}</span>
             </h1>
@@ -79,7 +79,7 @@ const trainers = [
             </p>
             
             {showButtons && (
-              <div class="mt-8" data-aos="fade-up" data-aos-delay="200">
+              <div class="mt-8 hidden sm:block" data-aos="fade-up" data-aos-delay="200">
                 <HeroButtons />
               </div>
             )}

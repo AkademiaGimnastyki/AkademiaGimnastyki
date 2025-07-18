@@ -65,7 +65,7 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="relative w-full overflow-hidden bg-white h-auto lg:h-[773px] pt-20 lg:pt-0 mb-12 will-change-scroll"
+      className="relative w-full bg-white h-auto lg:h-[900px] pt-20 lg:pt-0 mb-12 will-change-scroll"
     >
       {/* Background blur effect */}
       <div
@@ -77,7 +77,7 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
       <div className="relative z-10 flex flex-col items-center justify-center h-full pb-6 lg:pb-0">
 
         {/* Images container - appears above text on mobile */}
-        <div className="w-full flex justify-center items-start gap-x-12 xs:gap-x-4 sm:gap-x-6 lg:block order-1 lg:order-none mb-6 sm:mb-8 lg:mb-0">
+        <div className="w-full flex justify-center items-start gap-x-16 xs:gap-x-8 sm:gap-x-12 lg:block order-1 lg:order-none mb-6 sm:mb-8 lg:mb-0">
           {/* Left image */}
           <motion.div 
             className="relative lg:absolute lg:-left-[20px] xl:-left-[25px] 2xl:-left-[35px] 3xl:-left-[22px] lg:top-8 xl:top-28 2xl:top-32 z-0"
@@ -140,20 +140,20 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
         {/* Text content container */}
         <div className="order-2 lg:order-none flex flex-col items-center text-center">
           <motion.h2 
-            className="text-center mb-4 lg:mb-8"
+            className="text-center mb-4 lg:mb-12"
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <span className="block font-heading text-3xl xs:text-4xl sm:text-5xl lg:text-[64px] font-bold leading-tight">
+            <span className="block font-heading text-2xl xs:text-3xl sm:text-4xl lg:text-[64px] font-bold leading-tight">
               <span className="text-brand-primary-dynamic">Gimnastyka</span>
               <span className="text-brand-accent-sensitive ml-2 lg:ml-4">jest</span>
             </span>
-            <span className="relative flex w-full justify-center overflow-hidden text-center h-[40px] xs:h-[50px] sm:h-[60px] lg:h-[90px]">
+            <span className="relative flex w-full justify-center overflow-hidden text-center h-[32px] xs:h-[40px] sm:h-[50px] lg:h-[130px] lg:mt-12 lg:pt-4">
               {titles.map((title, index) => (
                 <motion.span
                   key={index}
-                  className="absolute font-heading text-3xl xs:text-4xl sm:text-5xl lg:text-[64px] font-extralight"
+                  className="absolute font-heading text-2xl xs:text-3xl sm:text-4xl lg:text-[64px] font-extralight"
                   initial={{ opacity: 0, y: "100%" }}
                   animate={
                     titleNumber === index
