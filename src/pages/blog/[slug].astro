@@ -4,6 +4,8 @@ import { getBlogPostBySlug } from '../../lib/contentAdapter';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types';
 
+
+
 // Generowanie statycznych ścieżek dla wszystkich artykułów
 export async function getStaticPaths() {
   try {
@@ -67,41 +69,55 @@ function renderRichTextContent(content: any) {
     
     // Jeśli to obiekt Rich Text z Contentful
     if (contentObj && contentObj.nodeType === 'document') {
-      // Opcje renderowania dla Contentful Rich Text
+      // Podstawowe opcje renderowania
       const options = {
-
         renderMark: {
           [MARKS.BOLD]: (text: string) => `<strong>${text}</strong>`,
-          [MARKS.ITALIC]: (text: string) => `<em>${text}</em>`,
-          [MARKS.UNDERLINE]: (text: string) => `<u>${text}</u>`,
-          [MARKS.CODE]: (text: string) => `<code>${text}</code>`,
         },
         renderNode: {
-          [BLOCKS.PARAGRAPH]: (node: any, next: any) => `<p>${next(node.content)}</p>`,
-          [BLOCKS.HEADING_1]: (node: any, next: any) => `<h1>${next(node.content)}</h1>`,
-          [BLOCKS.HEADING_2]: (node: any, next: any) => `<h2>${next(node.content)}</h2>`,
-          [BLOCKS.HEADING_3]: (node: any, next: any) => `<h3>${next(node.content)}</h3>`,
-          [BLOCKS.UL_LIST]: (node: any, next: any) => `<ul>${next(node.content)}</ul>`,
-          [BLOCKS.OL_LIST]: (node: any, next: any) => `<ol>${next(node.content)}</ol>`,
-          [BLOCKS.LIST_ITEM]: (node: any, next: any) => `<li>${next(node.content)}</li>`,
-          [BLOCKS.QUOTE]: (node: any, next: any) => `<blockquote>${next(node.content)}</blockquote>`,
-          [BLOCKS.HR]: () => `<hr />`,
+          [BLOCKS.PARAGRAPH]: (node: any, next: any) => {
+            console.log('Rendering paragraph:', node);
+            return `<p class="mb-4 text-gray-700 leading-relaxed">${next(node.content)}</p>`;
+          },
+          [BLOCKS.HEADING_1]: (node: any, next: any) => `<h1 class="text-3xl font-bold mb-6 text-gray-900">${next(node.content)}</h1>`,
+          [BLOCKS.HEADING_2]: (node: any, next: any) => `<h2 class="text-2xl font-bold mb-4 text-gray-900">${next(node.content)}</h2>`,
+          [BLOCKS.HEADING_3]: (node: any, next: any) => `<h3 class="text-xl font-bold mb-3 text-gray-900">${next(node.content)}</h3>`,
+          [BLOCKS.UL_LIST]: (node: any, next: any) => `<ul class="list-disc list-inside mb-4 space-y-2 text-gray-700">${next(node.content)}</ul>`,
+          [BLOCKS.OL_LIST]: (node: any, next: any) => `<ol class="list-decimal list-inside mb-4 space-y-2 text-gray-700">${next(node.content)}</ol>`,
+          [BLOCKS.LIST_ITEM]: (node: any, next: any) => `<li class="ml-4">${next(node.content)}</li>`,
+          [BLOCKS.QUOTE]: (node: any, next: any) => `<blockquote class="border-l-4 border-blue-500 pl-4 py-2 mb-4 italic text-gray-600">${next(node.content)}</blockquote>`,
+          [BLOCKS.HR]: () => `<hr class="my-8 border-gray-300" />`,
           [INLINES.HYPERLINK]: (node: any, next: any) => {
-            return `<a href="${node.data.uri}" target="_blank" rel="noopener noreferrer">${next(node.content)}</a>`;
+            console.log('Rendering hyperlink:', node);
+            const uri = node.data?.uri || '#';
+            const content = next(node.content);
+            const isExternal = uri.startsWith('http') || uri.startsWith('https');
+            const target = isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
+            return `<a href="${uri}" ${target} class="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">${content}</a>`;
+          },
+          [INLINES.ENTRY_HYPERLINK]: (node: any, next: any) => {
+            console.log('Rendering entry hyperlink:', node);
+            const entryId = node.data?.target?.sys?.id;
+            const content = next(node.content);
+            // Dla linków do innych wpisów - możemy później dodać logikę generowania URL
+            return `<a href="/blog/${entryId}" class="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">${content}</a>`;
           },
           [BLOCKS.EMBEDDED_ASSET]: (node: any) => {
-            // Obsługa obrazów osadzonych
             if (node.data?.target?.fields?.file?.url) {
               const url = node.data.target.fields.file.url;
-              const alt = node.data.target.fields.title || '';
-              return `<img src="https:${url}" alt="${alt}" class="my-8 rounded-lg mx-auto shadow-lg" />`;
+              const alt = node.data.target.fields.title || node.data.target.fields.description || '';
+              return `<img src="https:${url}" alt="${alt}" class="my-8 rounded-lg mx-auto shadow-lg max-w-full h-auto" />`;
             }
             return '';
+          },
+          [BLOCKS.EMBEDDED_ENTRY]: (node: any) => {
+            console.log('Embedded entry:', node);
+            return `<div class="my-4 p-4 bg-gray-50 rounded-lg">Osadzony wpis</div>`;
           }
         }
       };
       
-      // Użyj oficjalnego renderera Contentful
+      // Użyj podstawowego renderera Contentful
       return documentToHtmlString(contentObj, options);
     }
     
@@ -113,8 +129,11 @@ function renderRichTextContent(content: any) {
   }
 }
 
+
+
 // Renderuj treść
 const renderedContent = renderRichTextContent(post.content);
+
 ---
 
 <Layout title={`${post.title || 'Wpis na blogu'} - Blog - Małopolska Akademia Gimnastyki`}>
@@ -149,9 +168,9 @@ const renderedContent = renderRichTextContent(post.content);
       </div>
 
       <!-- 4. TREŚĆ -->
-      <div class="prose max-w-none mb-12 content-contentful">
+      <div class="prose prose-lg prose-slate max-w-none mb-12 content-contentful">
         {renderedContent ? (
-          <div set:html={renderedContent} />
+          <div set:html={renderedContent} class="space-y-4" />
         ) : (
           <div class="text-gray-500 text-sm mt-4">
             <p>Treść wpisu nie jest dostępna. Aby edytować pełną treść wpisu, przejdź do panelu Contentful.</p>
@@ -207,208 +226,166 @@ const renderedContent = renderRichTextContent(post.content);
 </Layout>
 
 <style>
-  /* Stylizacja zawartości Markdown i Rich Text */
+  /* Podstawowe style dla treści Rich Text */
   .prose {
     font-size: 1.125rem;
     line-height: 1.75;
+    color: #374151;
+    max-width: none;
   }
 
+  /* Nagłówki */
   .prose h1 {
-    font-size: 2rem;
-    line-height: 2.5rem;
-    margin-top: 2.5rem;
-    margin-bottom: 1.25rem;
+    font-size: 2.25rem;
     font-weight: 700;
-    color: #000;
+    color: #111827;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-family: 'Poppins', sans-serif;
   }
 
   .prose h2 {
-    font-size: 1.75rem;
-    line-height: 2.25rem;
-    margin-top: 2.25rem;
-    margin-bottom: 1rem;
+    font-size: 1.875rem;
     font-weight: 600;
-    color: #000;
+    color: #111827;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-family: 'Poppins', sans-serif;
   }
 
   .prose h3 {
     font-size: 1.5rem;
-    line-height: 2rem;
-    margin-top: 2rem;
-    margin-bottom: 0.75rem;
     font-weight: 600;
-    color: #000;
+    color: #111827;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-family: 'Poppins', sans-serif;
   }
 
-  /* Paragrafy z większymi odstępami */
+  .prose h4, .prose h5, .prose h6 {
+    font-weight: 600;
+    color: #111827;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Paragrafy */
   .prose p {
-    white-space: pre-line;
     margin-top: 1.25rem;
     margin-bottom: 1.25rem;
     color: #4b5563;
     line-height: 1.8;
   }
 
-  /* Poprawione listy wypunktowane */
+  /* Listy */
   .prose ul {
-    list-style-position: outside;
-    margin-left: 0.5rem;
     list-style-type: disc;
-    padding-left: 2.5rem;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  /* Poprawa wcięć dla list numerowanych */
-  .prose ol {
     list-style-position: outside;
-    margin-left: 0.5rem;
-    list-style-type: decimal;
-    padding-left: 2.5rem;
+    padding-left: 2rem;
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
   }
 
-  /* Zachowanie białych znaków również w paragrafach wewnątrz list */
-  .prose li p {
-    white-space: pre-line;
+  .prose ol {
+    list-style-type: decimal;
+    list-style-position: outside;
+    padding-left: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
-  /* Większe odstępy między elementami listy */
   .prose li {
-    margin-bottom: 0.75rem;
-    padding-left: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: #4b5563;
+    line-height: 1.7;
   }
 
-  /* Ustawienia dla zagnieżdżonych list */
-  .prose li > ul,
-  .prose li > ol {
-    margin-top: 0.75rem;
-    margin-bottom: 0.75rem;
+  .prose li::marker {
+    color: #00B3D4;
   }
 
-  .prose img {
-    border-radius: 0.5rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  }
-
+  /* Linki */
   .prose a {
     color: #00B3D4;
-    font-weight: 500;
     text-decoration: underline;
     text-underline-offset: 2px;
-    transition-property: color;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
+    font-weight: 500;
+    transition: color 0.3s ease;
   }
 
   .prose a:hover {
     color: #E3A1A1;
   }
-  
-  /* Dodatkowe style dla Rich Text z Contentful */
-  .prose blockquote {
-    border-left: 4px solid #E3A1A1;
-    padding: 0.75rem 0 0.75rem 1.5rem;
-    font-style: italic;
-    margin: 2rem 0;
-    color: #6b7280;
-    background-color: #f9fafb;
-    border-radius: 0 0.25rem 0.25rem 0;
-  }
 
-  .prose hr {
-    margin: 2.5rem 0;
-    border-color: #e5e7eb;
-    border-width: 1px;
-  }
-
-  .prose table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 2rem 0;
-  }
-
-  .prose th,
-  .prose td {
-    padding: 0.75rem 1rem;
-    border: 1px solid #e5e7eb;
-  }
-
-  .prose th {
-    background-color: #f9fafb;
-    font-weight: 600;
-  }
-
-  /* Specjalne style dla nagłówków sekcji */
-  .prose h2 + p,
-  .prose h3 + p {
-    margin-top: 1rem;
-  }
-
-  /* Poprawienie odstępów dla całego kontenera */
-  .prose > div > * + * {
-    margin-top: 1.5rem;
-  }
-
-  /* Style dla tekstu z pogrubieniem */
+  /* Formatowanie tekstu */
   .prose strong {
     font-weight: 700;
-    color: #000;
+    color: #111827;
   }
 
-  /* Style dla tekstu z kursywą */
   .prose em {
     font-style: italic;
   }
 
-  /* Style dla kodu */
   .prose code {
     background-color: #f3f4f6;
+    color: #e11d48;
     padding: 0.2rem 0.4rem;
     border-radius: 0.25rem;
-    font-family: ui-monospace, monospace;
+    font-family: monospace;
     font-size: 0.9em;
   }
 
-  /* Poprawka wyświetlania list i markerów */
-  .prose ul,
-  .prose ol {
-    list-style-position: outside;
-    padding-left: 1.5rem;
-    margin-left: 0;
+  /* Cytaty */
+  .prose blockquote {
+    border-left: 4px solid #00B3D4;
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: #6b7280;
+    background-color: #f8fafc;
+    border-radius: 0 0.25rem 0.25rem 0;
   }
 
-  .prose ul {
-    list-style-type: disc;
+  /* Obrazy */
+  .prose img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
 
-  .prose ol {
-    list-style-type: decimal;
+  /* Linie poziome */
+  .prose hr {
+    margin: 2rem 0;
+    border: none;
+    height: 1px;
+    background-color: #e5e7eb;
   }
 
-  /* Kolor markerów list */
-  .prose li::marker {
-    color: #4b5563;
-    font-weight: 500;
-  }
-
-  /* Zachowanie białych znaków i odstępów w elementach listy */
-  .prose li {
-    margin-bottom: 0.75rem;
-  }
-
-  .prose li p {
-    white-space: pre-line;
-  }
-
-  /* Linki w tekście – nawet wewnątrz <strong>/<em> */
-  .prose a,
-  .prose a strong,
-  .prose a em {
-    color: #00B3D4;
+  /* Responsywność */
+  @media (max-width: 640px) {
+    .prose {
+      font-size: 1rem;
+    }
+    
+    .prose h1 {
+      font-size: 1.875rem;
+    }
+    
+    .prose h2 {
+      font-size: 1.5rem;
+    }
+    
+    .prose h3 {
+      font-size: 1.25rem;
+    }
+    
+    .prose ul, .prose ol {
+      padding-left: 1.5rem;
+    }
   }
 
 </style>

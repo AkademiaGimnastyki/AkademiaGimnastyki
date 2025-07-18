@@ -78,6 +78,8 @@ function transformContentfulEntry(entry: Entry<any>): UnifiedBlogPost {
   // Treść - może być w różnych polach i formatach
   let content = '';
   
+
+  
   // Sprawdź dostępne pola dla treści
   if (fields.content) {
     // Jeśli jest to obj Rich Text, przekazujemy oryginalny obiekt
