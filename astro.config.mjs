@@ -12,6 +12,16 @@ export default defineConfig({
     port: 4321,
     host: '127.0.0.1'
   },
+  // Konfiguracja optymalizacji obrazów
+  image: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.ctfassets.net',
+      },
+    ],
+    domains: ['images.ctfassets.net'],
+  },
   integrations: [
     tailwind(),
     react({

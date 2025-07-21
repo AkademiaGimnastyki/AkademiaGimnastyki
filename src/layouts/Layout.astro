@@ -35,18 +35,50 @@ const {
 
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
-      "@type": "SportsClub",
-      "name": "Małopolska Akademia Gimnastyki",
-      "url": Astro.site,
-      "logo": new URL("/images/logo/logo_akademia.svg", Astro.site),
-      "description": description,
-      "sameAs": [
-        "https://www.facebook.com/p/Akademia-Gimnastyki-Mszana-Dolna-100072345243817/",
-        "https://www.instagram.com/malopolskaakademiagimnastyki?fbclid=IwY2xjawLaKQ9leHRuA2FlbQIxMABicmlkETBRRWFZM2c0TlVJaDRKaG9jAR4sRjNcU8n07NwrqQgSQDlpIZiW5OvL81tSBTTKe_HgSmqFbUp8Mwf99SkfgA_aem_ZL3FQnskJz8_7OXsGJQaDw"
+      "@graph": [
+        {
+          "@type": "SportsClub",
+          "name": "Małopolska Akademia Gimnastyki",
+          "url": Astro.site,
+          "logo": new URL("/images/logo/logo_akademia.svg", Astro.site),
+          "description": description,
+          "sameAs": [
+            "https://www.facebook.com/p/Akademia-Gimnastyki-Mszana-Dolna-100072345243817/",
+            "https://www.instagram.com/malopolskaakademiagimnastyki"
+          ]
+        },
+        {
+          "@type": "LocalBusiness",
+          "name": "Małopolska Akademia Gimnastyki",
+          "url": Astro.site,
+          "logo": new URL("/images/logo/logo_akademia.svg", Astro.site),
+          "description": description,
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "ul. Józefa Marka 2",
+            "addressLocality": "Mszana Dolna",
+            "postalCode": "34-730",
+            "addressCountry": "PL"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "49.6789",
+            "longitude": "20.0789"
+          },
+          "telephone": "+48 535 124 492",
+          "email": "kontakt@akademia-gimnastyki.pl",
+          "paymentAccepted": ["Cash", "Credit Card"],
+          "priceRange": "$",
+          "sameAs": [
+            "https://www.facebook.com/p/Akademia-Gimnastyki-Mszana-Dolna-100072345243817/",
+            "https://www.instagram.com/malopolskaakademiagimnastyki"
+          ]
+        }
       ]
     })} />
 
     <!-- Preload krytycznych zasobów -->
+    <link rel="preload" href="/images/hero/hero o nas.jpg" as="image" fetchpriority="high" />
     <link rel="preload" href="/images/logo/logo_akademia.svg" as="image" fetchpriority="high" />
     <link rel="preload" href="/images/trainers/trainer1.jpg" as="image" fetchpriority="high" />
     <link rel="preload" href="/images/trainers/trainer2.jpg" as="image" fetchpriority="high" />

@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
   title: string;
   description: string;
@@ -20,10 +22,17 @@ const formattedDate = dateFormatter.format(date);
 
 <article class="group flex flex-col overflow-hidden rounded-3xl shadow-lg transition-all duration-300 hover:shadow-2xl bg-white">
   <div class="relative h-48 overflow-hidden">
-    <img 
+    <Image 
       src={image} 
       alt={title} 
       class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+      width={400}
+      height={192}
+      format="avif"
+      quality={80}
+      loading="lazy"
+      decoding="async"
+      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
     />
     <div class="absolute top-4 left-4 rounded-full bg-white px-2 py-1 text-xs font-medium text-gray-700">
       {formattedDate}

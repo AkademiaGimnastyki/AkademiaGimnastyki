@@ -38,11 +38,15 @@ const trainers = [
         <Image
           src={backgroundImage}
           alt="Dzieci trenujące gimnastykę w Małopolskiej Akademii Gimnastyki"
+          class="absolute inset-0 w-full h-full object-cover"
           width={1920}
           height={1080}
-          class="absolute inset-0 w-full h-full object-cover"
+          format="avif"
+          quality={85}
+          sizes="(max-width: 640px) 640px, (max-width: 1024px) 1024px, (max-width: 1536px) 1536px, 1920px"
           loading="eager"
           decoding="sync"
+          fetchpriority="high"
           transition:name="hero-image"
         />
         <!-- Overlay -->
@@ -56,14 +60,15 @@ const trainers = [
           <!-- Top Row - Logo -->
           <div class="h-12 xs:h-16 md:h-24">
             <a href="/o-nas" class="inline-block" transition:name="hero-logo">
-              <img
+              <Image
                 src="/images/logo/logo_akademia.svg"
                 alt="Małopolska Akademia Gimnastyki - Logo"
                 class="w-auto h-10 xs:h-12 sm:h-16 md:h-20 lg:h-24 transition-all duration-300 ease-in-out hover:scale-110 hover:drop-shadow-mag cursor-pointer hover:-translate-y-1"
                 loading="eager"
                 decoding="sync"
-                width="240"
-                height="96"
+                width={240}
+                height={96}
+                format="svg"
               />
             </a>
           </div>
