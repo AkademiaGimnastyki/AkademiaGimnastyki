@@ -1,0 +1,20 @@
+# Nagłówki dla sitemap XML - zapewnienie prawidłowego Content-Type
+/sitemap*.xml
+  Content-Type: application/xml; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+# Nagłówki dla robots.txt
+/robots.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=86400
+
+# Nagłówki dla favicon
+/favicon.ico
+  Content-Type: image/x-icon
+  Cache-Control: public, max-age=31536000
+
+# Nagłówki bezpieczeństwa dla wszystkich stron
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

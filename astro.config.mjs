@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
+// import sitemap from '@astrojs/sitemap'; // Używamy ręcznego sitemap.xml
 
 export default defineConfig({
   // WAŻNE: Zastąp ten adres URL docelową domeną Twojej strony przed wdrożeniem!
@@ -28,7 +28,7 @@ export default defineConfig({
       include: ['**/react/*', '**/gallery/*'],
     }),
     mdx(),
-    sitemap(),
+    // sitemap(), // Używamy ręcznego sitemap.xml w public/
   ],
   vite: {
     ssr: {

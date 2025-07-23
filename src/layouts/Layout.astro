@@ -14,12 +14,23 @@ import '../styles/globals.css';
 interface Props {
   title: string;
   description?: string;
+  canonicalURL?: string;
+  ogImage?: string;
+  ogType?: string;
 }
 
 const { 
   title, 
-  description = "Małopolska Akademia Gimnastyki - profesjonalne zajęcia gimnastyczne dla dzieci i młodzieży." 
+  description = "Małopolska Akademia Gimnastyki - profesjonalne zajęcia gimnastyczne dla dzieci i młodzieży.",
+  canonicalURL,
+  ogImage = "/images/logo/logo_akademia.svg",
+  ogType = "website"
 } = Astro.props;
+
+// Generowanie canonical URL
+const canonical = canonicalURL || new URL(Astro.url.pathname, Astro.site).href;
+// Generowanie pełnego URL dla Open Graph image
+const fullOgImage = new URL(ogImage, Astro.site).href;
 ---
 
 <!doctype html>
@@ -30,7 +41,28 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonical} />
     <title>{title}</title>
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={fullOgImage} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Małopolska Akademia Gimnastyki" />
+    <meta property="og:locale" content="pl_PL" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullOgImage} />
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Małopolska Akademia Gimnastyki" />
+    
     <ViewTransitions />
 
     <script type="application/ld+json" set:html={JSON.stringify({
