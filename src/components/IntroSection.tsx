@@ -21,7 +21,10 @@ interface IntroSectionProps {
 
 export default function IntroSection({ image1, image2 }: IntroSectionProps) {
   const [titleNumber, setTitleNumber] = useState(0);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
   const componentRef = useRef(null);
+  const image1Ref = useRef<HTMLImageElement>(null);
+  const image2Ref = useRef<HTMLImageElement>(null);
   
   // Używamy useScroll z odpowiednim offsetem
   const { scrollYProgress } = useScroll({
@@ -48,6 +51,32 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
     [-150, 0, 150],
     { clamp: true }
   );
+
+  // Preload images immediately
+  useEffect(() => {
+    const preloadImages = () => {
+      const img1 = new Image();
+      const img2 = new Image();
+      
+      let loadedCount = 0;
+      const checkAllLoaded = () => {
+        loadedCount++;
+        if (loadedCount === 2) {
+          setImagesLoaded(true);
+        }
+      };
+      
+      img1.onload = checkAllLoaded;
+      img2.onload = checkAllLoaded;
+      img1.onerror = checkAllLoaded; // Fallback w przypadku błędu
+      img2.onerror = checkAllLoaded;
+      
+      img1.src = image1.attributes.src;
+      img2.src = image2.attributes.src;
+    };
+    
+    preloadImages();
+  }, [image1.attributes.src, image2.attributes.src]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -82,20 +111,18 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
           <motion.div 
             className="relative lg:absolute lg:-left-[20px] xl:-left-[25px] 2xl:-left-[35px] 3xl:-left-[22px] lg:top-8 xl:top-28 2xl:top-32 z-0"
             style={{ x: leftImageX }}
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 1 }} // Zmieniono z 0 na 1 dla natychmiastowej widoczności
             animate={{ 
-              opacity: 1,
               y: [0, -10, 0],
               rotate: [-1, 1, -1]
             }}
             transition={{ 
-              duration: 1,
-              delay: 0.2,
-              y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-              rotate: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+              y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
+              rotate: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }
             }}
           >
             <img
+              ref={image1Ref}
               src={image1.attributes.src}
               srcSet={image1.attributes.srcSet}
               width={image1.attributes.width}
@@ -103,7 +130,14 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
               alt={image1.alt}
               className="object-contain will-change-transform w-[90px] xs:w-[120px] sm:w-[180px] lg:w-[300px] xl:w-[400px] 2xl:w-[458px]"
               loading="eager"
-              decoding="async"
+              decoding="sync"
+              fetchPriority="high"
+              onLoad={() => {
+                if (image1Ref.current) {
+                  image1Ref.current.style.opacity = '1';
+                }
+              }}
+              style={{ opacity: imagesLoaded ? '1' : '0.8' }}
             />
           </motion.div>
 
@@ -111,20 +145,18 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
           <motion.div 
             className="relative lg:absolute lg:-right-[20px] xl:-right-[25px] 2xl:-right-[35px] 3xl:-right-[22px] lg:top-8 xl:top-28 2xl:top-32 z-0"
             style={{ x: rightImageX }}
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 1 }} // Zmieniono z 0 na 1 dla natychmiastowej widoczności
             animate={{ 
-              opacity: 1,
               y: [0, -10, 0],
               rotate: [1, -1, 1]
             }}
             transition={{ 
-              duration: 1,
-              delay: 0.2,
-              y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-              rotate: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+              y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.7 },
+              rotate: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.7 }
             }}
           >
             <img
+              ref={image2Ref}
               src={image2.attributes.src}
               srcSet={image2.attributes.srcSet}
               width={image2.attributes.width}
@@ -132,7 +164,14 @@ export default function IntroSection({ image1, image2 }: IntroSectionProps) {
               alt={image2.alt}
               className="object-contain will-change-transform w-[90px] xs:w-[120px] sm:w-[180px] lg:w-[300px] xl:w-[400px] 2xl:w-[458px]"
               loading="eager"
-              decoding="async"
+              decoding="sync"
+              fetchPriority="high"
+              onLoad={() => {
+                if (image2Ref.current) {
+                  image2Ref.current.style.opacity = '1';
+                }
+              }}
+              style={{ opacity: imagesLoaded ? '1' : '0.8' }}
             />
           </motion.div>
         </div>
