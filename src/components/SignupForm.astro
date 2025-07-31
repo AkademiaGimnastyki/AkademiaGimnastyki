@@ -1,8 +1,13 @@
 ---
 const groups = [
-  "Grupa Początkująca 3-5 lat (Mszana Dolna)",
-  "Grupa Średniozaawansowana 6-10 lat (Nowy Targ)",
-  "Grupa Zaawansowana 11-17 lat (Mszana Dolna)"
+  "3-5 lat (Mszana Dolna)",
+  "6-7 lat (Mszana Dolna)",
+  "8-10 lat (Mszana Dolna)",
+  "11+ lat (Mszana Dolna)",
+  "3-5 lat (Nowy Targ)",
+  "6-7 lat (Nowy Targ)",
+  "8-10 lat (Nowy Targ)",
+  "11+ lat (Nowy Targ)"
 ];
 ---
 
@@ -75,11 +80,52 @@ const groups = [
     ></textarea>
   </div>
 
+  <!-- Zgoda na przetwarzanie danych -->
+  <div class="flex flex-col">
+    <div class="flex items-start space-x-3">
+      <input
+        type="checkbox"
+        id="privacy-consent"
+        name="privacy-consent"
+        required
+        class="mt-1 w-4 h-4 text-gray-900 border-gray-900 rounded focus:ring-2 focus:ring-gray-900"
+      >
+      <label for="privacy-consent" class="text-sm text-gray-700 leading-relaxed">
+        Wyrażam zgodę na przetwarzanie moich danych osobowych w celu obsługi zapytania zgodnie z 
+        <a href="/regulamin-klubu/" class="text-[#00B3D4] hover:text-[#E3A1A1] underline transition-colors" target="_blank">polityką prywatności</a>. *
+      </label>
+    </div>
+  </div>
+
   <!-- Przycisk CTA -->
   <button
     type="submit"
-    class="rounded-full border border-gray-900 px-12 py-3 font-roboto font-medium text-xl text-gray-900 hover:bg-gray-900 hover:text-white transition-colors duration-300"
+    id="submit-button"
+    class="rounded-full border border-gray-900 px-12 py-3 font-roboto font-medium text-xl text-gray-900 hover:bg-gray-900 hover:text-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
   >
-    Zapisz się na zajęcia
+    Wyślij formularz
   </button>
 </form>
+
+<script>
+  // Walidacja zgody na przetwarzanie danych
+  document.addEventListener('DOMContentLoaded', function() {
+    const consentCheckbox = document.getElementById('privacy-consent') as HTMLInputElement;
+    const submitButton = document.getElementById('submit-button') as HTMLButtonElement;
+    
+    // Funkcja sprawdzająca stan checkboxa
+    function updateSubmitButton() {
+      if (consentCheckbox && submitButton) {
+        submitButton.disabled = !consentCheckbox.checked;
+      }
+    }
+    
+    // Sprawdź stan przy ładowaniu strony
+    updateSubmitButton();
+    
+    // Nasłuchuj zmian w checkboxie
+    if (consentCheckbox) {
+      consentCheckbox.addEventListener('change', updateSubmitButton);
+    }
+  });
+</script>

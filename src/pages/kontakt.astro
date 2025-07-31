@@ -16,11 +16,59 @@ import SignupForm from '../components/SignupForm.astro';
       Małopolska Akademia Gimnastyki - kontakt i zapisy na zajęcia
     </Hero>
 
+    <!-- Sekcja Sports Manago -->
+    <section class="py-16 overflow-visible">
+      <div class="max-w-6xl mx-auto bg-white rounded-3xl px-6 sm:px-10 md:px-16 py-12 border border-gray-900 text-center">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-poppins font-bold mb-12">
+          <span class="font-extralight">Zapisz się przez </span><span class="font-bold">Sports Manago</span>
+        </h2>
+
+        <div class="grid gap-12 sm:grid-cols-2">
+          <!-- Krok 1 -->
+          <div class="flex flex-col items-center">
+            <span class="flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gray-900 text-white text-3xl sm:text-4xl font-bold mb-6 transition-colors duration-300 hover:bg-[#00B3D4]">1</span>
+            <h3 class="text-lg sm:text-xl font-semibold mb-2">Aktywuj konto rodzica</h3>
+            <p class="text-sm text-gray-700 max-w-xs">Zarejestruj się w systemie Sports Manago i aktywuj swoje konto rodzica</p>
+          </div>
+          <!-- Krok 2 -->
+          <div class="flex flex-col items-center">
+            <span class="flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gray-900 text-white text-3xl sm:text-4xl font-bold mb-6 transition-colors duration-300 hover:bg-[#E3A1A1]">2</span>
+            <h3 class="text-lg sm:text-xl font-semibold mb-2">Dokonaj rejestracji i opłaty</h3>
+            <p class="text-sm text-gray-700 max-w-xs">Zarejestruj dziecko na wybrane zajęcia i dokonaj opłaty w systemie Sports Manago</p>
+          </div>
+        </div>
+
+        <!-- Przycisk Sports Manago -->
+        <div class="mt-12">
+          <a 
+            href="https://akademia-gimnastyki.sportsmanago.pl/login" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-3 rounded-full border border-gray-900 px-8 py-4 font-roboto font-medium text-lg text-gray-900 hover:bg-gray-900 hover:text-white transition-colors duration-300"
+          >
+            
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+            Zapisz się na zajęcia
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center lg:items-start gap-12 lg:gap-24">
+      <!-- Lewa kolumna: nagłówek i opis -->
+      <div class="flex-1 max-w-xl lg:max-w-none text-center">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-poppins py-8 lg:py-12 leading-tight">
+          <span class="font-extralight">Formularz </span>
+          <span class="font-bold">Zapisu</span>
+        </h2>
+
+
     <!-- Sekcja kroków zapisu -->
     <section class="py-16 overflow-visible">
       <div class="max-w-6xl mx-auto bg-white rounded-3xl px-6 sm:px-10 md:px-16 py-12 border border-gray-900 text-center">
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-poppins font-bold mb-12">
-          <span class="font-extralight">Pierwszy raz? </span><span class="font-bold">Zapisz się. To proste!</span>
+          <span class="font-extralight">Skontaktuj się z nami</span>
         </h2>
 
         <div class="grid gap-12 sm:grid-cols-3">
@@ -34,7 +82,7 @@ import SignupForm from '../components/SignupForm.astro';
           <div class="flex flex-col items-center">
             <span class="flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gray-900 text-white text-3xl sm:text-4xl font-bold mb-6 transition-colors duration-300 hover:bg-[#E3A1A1]">2</span>
             <h3 class="text-lg sm:text-xl font-semibold mb-2">Poczekaj na potwierdzenie</h3>
-            <p class="text-sm text-gray-700 max-w-xs">Skontaktujemy się z&nbsp;Tobą do dwóch dni roboczych – mailowo albo telefonicznie – napisz nam w&nbsp;wiadomości jaką formę preferujesz!</p>
+            <p class="text-sm text-gray-700 max-w-xs">Skontaktujemy się z&nbsp;Tobą do dwóch dni roboczych </p>
           </div>
           <!-- Krok 3 -->
           <div class="flex flex-col items-center">
@@ -49,14 +97,7 @@ import SignupForm from '../components/SignupForm.astro';
     </section>
 
 
-    <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center lg:items-start gap-12 lg:gap-24">
-      <!-- Lewa kolumna: nagłówek i opis -->
-      <div class="flex-1 max-w-xl lg:max-w-none text-center">
-        <h2 class="text-3xl md:text-4xl lg:text-5xl font-poppins py-8 lg:py-12 leading-tight">
-          <span class="font-extralight">Formularz </span>
-          <span class="font-bold">Zapisu</span>
-        </h2>
-
+    
 
     <SignupForm />
 
