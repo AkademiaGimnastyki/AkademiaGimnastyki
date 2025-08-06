@@ -4,17 +4,21 @@ import TrainerAvatars from './ui/TrainerAvatars.astro';
 import HeroButtons from './ui/HeroButtons.astro';
 
 interface Props {
+  signupUrl?: string;
   title?: string;
   subtitle?: string;
   backgroundImage?: string;
   showButtons?: boolean;
+  showAvatars?: boolean;
 }
 
 const { 
+  title = "Klub Sportowy",
+  subtitle = "Małopolska Akademia Gimnastyki",
   backgroundImage = "/images/hero/hero o nas.jpg",
   showButtons = true,
-  title = "Klub Sportowy",
-  subtitle = "Małopolska Akademia Gimnastyki"
+  showAvatars = true,
+  signupUrl
 } = Astro.props;
 
 const trainers = [
@@ -85,7 +89,7 @@ const trainers = [
             
             {showButtons && (
               <div class="mt-8 hidden sm:block" data-aos="fade-up" data-aos-delay="200">
-                <HeroButtons />
+                <HeroButtons signupUrl={signupUrl ?? '/kontakt'} />
               </div>
             )}
           </div>
@@ -93,7 +97,7 @@ const trainers = [
           <!-- Bottom Row - Social Links -->
           <div class="h-24 flex items-end justify-between" transition:name="hero-footer">
             <div class="space-y-4 hidden lg:block">
-              <TrainerAvatars trainers={trainers} />
+              {showAvatars && <TrainerAvatars trainers={trainers} />}
               <div class="flex space-x-2 sm:space-x-4">
                 <a
                   href="https://www.facebook.com/profile.php?id=100072345243817"

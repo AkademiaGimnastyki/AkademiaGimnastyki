@@ -3,9 +3,10 @@ import Button from './Button.astro';
 
 interface Props {
   class?: string;
+  signupUrl?: string;
 }
 
-const { class: className = '' } = Astro.props;
+const { class: className, signupUrl = '/kontakt' } = Astro.props;
 ---
 
 <div class:list={['relative flex flex-col sm:flex-row gap-6 mt-8', className]}>
@@ -17,7 +18,7 @@ const { class: className = '' } = Astro.props;
       Poznaj naszą ofertę
     </Button>
   </a>
-  <a href="/kontakt">
+  <a href={signupUrl}>
     <Button
       variant="default"
       class="relative z-20 bg-brand-accent/80 hover:bg-brand-primary text-white rounded-full px-8 py-3 backdrop-blur-md hover:scale-105 hover:shadow-lg transition-all duration-300"
