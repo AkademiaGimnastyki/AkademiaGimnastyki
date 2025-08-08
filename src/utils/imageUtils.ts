@@ -18,27 +18,40 @@ export function optimizeContentfulImage(
     return url;
   }
 
-  const {
-    width,
-    height,
-    format = 'webp',
-    quality = 80,
-    fit = 'fill',
-    progressive = true
-  } = options;
+  try {
+    const {
+      width,
+      height,
+      format = 'webp',
+      quality = 80,
+      fit = 'fill',
+      progressive = true
+    } = options;
 
-  const urlObj = new URL(url.startsWith('//') ? `https:${url}` : url);
-  const params = new URLSearchParams();
+    // Normalize URL
+    let normalizedUrl = url;
+    if (url.startsWith('//')) {
+      normalizedUrl = `https:${url}`;
+    } else if (!url.startsWith('http')) {
+      normalizedUrl = `https://${url}`;
+    }
 
-  if (width) params.set('w', width.toString());
-  if (height) params.set('h', height.toString());
-  params.set('fm', format);
-  params.set('q', quality.toString());
-  params.set('fit', fit);
-  if (progressive) params.set('fl', 'progressive');
+    const urlObj = new URL(normalizedUrl);
+    const params = new URLSearchParams(urlObj.search);
 
-  urlObj.search = params.toString();
-  return urlObj.toString();
+    if (width) params.set('w', width.toString());
+    if (height) params.set('h', height.toString());
+    params.set('fm', format);
+    params.set('q', quality.toString());
+    params.set('fit', fit);
+    if (progressive) params.set('fl', 'progressive');
+
+    urlObj.search = params.toString();
+    return urlObj.toString();
+  } catch (error) {
+    console.error('Error optimizing Contentful image:', error, 'URL:', url);
+    return url; // Return original URL if optimization fails
+  }
 }
 
 /**

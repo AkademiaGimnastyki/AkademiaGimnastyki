@@ -3,7 +3,6 @@ import Layout from '../../layouts/Layout.astro';
 import { getBlogPostBySlug } from '../../lib/contentAdapter';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types';
-import { optimizeContentfulImage, generateContentfulResponsiveImages } from '../../utils/imageUtils';
 
 
 
@@ -103,18 +102,8 @@ function renderRichTextContent(content: any) {
               const url = node.data.target.fields.file.url;
               const alt = node.data.target.fields.title || node.data.target.fields.description || '';
               const fullUrl = url.startsWith('//') ? `https:${url}` : url;
-              const optimizedUrl = optimizeContentfulImage(fullUrl, { width: 800, quality: 85 });
-              const sources = generateContentfulResponsiveImages(fullUrl);
               
-              let pictureHtml = '<picture class="block my-8 mx-auto">';
-              sources.forEach(source => {
-                const mediaAttr = source.media ? ` media="${source.media}"` : '';
-                pictureHtml += `<source srcset="${source.srcset}" type="${source.type}"${mediaAttr}>`;
-              });
-              pictureHtml += `<img src="${optimizedUrl}" alt="${alt}" class="rounded-lg shadow-lg max-w-full h-auto mx-auto" loading="lazy" decoding="async">`;
-              pictureHtml += '</picture>';
-              
-              return pictureHtml;
+              return `<img src="${fullUrl}" alt="${alt}" class="my-8 rounded-lg shadow-lg max-w-full h-auto mx-auto" loading="lazy" decoding="async">`;
             }
             return '';
           },
@@ -161,36 +150,16 @@ const renderedContent = renderRichTextContent(post.content);
 
       <!-- 2. GRAFIKA GŁÓWNA -->
       <div class="relative w-full h-72 sm:h-96 md:h-[500px] mb-8 rounded-lg overflow-hidden shadow-lg">
-        {post.image && post.image.includes('ctfassets.net') ? (
-          <picture class="w-full h-full">
-            {generateContentfulResponsiveImages(post.image, [
-              { width: 400, viewportWidth: '640px' },
-              { width: 600, viewportWidth: '1024px' },
-              { width: 1200 }
-            ]).map(source => (
-              <source 
-                srcset={source.srcset} 
-                type={source.type} 
-                media={source.media} 
-              />
-            ))}
-            <img 
-              src={optimizeContentfulImage(post.image, { width: 1200, quality: 85 })}
-              alt={post.title || 'Wpis na blogu'} 
-              class="w-full h-full object-cover"
-              loading="eager"
-              decoding="sync"
-            />
-          </picture>
-        ) : (
-          <img 
-            src={post.image || '/images/hero/bruce-mars-HHXdPG_eTIQ-unsplash.jpg'} 
-            alt={post.title || 'Wpis na blogu'} 
-            class="w-full h-full object-cover"
-            loading="eager"
-            decoding="sync"
-          />
-        )}
+        <img 
+          src={post.image && post.image.includes('ctfassets.net') 
+            ? post.image.replace(/(\?.*)?$/, '?w=1200&h=675&fm=webp&q=90&fit=fill')
+            : (post.image || '/images/hero/hero blog.jpg')
+          }
+          alt={post.title || 'Wpis na blogu'} 
+          class="w-full h-full object-cover"
+          loading="eager"
+          decoding="sync"
+        />
       </div>
 
       <!-- 3. OPIS -->

@@ -37,7 +37,7 @@ const posts = await getBlogPosts();
               title={post.title}
               description={post.description || 'Kliknij, aby przeczytać więcej'}
               date={post.date instanceof Date ? post.date : new Date(post.date)}
-              image={post.image || '/images/hero/bruce-mars-HHXdPG_eTIQ-unsplash.jpg'}
+              image={post.image || '/images/hero/hero blog.jpg'}
               url={`/blog/${post.slug}/`}
             />
           ))}

@@ -69,10 +69,28 @@ function transformContentfulEntry(entry: Entry<any>): UnifiedBlogPost {
   }
   
   // Bezpieczne pobieranie URL obrazu
-  let imageUrl = '/images/placeholder.jpg';
+  let imageUrl = '/images/hero/hero o nas.jpg';
   if (fields.image && typeof fields.image === 'object' && fields.image.fields && 
       fields.image.fields.file && fields.image.fields.file.url) {
-    imageUrl = `https:${fields.image.fields.file.url}`;
+    // Upewnij się, że URL ma poprawny format
+    const contentfulUrl = fields.image.fields.file.url;
+    let fullUrl = contentfulUrl.startsWith('//') ? `https:${contentfulUrl}` : contentfulUrl;
+    
+    // Dodaj optymalizację dla obrazów z Contentful - wyższa jakość dla desktop
+    try {
+      const url = new URL(fullUrl);
+      const params = new URLSearchParams();
+      params.set('w', '800');  // Zwiększone z 400 do 800
+      params.set('h', '450');  // Zwiększone z 192 do 450 (zachowuje proporcje ~16:9)
+      params.set('fm', 'webp');
+      params.set('q', '90');   // Zwiększone z 85 do 90 dla lepszej jakości
+      params.set('fit', 'fill');
+      url.search = params.toString();
+      imageUrl = url.toString();
+    } catch (error) {
+      console.error('Error optimizing Contentful image:', error);
+      imageUrl = fullUrl; // fallback to original URL
+    }
   }
   
   // Treść - może być w różnych polach i formatach
