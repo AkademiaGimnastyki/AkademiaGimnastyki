@@ -80,6 +80,11 @@ const features = [
                       alt={feature.title}
                       width={1000}
                       height={667}
+                      format="avif"
+                      quality={80}
+                      sizes="(max-width: 640px) 400px, (max-width: 1024px) 600px, 1000px"
+                      loading="lazy"
+                      decoding="async"
                       class="w-full h-full object-cover"
                     />
                     <div class="absolute inset-0 bg-black/10"></div>

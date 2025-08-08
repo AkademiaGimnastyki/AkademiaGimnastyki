@@ -11,7 +11,12 @@ export interface Card {
   thumbnail: string;
 }
 
-export const BentoGrid = ({ cards }: { cards: Card[] }) => {
+interface BentoGridProps {
+  cards: Card[];
+  heroImage?: string;
+}
+
+export const BentoGrid = ({ cards, heroImage = "/images/arts/art4.png" }: BentoGridProps) => {
   const [selected, setSelected] = useState<Card | null>(null);
   const [lastSelected, setLastSelected] = useState<Card | null>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -74,9 +79,13 @@ export const BentoGrid = ({ cards }: { cards: Card[] }) => {
             style={{ filter: 'blur(20px)' }}
           />
           <img
-            src="/images/arts/art4.png"
+            src={heroImage}
             alt="Dzieci z pucharem"
-            className="relative w-[434px] h-[434px] object-cover rounded-full hover:brightness-110 hover:scale-105 transform transition-all duration-500 ease-in-out"
+            width={434}
+            height={434}
+            loading="lazy"
+            decoding="async"
+            className="relative w-[120px] h-[120px] sm:w-[280px] sm:h-[280px] md:w-[434px] md:h-[434px] object-cover rounded-full hover:brightness-110 hover:scale-105 transform transition-all duration-500 ease-in-out"
           />
         </motion.div>
         <motion.h2 

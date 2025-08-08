@@ -47,6 +47,11 @@ const galleryItems = [
               alt={item.caption}
               width={800}
               height={600}
+              format="avif"
+              quality={80}
+              sizes="(max-width: 640px) 400px, (max-width: 1024px) 600px, 800px"
+              loading="lazy"
+              decoding="async"
               class="w-full h-96 object-cover transition-transform duration-500 ease-out group-hover:scale-110"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-all duration-500 ease-out group-hover:opacity-100"></div>

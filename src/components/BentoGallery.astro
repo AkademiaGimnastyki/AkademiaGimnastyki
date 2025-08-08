@@ -1,5 +1,17 @@
 ---
 import { BentoGrid } from './ui/BentoGrid';
+import { getImage } from 'astro:assets';
+import art4Image from '../images/arts/art4.png';
+import place1Image from '../images/placeholders/place1.jpg';
+import place3Image from '../images/placeholders/place3.jpg';
+import place4Image from '../images/placeholders/place4.jpg';
+import place7Image from '../images/placeholders/place7.jpg';
+
+const optimizedArt4 = await getImage({src: art4Image, width: 434, height: 434, format: "avif"});
+const optimizedPlace1 = await getImage({src: place1Image, width: 800, height: 600, format: "avif"});
+const optimizedPlace3 = await getImage({src: place3Image, width: 800, height: 600, format: "avif"});
+const optimizedPlace4 = await getImage({src: place4Image, width: 800, height: 600, format: "avif"});
+const optimizedPlace7 = await getImage({src: place7Image, width: 800, height: 600, format: "avif"});
 
 const cards = [
   {
@@ -7,35 +19,40 @@ const cards = [
     title: "Międzywojewódzkie Mistrzostwa Juniorów 2023",
     description: "Nasi zawodnicy zdobyli 5 medali podczas prestiżowych zawodów w Mszanie Dolnej. Złoto w kategorii junior młodszy przypadło Julii Kowalskiej za układ z obręczą.",
     className: "md:col-span-2 aspect-[2/1]",
-    thumbnail: "/images/placeholders/place1.jpg",
+    thumbnail: optimizedPlace1.src,
   },
   {
     id: 2,
     title: "Grand Prix Małopolski - Kraków 2023",
     description: "Historyczny sukces naszej akademii - wszystkie podium w kategorii młodzik zajęte przez nasze zawodniczki! Gratulujemy Ani, Zosi i Marysi!",
     className: "col-span-1 aspect-square",
-    thumbnail: "/images/placeholders/place7.jpg",
+    thumbnail: optimizedPlace7.src,
   },
   {
     id: 3,
     title: "Ogólnopolski Turniej w Akrobatyce Sportowej",
     description: "Występ naszych najmłodszych adeptów podczas turnieju w Nowym Sączu. Debiut 8-letniej Hani w konkurencji dwójek mieszanych zakończony brązowym medalem!",
     className: "col-span-1 aspect-square",
-    thumbnail: "/images/placeholders/place3.jpg",
+    thumbnail: optimizedPlace3.src,
   },
   {
     id: 4,
     title: "Mistrzostwa Polski Seniorów 2023",
     description: "Karolina Nowak z naszej akademii reprezentowała Małopolskę na Mistrzostwach Polski w Gdańsku. 4. miejsce w wieloboju i finał w układzie ze wstążką!",
     className: "md:col-span-2 aspect-[2/1]",
-    thumbnail: "/images/placeholders/place4.jpg",
+    thumbnail: optimizedPlace4.src,
   },
 ];
+
+const bentoProps = {
+  cards,
+  heroImage: optimizedArt4.src
+};
 ---
 
 <section class="w-full pb-20 bg-white">
   <div class="container mx-auto px-4">
-    <BentoGrid client:load cards={cards} />
+    <BentoGrid client:load cards={cards} heroImage={optimizedArt4.src} />
   </div>
 </section>
 
