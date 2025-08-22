@@ -5,6 +5,8 @@ interface Props {
     ageRange: string;
     day: string;
     time: string;
+    dayName?: string;
+    dayColor?: string;
   }[];
 }
 
@@ -34,6 +36,9 @@ const { location, groups } = Astro.props;
             <div class="text-[#575757] text-base">
               <span class="font-bold">{group.ageRange}</span>
               <span class="font-normal">{group.day}</span>
+              {group.dayName && (
+                <span class={`font-bold ml-2 ${group.dayColor || 'text-[#575757]'}`}>- {group.dayName}</span>
+              )}
               <span class="font-bold ml-2">{group.time}</span>
             </div>
           ))

@@ -23,12 +23,23 @@ const groups = [
   <input type="hidden" name="form-name" value="signup">
   <input type="text" name="bot-field" class="hidden">
 
-  <!-- Imię i Nazwisko -->
+  <!-- Imię i Nazwisko Rodzica -->
   <div class="flex flex-col">
-    <label class="text-left text-gray-900 mb-2 font-medium">Imię i Nazwisko *</label>
+    <label class="text-left text-gray-900 mb-2 font-medium">Imię i Nazwisko (rodzica) *</label>
     <input 
       type="text" 
-      name="name" 
+      name="parent_name" 
+      required
+      class="w-full p-3 border border-gray-900 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+    >
+  </div>
+
+  <!-- Imię i Nazwisko Dziecka -->
+  <div class="flex flex-col">
+    <label class="text-left text-gray-900 mb-2 font-medium">Imię i Nazwisko (dziecka) *</label>
+    <input 
+      type="text" 
+      name="child_name" 
       required
       class="w-full p-3 border border-gray-900 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
     >

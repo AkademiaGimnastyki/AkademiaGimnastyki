@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx astro:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)",
+      "Bash(netlify:*)",
+      "Bash(npx netlify:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -6,22 +6,22 @@ import ScheduleInfo from '../components/ScheduleInfo.astro';
 import Calendar_Nowy_Targ from '../components/Calendar_Nowy_Targ.astro';
 
 const mszanaGroups = [
-  { ageRange: "3-5", day: "Grupa 1 - Środa", time: "16:30-17:15" },
-  { ageRange: "6-7", day: "Grupa 2 - Środa", time: "17:15-18:15" },
-  { ageRange: "8-10", day: "Grupa 3 - Środa", time: "18:15-19:15" },
-  { ageRange: "11+", day: "Grupa 4 - Środa", time: "19:15-20:45" },
-  { ageRange: "4-7", day: "Gim. Artystyczna - Piątek", time: "15:50-16:50" },
-  { ageRange: "8+", day: "Gim. Artystyczna - Piątek", time: "16:50-17:50" }
+  { ageRange: "3-5", day: "Grupa 1", time: "16:30-17:15", dayName: "Środa", dayColor: "text-brand-primary" },
+  { ageRange: "6-7", day: "Grupa 2", time: "17:15-18:15", dayName: "Środa", dayColor: "text-brand-primary" },
+  { ageRange: "8-10", day: "Grupa 3", time: "18:15-19:15", dayName: "Środa", dayColor: "text-brand-primary" },
+  { ageRange: "11+", day: "Grupa 4", time: "19:15-20:45", dayName: "Środa", dayColor: "text-brand-primary" },
+  { ageRange: "4-7", day: "Gim. Artystyczna", time: "15:50-16:50", dayName: "Piątek", dayColor: "text-brand-accent" },
+  { ageRange: "8+", day: "Gim. Artystyczna", time: "16:50-17:50", dayName: "Piątek", dayColor: "text-brand-accent" }
 ];
 
 const nowyTargGroups = [
-  { ageRange: "3-5", day: "Grupa 1 - Poniedziałek", time: "16:00-16:45" },
-  { ageRange: "6-7", day: "Grupa 2 - Poniedziałek", time: "16:45-17:45" },
-  { ageRange: "8-10", day: "Grupa 3 - Poniedziałek", time: "17:45-18:45" },
-  { ageRange: "11+", day: "Grupa 4 - Poniedziałek", time: "18:45-20:15" },
-  { ageRange: "6-7", day: "Grupa Brązowa - Czwartek", time: "16:00-17:00" },
-  { ageRange: "8-10", day: "Grupa Srebrna - Czwartek", time: "17:00-18:00" },
-  { ageRange: "11+", day: "Grupa Złota - Czwartek", time: "18:00-19:30" }
+  { ageRange: "3-5", day: "Grupa 1", time: "16:00-16:45", dayName: "Poniedziałek", dayColor: "text-brand-primary" },
+  { ageRange: "6-7", day: "Grupa 2", time: "16:45-17:45", dayName: "Poniedziałek", dayColor: "text-brand-primary" },
+  { ageRange: "8-10", day: "Grupa 3", time: "17:45-18:45", dayName: "Poniedziałek", dayColor: "text-brand-primary" },
+  { ageRange: "11+", day: "Grupa 4", time: "18:45-20:15", dayName: "Poniedziałek", dayColor: "text-brand-primary" },
+  { ageRange: "6-7", day: "Grupa Brązowa", time: "16:00-17:00", dayName: "Czwartek", dayColor: "text-brand-accent" },
+  { ageRange: "8-10", day: "Grupa Srebrna", time: "17:00-18:00", dayName: "Czwartek", dayColor: "text-brand-accent" },
+  { ageRange: "11+", day: "Grupa Złota", time: "18:00-19:30", dayName: "Czwartek", dayColor: "text-brand-accent" }
 ];
 ---
 
