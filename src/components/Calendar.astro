@@ -8,8 +8,8 @@ const {
 } = Astro.props;
 ---
 
-<div class="bg-white rounded-[32px] shadow-xl overflow-hidden">
-  <div class="relative w-full aspect-[16/10]">
+<div class="bg-white rounded-[32px] shadow-xl overflow-hidden h-full">
+  <div class="relative w-full h-full min-h-[700px]">
     <iframe
       src={calendarUrl}
       class="absolute inset-0 w-full h-full border-0"
