@@ -18,7 +18,7 @@ export default function FAQAccordion() {
           <ul className="list-disc pl-6 mt-2 space-y-1">
             <li>Mszana Dolna: ul. Józefa Marka 2</li>
             <li>Nowy Targ: ul. Plac Evry 4</li>
-          </ul> 
+          </ul>
         </AccordionContent>
       </AccordionItem>
 
@@ -36,11 +36,19 @@ export default function FAQAccordion() {
           Jak mogę zapisać dziecko na zajęcia?
         </AccordionTrigger>
         <AccordionContent className="text-base">
-          Obecnie pracujemy nad elektronicznym formularzem zapisów. Tymczasowo prosimy o bezpośredni kontakt:
-          <ul className="list-none mt-2 space-y-1">
-            <li> Telefon: 535 124 492</li>
-            <li> E-mail: akademia.malopolska@gmail.com</li>
-          </ul>
+          Możesz zapisać swoje dziecko przez system{" "}
+          <a
+            href="https://akademia-gimnastyki.sportsmanago.pl/login"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand-primary hover:underline font-medium"
+          >
+            sportsmanago
+          </a>{" "}
+          - lub skorzystać z formularza znajdującego się na stronie{" "}
+          <a href="/kontakt" className="text-brand-primary hover:underline font-medium">
+            kontakt
+          </a>.
         </AccordionContent>
       </AccordionItem>
 
